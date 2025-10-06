@@ -64,7 +64,7 @@ export default function Page(){
         {Array.isArray(items) && items.map((r:any)=> (
           <div key={r.id} className="p-4 rounded-xl border border-gray-200 bg-white shadow-sm flex items-center justify-between">
             <div className="space-y-1">
-              <div className="font-medium text-gray-900">{r.primaryName || r.title || 'Untitled Resume'}</div>
+              <div className="font-medium text-gray-900">{r.title || 'Untitled Resume'}</div>
               <div className="text-sm text-gray-500">{r.primaryEmail}</div>
               {r.updatedAt && (
                 <div className="text-sm text-gray-500">Last updated: {formatUpdatedAt(r.updatedAt)}</div>

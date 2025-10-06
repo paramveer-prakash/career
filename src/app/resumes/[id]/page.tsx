@@ -19,6 +19,7 @@ export default function Page(){
     <div className="p-6 space-y-8 max-w-5xl mx-auto">
       <section className="space-y-3">
         <h2 className="text-xl font-semibold text-gray-900">Primary info</h2>
+        <label className="space-y-1 block"><span className="text-sm text-gray-600">Resume Title</span><textarea className="border px-3 py-2 rounded w-full" rows={4} value={resume.title||''} onChange={e=>setResume({...resume, title:e.target.value})} /></label>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           <label className="space-y-1"><span className="text-sm text-gray-600">Name</span><input className="border px-3 py-2 rounded w-full" value={resume.primaryName||''} onChange={e=>setResume({...resume, primaryName:e.target.value})} /></label>
           <label className="space-y-1"><span className="text-sm text-gray-600">Email</span><input className="border px-3 py-2 rounded w-full" value={resume.primaryEmail||''} onChange={e=>setResume({...resume, primaryEmail:e.target.value})} /></label>
