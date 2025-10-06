@@ -11,7 +11,7 @@ export default function Page(){
   const [resume,setResume]=useState<any>(null);
   const [saving,setSaving]=useState(false);
 
-  useEffect(()=>{(async()=>{ if(!id) return; const r=await api.get('/api/v1/resumes/'+id); setResume(r.data); })();},[id]);
+  useEffect(()=>{(async()=>{ if(!id) return; try{ const r=await api.get('/api/v1/resumes/'+id); setResume(r.data);} catch(e){ console.error('Failed to load resume', e); setResume(null);} })();},[id]);
 
   if(!resume) return <div className="p-6">Loading...</div>;
 
@@ -26,7 +26,10 @@ export default function Page(){
           <label className="space-y-1"><span className="text-sm text-gray-600">Location</span><input className="border px-3 py-2 rounded w-full" value={resume.primaryLocation||''} onChange={e=>setResume({...resume, primaryLocation:e.target.value})} /></label>
         </div>
         <label className="space-y-1 block"><span className="text-sm text-gray-600">Summary</span><textarea className="border px-3 py-2 rounded w-full" rows={4} value={resume.summary||''} onChange={e=>setResume({...resume, summary:e.target.value})} /></label>
-        <button onClick={async()=>{ setSaving(true); await api.put('/api/v1/resumes/'+id, resume); setSaving(false); }} className="px-4 py-2 rounded bg-green-600 text-white hover:bg-green-700">{saving?'Saving...':'Save resume'}</button>
+        <div className="flex gap-2">
+          <button onClick={async()=>{ setSaving(true); await api.put('/api/v1/resumes/'+id, resume); setSaving(false); }} className="px-4 py-2 rounded bg-green-600 text-white hover:bg-green-700">{saving?'Saving...':'Save resume'}</button>
+          <button onClick={async()=>{ if(!confirm('Delete this resume?')) return; await api.delete('/api/v1/resumes/'+id); window.location.href='/resumes'; }} className="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700">Delete resume</button>
+        </div>
       </section>
 
       <Section title="Skills"><SkillsEditor resumeId={id} /></Section>
@@ -49,7 +52,7 @@ function Section({title, children}:{title:string, children:React.ReactNode}){
 function SkillsEditor({resumeId}:{resumeId:string}){
   const [items,setItems]=useState<any[]>([]);
   const [newSkill,setNewSkill]=useState('');
-  useEffect(()=>{(async()=>{try{const r=await api.get(`/api/v1/resumes/${resumeId}/skills`); const d=r.data; setItems(Array.isArray(d)?d:(Array.isArray(d?.content)?d.content:[]));}catch(e){console.error('Failed to load skills', e); setItems([]);}})();},[resumeId]);
+  useEffect(()=>{(async()=>{try{const r=await api.get(`/api/v1/resumes/${resumeId}/skills`); const d=r.data; const list=Array.isArray(d)?d:(Array.isArray(d?.content)?d.content:[]); const normalized=list.map((s:any)=> ({ id:s.id, name:s.name || s.skill || s.label || '' })); setItems(normalized);}catch(e){console.error('Failed to load skills', e); setItems([]);}})();},[resumeId]);
   return (
     <div className="space-y-3">
       <div className="flex gap-2">
@@ -73,8 +76,15 @@ function WorkExpEditor({resumeId}:{resumeId:string}){
     <div className="space-y-2">
       <button className="px-3 py-1 rounded bg-blue-600 text-white" onClick={async()=>{ await api.post(`/api/v1/resumes/${resumeId}/work-experiences`, { jobTitle:'New role' }); const r=await api.get(`/api/v1/resumes/${resumeId}/work-experiences`); setItems(r.data||[]); }}>Add experience</button>
       <ul className="space-y-2">{items.map((w:any)=> (
-        <li key={w.id} className="border rounded p-3 space-y-2">
+        <li key={w.id} className="border rounded p-3 space-y-3">
           <input className="border px-2 py-1 rounded w-full" value={w.jobTitle||''} onChange={e=>{ const v={...w, jobTitle:e.target.value}; setItems(items.map(x=>x.id===w.id?v:x)); }} />
+          {Array.isArray(w.responsibilities) && w.responsibilities.length>0 && (
+            <ul className="list-disc pl-5 space-y-1">
+              {w.responsibilities.map((r:any, idx:number)=> (
+                <li key={r.id || idx} className="text-sm text-gray-700">{r.description}</li>
+              ))}
+            </ul>
+          )}
           <div className="flex gap-2">
             <button className="px-2 py-1 rounded bg-green-600 text-white" onClick={async()=>{ await api.put(`/api/v1/resumes/${resumeId}/work-experiences/${w.id}`, w); }}>Save</button>
             <button className="px-2 py-1 rounded bg-red-600 text-white" onClick={async()=>{ await api.delete(`/api/v1/resumes/${resumeId}/work-experiences/${w.id}`); const r=await api.get(`/api/v1/resumes/${resumeId}/work-experiences`); setItems(r.data||[]); }}>Delete</button>

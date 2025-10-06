@@ -33,7 +33,7 @@ export default function Page(){
         if(!input.files?.length) return;
         const form=new FormData();
         form.append('file', input.files[0]);
-        await api.post('/api/v1/resumes/files', form, { headers: { 'Content-Type':'multipart/form-data' }});
+        await api.post('/api/v1/resumes/upload', form, { headers: { 'Content-Type':'multipart/form-data' }});
         const r=await api.get('/api/v1/resumes');
         const data=r.data;
         const list=Array.isArray(data) ? data : (Array.isArray(data?.content) ? data.content : []);
@@ -51,7 +51,19 @@ export default function Page(){
               <div className="font-medium text-gray-900">{r.primaryName || r.title || 'Untitled Resume'}</div>
               <div className="text-sm text-gray-500">{r.primaryEmail}</div>
             </div>
-            <Link className="px-3 py-2 rounded-md bg-gray-900 text-white hover:bg-gray-800" href={'/resumes/'+r.id}>Open</Link>
+            <div className="flex gap-2">
+              <Link className="px-3 py-2 rounded-md bg-gray-900 text-white hover:bg-gray-800" href={'/resumes/'+r.id}>Open</Link>
+              <button
+                className="px-3 py-2 rounded-md bg-red-600 text-white hover:bg-red-700"
+                onClick={async()=>{
+                  if(!confirm('Delete this resume?')) return;
+                  await api.delete(`/api/v1/resumes/${r.id}`);
+                  const rr=await api.get('/api/v1/resumes');
+                  const data=rr.data; const list=Array.isArray(data)?data:(Array.isArray(data?.content)?data.content:[]);
+                  setItems(list);
+                }}
+              >Delete</button>
+            </div>
           </div>
         ))}
       </div>
