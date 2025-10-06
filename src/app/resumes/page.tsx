@@ -10,6 +10,22 @@ export default function Page(){
   const [items,setItems]=useState<any[]>([]);
   const [loading,setLoading]=useState(true);
 
+  const formatUpdatedAt = (value: any) => {
+    try {
+      const d = new Date(value);
+      if (isNaN(d.getTime())) return String(value ?? '');
+      return d.toLocaleString(undefined, {
+        year: 'numeric',
+        month: 'short',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+      });
+    } catch {
+      return String(value ?? '');
+    }
+  };
+
   useEffect(()=>{(async()=>{
     try{
       const r=await api.get('/api/v1/resumes');
@@ -50,6 +66,9 @@ export default function Page(){
             <div className="space-y-1">
               <div className="font-medium text-gray-900">{r.primaryName || r.title || 'Untitled Resume'}</div>
               <div className="text-sm text-gray-500">{r.primaryEmail}</div>
+              {r.updatedAt && (
+                <div className="text-sm text-gray-500">Last updated: {formatUpdatedAt(r.updatedAt)}</div>
+              )}
             </div>
             <div className="flex gap-2">
               <Link className="px-3 py-2 rounded-md bg-gray-900 text-white hover:bg-gray-800" href={'/resumes/'+r.id}>Open</Link>
