@@ -2,7 +2,6 @@
 
 import { useAuth } from 'react-oidc-context'
 import { Button } from '@/components/ui/button'
-import { RateLimitStatusComponent } from '@/components/rate-limit-status'
 import { ArrowLeft, User, Shield, Zap, Info, LogOut } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
@@ -16,7 +15,7 @@ export default function SettingsPage() {
   }
 
   const handleBack = () => {
-    router.push('/chat')
+    router.push('/resumes')
   }
 
   if (authLoading) {
@@ -46,7 +45,7 @@ export default function SettingsPage() {
                 className="flex items-center space-x-1 sm:space-x-2 text-sm sm:text-base"
               >
                 <ArrowLeft className="w-4 h-4" />
-                <span className="hidden sm:inline">Back to Chat</span>
+                <span className="hidden sm:inline">Back to Resumes</span>
                 <span className="sm:hidden">Back</span>
               </Button>
               <h1 className="text-lg sm:text-xl font-semibold text-gray-900">Settings</h1>
@@ -99,22 +98,7 @@ export default function SettingsPage() {
             </div>
           </div>
 
-          {/* Usage & Rate Limits */}
-          <div className="bg-white border border-gray-200 rounded-lg p-4 sm:p-6">
-            <div className="flex items-center space-x-3 mb-6">
-              <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
-                <Zap className="w-5 h-5 text-green-600" />
-              </div>
-              <div>
-                <h2 className="text-lg font-semibold text-gray-900">Usage & Rate Limits</h2>
-                <p className="text-sm text-gray-500">Monitor your API usage and rate limit status</p>
-              </div>
-            </div>
-            
-            <div className="bg-gray-50 rounded-lg p-4">
-              <RateLimitStatusComponent />
-            </div>
-          </div>
+          {/* Placeholder for future settings sections */}
 
 
           {/* Privacy & Security */}

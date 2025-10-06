@@ -23,8 +23,8 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Chat – Smarter Conversations, Simplified",
-  description: "An intuitive AI chat experience designed for clarity, speed, and intelligence with Amazon Nova Pro at its core.",
+  title: "Career – Resume Manager",
+  description: "Upload, parse, and edit resumes with a modern, structured editor.",
 };
 
 export const viewport = {
