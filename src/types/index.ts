@@ -16,23 +16,6 @@ export interface AuthState {
   access_token: string | null;
 }
 
-// AI Chat types based on backend DTOs
-export interface ChatRequest {
-  message: string;
-  context?: string;
-  ragEnabled?: boolean;
-}
-
-export interface ChatResponse {
-  message: string;
-  conversationId: number;
-  timestamp: string;
-  model: string;
-  processingTimeMs?: number;
-  tokensUsed?: number;
-  estimatedCost?: string;
-}
-
 export interface Message {
   id: number;
   role: 'USER' | 'ASSISTANT' | 'SYSTEM' | 'TOOL';

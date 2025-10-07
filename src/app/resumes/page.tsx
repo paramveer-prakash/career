@@ -40,9 +40,10 @@ export default function Page(){
   if(loading) return <div className="p-6">Loading...</div>;
 
   return (
-    <div className="p-6 space-y-4 max-w-4xl mx-auto">
-      <h1 className="text-2xl font-semibold text-gray-900">My Resumes</h1>
-      <form className="space-x-2" onSubmit={async(e)=>{
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-semibold">My Resumes</h1>
+        <form className="flex items-center gap-2" onSubmit={async(e)=>{
         e.preventDefault();
         const formEl=e.target as HTMLFormElement;
         const input=formEl.querySelector('input[type=file]') as HTMLInputElement;
@@ -55,33 +56,36 @@ export default function Page(){
         const list=Array.isArray(data) ? data : (Array.isArray(data?.content) ? data.content : []);
         setItems(list);
         input.value='';
-      }}>
-        <input type="file" accept=".pdf,.doc,.docx,.txt" className="border px-3 py-2 rounded" />
-        <button type="submit" className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700">Upload</button>
-      </form>
+        }}>
+          <input type="file" accept=".pdf,.doc,.docx,.txt" className="border border-gray-700 bg-black/20 px-3 py-2 rounded" />
+          <button type="submit" className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700">Upload</button>
+        </form>
+      </div>
 
       <div className="grid gap-4">
         {Array.isArray(items) && items.map((r:any)=> (
-          <div key={r.id} className="p-4 rounded-xl border border-gray-200 bg-white shadow-sm flex items-center justify-between">
-            <div className="space-y-1">
-              <div className="font-medium text-gray-900">{r.title || 'Untitled Resume'}</div>
-              <div className="text-sm text-gray-500">{r.primaryEmail}</div>
-              {r.updatedAt && (
-                <div className="text-sm text-gray-500">Last updated: {formatUpdatedAt(r.updatedAt)}</div>
-              )}
-            </div>
-            <div className="flex gap-2">
-              <Link className="px-3 py-2 rounded-md bg-gray-900 text-white hover:bg-gray-800" href={'/resumes/'+r.id}>Open</Link>
-              <button
-                className="px-3 py-2 rounded-md bg-red-600 text-white hover:bg-red-700"
-                onClick={async()=>{
-                  if(!confirm('Delete this resume?')) return;
-                  await api.delete(`/api/v1/resumes/${r.id}`);
-                  const rr=await api.get('/api/v1/resumes');
-                  const data=rr.data; const list=Array.isArray(data)?data:(Array.isArray(data?.content)?data.content:[]);
-                  setItems(list);
-                }}
-              >Delete</button>
+          <div key={r.id} className="group relative overflow-hidden rounded-xl border border-gray-800 bg-black/30 p-4">
+            <div className="flex items-center justify-between">
+              <div className="space-y-1">
+                <div className="font-medium">{r.title || 'Untitled Resume'}</div>
+                <div className="text-sm text-gray-400">{r.primaryName || ''}</div>
+                {r.updatedAt && (
+                  <div className="text-xs text-gray-500">Updated {formatUpdatedAt(r.updatedAt)}</div>
+                )}
+              </div>
+              <div className="flex gap-2 opacity-100 group-hover:opacity-100">
+                <Link className="px-3 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700" href={'/resumes/'+r.id}>Open</Link>
+                <button
+                  className="px-3 py-2 rounded-md bg-red-600 text-white hover:bg-red-700"
+                  onClick={async()=>{
+                    if(!confirm('Delete this resume?')) return;
+                    await api.delete(`/api/v1/resumes/${r.id}`);
+                    const rr=await api.get('/api/v1/resumes');
+                    const data=rr.data; const list=Array.isArray(data)?data:(Array.isArray(data?.content)?data.content:[]);
+                    setItems(list);
+                  }}
+                >Delete</button>
+              </div>
             </div>
           </div>
         ))}

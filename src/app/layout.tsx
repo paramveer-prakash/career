@@ -3,6 +3,7 @@ import { Inter, Sora, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { OIDCAuthProvider } from "@/components/providers/oidc-auth-provider";
 import { AuthProvider } from "@/components/providers/auth-provider";
+import { Header } from "@/components/header";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -43,7 +44,10 @@ export default function RootLayout({
       <body className="font-sans antialiased">
         <OIDCAuthProvider>
           <AuthProvider>
-            {children}
+            <Header />
+            <main className="mx-auto max-w-6xl px-4 py-6">
+              {children}
+            </main>
           </AuthProvider>
         </OIDCAuthProvider>
       </body>

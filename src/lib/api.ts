@@ -59,5 +59,3 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
-// Removed ChatAPI and AI-chat types; this app uses `api` directly.

@@ -5,6 +5,7 @@ import { useAuth } from 'react-oidc-context'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Bot, ArrowLeft } from 'lucide-react'
+import { routes } from "@/lib/config";
 
 export default function LoginPage() {
   const { signinRedirect, isAuthenticated, isLoading } = useAuth()
@@ -12,7 +13,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (!isLoading && isAuthenticated) {
-      router.push('/chat')
+      router.push(routes.resumes)
     }
   }, [isAuthenticated, isLoading, router])
 

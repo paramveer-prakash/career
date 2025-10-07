@@ -3,6 +3,7 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from 'react-oidc-context'
+import { routes } from "@/lib/config";
 
 export default function AuthCallbackPage() {
   const { isAuthenticated, isLoading, error } = useAuth()
@@ -11,7 +12,7 @@ export default function AuthCallbackPage() {
   useEffect(() => {
     if (!isLoading) {
       if (isAuthenticated) {
-        router.push('/chat')
+        router.push(routes.resumes)
       } else if (error) {
         router.push('/')
       }

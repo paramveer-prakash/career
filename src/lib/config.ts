@@ -33,8 +33,8 @@ export const cognitoAuthConfig = {
 };
 
 export const appConfig = {
-  name: "AI Chat",
-  description: "ChatGPT-like interface powered by Amazon Nova Pro",
+  name: "Resume Manager",
+  description: "Resume Manager",
   version: "1.0.0",
   baseUrl: process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000",
   apiUrl: process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080",
@@ -44,5 +44,5 @@ export const routes = {
   home: "/",
   login: "/auth/login",
   callback: "/auth/callback",
-  chat: "/chat",
+  resumes: "/resumes",
 } as const;

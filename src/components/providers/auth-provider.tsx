@@ -49,8 +49,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
       // Redirect to home page instead of login to show the landing page
       router.push(routes.home);
     } else if (auth.isAuthenticated && (pathname === routes.login || pathname === routes.home)) {
-      // Redirect to chat if user is authenticated and trying to access login/home page
-      router.push(routes.chat);
+      // Redirect to resumes if user is authenticated and trying to access login/home page
+      router.push(routes.resumes);
     }
   }, [auth.isAuthenticated, pathname, router, auth.isLoading]);
 
