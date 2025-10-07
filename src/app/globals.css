@@ -1,33 +1,33 @@
 @import "tailwindcss";
 
 :root {
-  /* Gemini-inspired dark gray theme */
-  --background: #1a1a1a;
-  --foreground: #e5e7eb;
-  --muted: #2d2d2d;
-  --muted-foreground: #9ca3af;
-  --border: transparent;
-  --input: #2d2d2d;
-  --primary: #4285f4;
+  /* Light theme defaults */
+  --background: #ffffff;
+  --foreground: #0f172a; /* slate-900 */
+  --muted: #f8fafc; /* slate-50 */
+  --muted-foreground: #64748b; /* slate-500 */
+  --border: #e5e7eb; /* gray-200 */
+  --input: #ffffff;
+  --primary: #2563eb; /* blue-600 */
   --primary-foreground: #ffffff;
-  --secondary: #2d2d2d;
-  --secondary-foreground: #e5e7eb;
-  --accent: #2d2d2d;
-  --accent-foreground: #e5e7eb;
+  --secondary: #f1f5f9; /* slate-100 */
+  --secondary-foreground: #0f172a;
+  --accent: #f8fafc;
+  --accent-foreground: #0f172a;
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
-  --ring: #4285f4;
+  --ring: #3b82f6; /* blue-500 */
   --radius: 0.75rem;
-  
-  /* Chat specific colors - Gemini dark theme */
-  --chat-bg: #1a1a1a;
-  --chat-user-bg: #2d2d2d;
-  --chat-assistant-bg: #1a1a1a;
-  --chat-border: transparent;
-  --chat-input-bg: #2d2d2d;
-  --chat-input-border: #374151;
-  --chat-sidebar-bg: #282a2c;
-  --chat-sidebar-border: transparent;
+
+  /* Chat specific colors - light */
+  --chat-bg: #ffffff;
+  --chat-user-bg: #f8fafc;
+  --chat-assistant-bg: #ffffff;
+  --chat-border: #e5e7eb;
+  --chat-input-bg: #ffffff;
+  --chat-input-border: #e5e7eb;
+  --chat-sidebar-bg: #f8fafc;
+  --chat-sidebar-border: #e5e7eb;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -77,7 +77,7 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-size: 14px; /* Gemini-style base font size */
+  font-size: 14px;
   line-height: 1.5;
 }
 

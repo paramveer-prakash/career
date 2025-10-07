@@ -17,22 +17,23 @@ export default function Page(){
 
   return (
     <div className="space-y-8">
-      <section className="space-y-4 rounded-xl border border-gray-800 bg-black/30 p-4">
+      <section className="space-y-4 rounded-xl border border-gray-200 bg-white p-4">
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-semibold">Primary Info</h2>
           <div className="flex gap-2">
+            <a href={`/resumes/${id}/preview`} className="px-4 py-2 rounded bg-gray-100 text-gray-900 hover:bg-gray-200">Preview</a>
             <button onClick={async()=>{ setSaving(true); await api.put('/api/v1/resumes/'+id, resume); setSaving(false); }} className="px-4 py-2 rounded bg-green-600 text-white hover:bg-green-700">{saving?'Saving...':'Save'}</button>
             <button onClick={async()=>{ if(!confirm('Delete this resume?')) return; await api.delete('/api/v1/resumes/'+id); window.location.href='/resumes'; }} className="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700">Delete</button>
           </div>
         </div>
-        <label className="space-y-1 block"><span className="text-sm text-gray-400">Resume Title</span><textarea className="border border-gray-700 bg-black/20 px-3 py-2 rounded w-full" rows={4} value={resume.title||''} onChange={e=>setResume({...resume, title:e.target.value})} /></label>
+        <label className="space-y-1 block"><span className="text-sm text-gray-600">Resume Title</span><textarea className="border border-gray-300 bg-white px-3 py-2 rounded w-full" rows={4} value={resume.title||''} onChange={e=>setResume({...resume, title:e.target.value})} /></label>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <label className="space-y-1"><span className="text-sm text-gray-400">Name</span><input className="border border-gray-700 bg-black/20 px-3 py-2 rounded w-full" value={resume.primaryName||''} onChange={e=>setResume({...resume, primaryName:e.target.value})} /></label>
-          <label className="space-y-1"><span className="text-sm text-gray-400">Email</span><input className="border border-gray-700 bg-black/20 px-3 py-2 rounded w-full" value={resume.primaryEmail||''} onChange={e=>setResume({...resume, primaryEmail:e.target.value})} /></label>
-          <label className="space-y-1"><span className="text-sm text-gray-400">Phone</span><input className="border border-gray-700 bg-black/20 px-3 py-2 rounded w-full" value={resume.primaryPhone||''} onChange={e=>setResume({...resume, primaryPhone:e.target.value})} /></label>
-          <label className="space-y-1"><span className="text-sm text-gray-400">Location</span><input className="border border-gray-700 bg-black/20 px-3 py-2 rounded w-full" value={resume.primaryLocation||''} onChange={e=>setResume({...resume, primaryLocation:e.target.value})} /></label>
+          <label className="space-y-1"><span className="text-sm text-gray-600">Name</span><input className="border border-gray-300 bg-white px-3 py-2 rounded w-full" value={resume.primaryName||''} onChange={e=>setResume({...resume, primaryName:e.target.value})} /></label>
+          <label className="space-y-1"><span className="text-sm text-gray-600">Email</span><input className="border border-gray-300 bg-white px-3 py-2 rounded w-full" value={resume.primaryEmail||''} onChange={e=>setResume({...resume, primaryEmail:e.target.value})} /></label>
+          <label className="space-y-1"><span className="text-sm text-gray-600">Phone</span><input className="border border-gray-300 bg-white px-3 py-2 rounded w-full" value={resume.primaryPhone||''} onChange={e=>setResume({...resume, primaryPhone:e.target.value})} /></label>
+          <label className="space-y-1"><span className="text-sm text-gray-600">Location</span><input className="border border-gray-300 bg-white px-3 py-2 rounded w-full" value={resume.primaryLocation||''} onChange={e=>setResume({...resume, primaryLocation:e.target.value})} /></label>
         </div>
-        <label className="space-y-1 block"><span className="text-sm text-gray-400">Summary</span><textarea className="border border-gray-700 bg-black/20 px-3 py-2 rounded w-full" rows={4} value={resume.summary||''} onChange={e=>setResume({...resume, summary:e.target.value})} /></label>
+        <label className="space-y-1 block"><span className="text-sm text-gray-600">Summary</span><textarea className="border border-gray-300 bg-white px-3 py-2 rounded w-full" rows={4} value={resume.summary||''} onChange={e=>setResume({...resume, summary:e.target.value})} /></label>
       </section>
 
       <Section title="Skills"><SkillsEditor resumeId={id} /></Section>
@@ -45,7 +46,7 @@ export default function Page(){
 
 function Section({title, children}:{title:string, children:React.ReactNode}){
   return (
-    <section className="space-y-3 rounded-xl border border-gray-800 bg-black/30 p-4">
+    <section className="space-y-3 rounded-xl border border-gray-200 bg-white p-4">
       <h2 className="text-lg font-semibold">{title}</h2>
       {children}
     </section>
@@ -59,13 +60,13 @@ function SkillsEditor({resumeId}:{resumeId:string}){
   return (
     <div className="space-y-3">
       <div className="flex gap-2">
-        <input className="border border-gray-700 bg-black/20 px-3 py-2 rounded flex-1" placeholder="Add skill" value={newSkill} onChange={e=>setNewSkill(e.target.value)} />
+        <input className="border border-gray-300 bg-white px-3 py-2 rounded flex-1" placeholder="Add skill" value={newSkill} onChange={e=>setNewSkill(e.target.value)} />
         <button className="px-3 py-2 rounded bg-blue-600 text-white hover:bg-blue-700" onClick={async()=>{ if(!newSkill) return; await api.post(`/api/v1/resumes/${resumeId}/skills`, { name:newSkill }); const r=await api.get(`/api/v1/resumes/${resumeId}/skills`); const d=r.data; setItems(Array.isArray(d)?d:(Array.isArray(d?.content)?d.content:[])); setNewSkill(''); }}>Add</button>
       </div>
       <ul className="space-y-2">{items.map((s:any)=> (
-        <li key={s.id} className="flex justify-between items-center p-3 rounded-lg border border-gray-800 bg-black/20">
+        <li key={s.id} className="flex justify-between items-center p-3 rounded-lg border border-gray-200 bg-white">
           <span>{s.name}</span>
-          <button className="text-red-400 hover:text-red-300" onClick={async()=>{ await api.delete(`/api/v1/resumes/${resumeId}/skills/${s.id}`); const r=await api.get(`/api/v1/resumes/${resumeId}/skills`); const d=r.data; setItems(Array.isArray(d)?d:(Array.isArray(d?.content)?d.content:[])); }}>Delete</button>
+          <button className="text-red-600 hover:text-red-700" onClick={async()=>{ await api.delete(`/api/v1/resumes/${resumeId}/skills/${s.id}`); const r=await api.get(`/api/v1/resumes/${resumeId}/skills`); const d=r.data; setItems(Array.isArray(d)?d:(Array.isArray(d?.content)?d.content:[])); }}>Delete</button>
         </li>
       ))}</ul>
     </div>
