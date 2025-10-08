@@ -26,105 +26,172 @@ interface MinimalDarkTemplateProps {
 
 export function MinimalDarkTemplate({ data }: MinimalDarkTemplateProps) {
   return (
-    <div className="minimal-dark-resume bg-black text-gray-200 font-sans">
-      {/* Header */}
-      <div className="header-section bg-gradient-to-br from-gray-900 to-gray-800 py-16 mb-10 relative">
-        <div className="header-content max-w-4xl mx-auto px-5 relative z-10">
-          <div className="profile-section flex items-center gap-10">
-            {data.profilePicture && (
-              <div className="profile-picture w-36 h-36 rounded-full overflow-hidden border-4 border-gray-600 shadow-2xl">
-                <img src={data.profilePicture} alt="Profile" className="w-full h-full object-cover" />
-              </div>
-            )}
-            <div className="name-section">
-              <h1 className="name text-4xl font-black mb-5 text-white text-shadow-lg">{data.primaryName}</h1>
-              <div className="contact-info flex flex-col gap-3">
-                <div className="contact-item flex gap-3 items-center">
-                  <span className="label text-gray-400 font-semibold">Email:</span>
-                  <span className="value text-gray-200">{data.primaryEmail}</span>
+    <div className="max-w-6xl mx-auto bg-white shadow-2xl rounded-lg overflow-hidden">
+      <div className="grid grid-cols-1 lg:grid-cols-5">
+          {/* LEFT SIDEBAR - Modern Dark Purple/Blue */}
+          <div className="lg:col-span-2 bg-gradient-to-br from-slate-800 via-slate-900 to-slate-800 text-white p-10">
+            {/* Profile Picture */}
+            <div className="mb-8 flex justify-center">
+              <div className="relative">
+                <div className="w-48 h-48 rounded-full overflow-hidden border-4 border-slate-600 shadow-2xl">
+                  <img 
+                    src={data.profilePicture || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=faces"}
+                    alt={data.primaryName}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-                <div className="contact-item flex gap-3 items-center">
-                  <span className="label text-gray-400 font-semibold">Phone:</span>
-                  <span className="value text-gray-200">{data.primaryPhone}</span>
+                <div className="absolute -bottom-2 -right-2 w-16 h-16 bg-emerald-500 rounded-full flex items-center justify-center border-4 border-slate-800">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
                 </div>
               </div>
             </div>
+
+            {/* Name on Sidebar */}
+            <div className="text-center mb-8">
+              <h1 className="text-3xl font-bold mb-2">{data.primaryName}</h1>
+              {data.workExperiences && data.workExperiences.length > 0 && (
+                <p className="text-emerald-400 text-lg font-medium">
+                  {data.workExperiences[0].jobTitle}
+                </p>
+              )}
+            </div>
+
+            <div className="w-16 h-1 bg-emerald-500 mx-auto mb-8"></div>
+
+            {/* Contact Section */}
+            <div className="mb-10">
+              <h3 className="text-emerald-400 font-bold text-sm uppercase tracking-wider mb-4 flex items-center">
+                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                Contact
+              </h3>
+              <div className="space-y-4">
+                <div className="flex items-start">
+                  <svg className="w-5 h-5 mr-3 mt-0.5 text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                  <span className="text-sm break-words">{data.primaryEmail}</span>
+                </div>
+                <div className="flex items-start">
+                  <svg className="w-5 h-5 mr-3 mt-0.5 text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                  </svg>
+                  <span className="text-sm">{data.primaryPhone}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Skills Section */}
+            {data.skills && data.skills.length > 0 && (
+              <div className="mb-10">
+                <h3 className="text-emerald-400 font-bold text-sm uppercase tracking-wider mb-4 flex items-center">
+                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                  </svg>
+                  Skills
+                </h3>
+                <div className="space-y-3">
+                  {data.skills.map((skill, index) => (
+                    <div key={index} className="flex items-center">
+                      <div className="w-2 h-2 bg-emerald-400 rounded-full mr-3"></div>
+                      <span className="text-sm">{skill.name}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Education Section */}
+            {data.educations && data.educations.length > 0 && (
+              <div>
+                <h3 className="text-emerald-400 font-bold text-sm uppercase tracking-wider mb-4 flex items-center">
+                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l9-5-9-5-9 5 9 5z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                  </svg>
+                  Education
+                </h3>
+                <div className="space-y-5">
+                  {data.educations.map((edu, index) => (
+                    <div key={index} className="border-l-2 border-emerald-400 pl-4">
+                      <div className="font-semibold text-sm mb-1">{edu.degree}</div>
+                      <div className="text-slate-300 text-xs mb-1">{edu.institution}</div>
+                      <div className="text-emerald-400 text-xs font-medium">{edu.graduationYear}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* RIGHT MAIN CONTENT - Clean White */}
+          <div className="lg:col-span-3 bg-white p-10">
+            {/* Profile Summary */}
+            {data.summary && (
+              <div className="mb-10">
+                <h2 className="text-2xl font-bold text-slate-900 mb-4 flex items-center">
+                  <div className="w-1 h-8 bg-emerald-500 mr-3"></div>
+                  Professional Summary
+                </h2>
+                <p className="text-slate-700 leading-relaxed text-base">
+                  {data.summary}
+                </p>
+              </div>
+            )}
+
+            {/* Work Experience */}
+            {data.workExperiences && data.workExperiences.length > 0 && (
+              <div>
+                <h2 className="text-2xl font-bold text-slate-900 mb-6 flex items-center">
+                  <div className="w-1 h-8 bg-emerald-500 mr-3"></div>
+                  Work Experience
+                </h2>
+                <div className="space-y-8">
+                  {data.workExperiences.map((work, index) => (
+                    <div key={index} className="relative pl-8 border-l-2 border-slate-200">
+                      <div className="absolute -left-2 top-0 w-4 h-4 bg-emerald-500 rounded-full border-2 border-white"></div>
+                      
+                      <div className="bg-slate-50 p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                        <div className="flex flex-wrap items-start justify-between mb-3">
+                          <div>
+                            <h3 className="text-xl font-bold text-slate-900 mb-1">
+                              {work.jobTitle}
+                            </h3>
+                            <div className="text-emerald-600 font-semibold text-base">
+                              {work.company}
+                            </div>
+                          </div>
+                          <div className="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-sm font-medium">
+                            {work.startDate} - {work.endDate}
+                          </div>
+                        </div>
+                        
+                        {work.responsibilities && work.responsibilities.length > 0 && (
+                          <ul className="space-y-2 mt-4">
+                            {work.responsibilities.map((resp, respIndex) => (
+                              <li 
+                                key={respIndex}
+                                className="text-slate-700 leading-relaxed text-sm flex items-start"
+                              >
+                                <svg className="w-4 h-4 mr-2 mt-0.5 text-emerald-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                </svg>
+                                <span>{resp.description}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
-
-      {/* Summary */}
-      {data.summary && (
-        <div className="summary-section mb-10 bg-gradient-to-br from-gray-900 to-gray-800 p-8 rounded-xl border-l-4 border-gray-600">
-          <p className="summary-text text-lg leading-relaxed text-gray-300">{data.summary}</p>
-        </div>
-      )}
-
-      {/* Main Content */}
-      <div className="content-grid grid grid-cols-1 lg:grid-cols-3 gap-12">
-        {/* Left Column */}
-        <div className="left-column lg:col-span-1">
-          {/* Skills */}
-          {data.skills && data.skills.length > 0 && (
-            <div className="skills-section mb-8">
-              <h3 className="section-title text-2xl font-bold text-white mb-4 border-b-2 border-gray-600 pb-2">Skills</h3>
-              <div className="skills-list flex flex-wrap gap-3">
-                {data.skills.map((skill, index) => (
-                  <div key={index} className="skill-item bg-gradient-to-br from-gray-800 to-gray-700 text-white px-4 py-2 rounded-full text-sm font-semibold border border-gray-600 hover:transform hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
-                    {skill.name}
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Education */}
-          {data.educations && data.educations.length > 0 && (
-            <div className="education-section">
-              <h3 className="section-title text-2xl font-bold text-white mb-4 border-b-2 border-gray-600 pb-2">Education</h3>
-              <div className="education-list">
-                {data.educations.map((edu, index) => (
-                  <div key={index} className="education-item mb-4 p-5 bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl shadow-lg">
-                    <div className="degree font-bold text-white mb-2 text-lg">{edu.degree}</div>
-                    <div className="institution text-gray-300 mb-2">{edu.institution}</div>
-                    <div className="year text-gray-400 font-medium">{edu.graduationYear}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Right Column */}
-        <div className="right-column lg:col-span-2">
-          {/* Work Experience */}
-          {data.workExperiences && data.workExperiences.length > 0 && (
-            <div className="experience-section">
-              <h3 className="section-title text-2xl font-bold text-white mb-4 border-b-2 border-gray-600 pb-2">Experience</h3>
-              <div className="experience-list">
-                {data.workExperiences.map((work, index) => (
-                  <div key={index} className="experience-item mb-8 p-6 border-l-4 border-gray-600 bg-gradient-to-br from-gray-900 to-gray-800 rounded-r-xl shadow-lg">
-                    <div className="job-header mb-4">
-                      <div className="job-title text-xl font-bold text-white mb-2">{work.jobTitle}</div>
-                      <div className="company text-lg text-gray-400 mb-2 font-medium">{work.company}</div>
-                      <div className="duration text-gray-500 font-medium">
-                        {work.startDate} - {work.endDate}
-                      </div>
-                    </div>
-                    {work.responsibilities && work.responsibilities.length > 0 && (
-                      <ul className="responsibilities ml-6">
-                        {work.responsibilities.map((resp, respIndex) => (
-                          <li key={respIndex} className="text-gray-300 leading-relaxed mb-2" style={{listStyleType: 'disc', color: '#6b7280'}}>{resp.description}</li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
   );
 }
