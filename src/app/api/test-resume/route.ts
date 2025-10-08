@@ -8,6 +8,7 @@ export async function GET() {
     primaryEmail: "renu.gusain05@gmail.com",
     primaryPhone: "+918802149906",
     primaryLocation: "India",
+    profilePicture: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=300&h=300&fit=crop&crop=face",
     summary: "Experienced Java Software Developer with 8+ years of expertise in building scalable, high-performance applications. Specialized in Java, Intershop, Spring Boot, and Microservices. Strong team player committed to enhancing software quality and embracing continuous learning.",
     skills: [
       { id: 1, name: "Java" },

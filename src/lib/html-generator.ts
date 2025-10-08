@@ -13,6 +13,21 @@ export function generateHtml(templateKey: string, data: any): string {
     case 'minimal':
       htmlContent = generateMinimalTemplate(data);
       break;
+    case 'professional':
+      htmlContent = generateProfessionalTemplate(data);
+      break;
+    case 'creative':
+      htmlContent = generateCreativeTemplate(data);
+      break;
+    case 'minimal-dark':
+      htmlContent = generateMinimalDarkTemplate(data);
+      break;
+    case 'executive':
+      htmlContent = generateExecutiveTemplate(data);
+      break;
+    case 'colorful':
+      htmlContent = generateColorfulTemplate(data);
+      break;
     default:
       htmlContent = generateModernTemplate(data);
   }
@@ -42,7 +57,7 @@ function generateModernTemplate(data: any): string {
 
   const workExperiences = (data.workExperiences || []).map((work: any) => {
     const responsibilities = (work.responsibilities || []).map((resp: any) => 
-      `<li>${resp.description}</li>`
+      `<li>${typeof resp === 'string' ? resp : resp.description}</li>`
     ).join('');
     
     return `
@@ -100,7 +115,7 @@ function generateClassicTemplate(data: any): string {
 
   const workExperiences = (data.workExperiences || []).map((work: any) => {
     const responsibilities = (work.responsibilities || []).map((resp: any) => 
-      `<li>${resp.description}</li>`
+      `<li>${typeof resp === 'string' ? resp : resp.description}</li>`
     ).join('');
     
     return `
@@ -199,6 +214,502 @@ function generateMinimalTemplate(data: any): string {
   `;
 }
 
+function generateProfessionalTemplate(data: any): string {
+  const skills = (data.skills || []).map((skill: any) => 
+    `<div class="skill-item">${skill.name || skill.skill}</div>`
+  ).join('');
+
+  const workExperiences = (data.workExperiences || []).map((work: any) => {
+    const responsibilities = (work.responsibilities || []).map((resp: any) => 
+      `<li>${typeof resp === 'string' ? resp : resp.description}</li>`
+    ).join('');
+    
+    return `
+      <div class="experience-item">
+        <div class="job-header">
+          <div class="job-title">${work.jobTitle}</div>
+          <div class="company">${work.company}</div>
+          <div class="duration">${work.startDate} - ${work.endDate}</div>
+        </div>
+        ${responsibilities ? `<ul class="responsibilities">${responsibilities}</ul>` : ''}
+      </div>
+    `;
+  }).join('');
+
+  const educations = (data.educations || []).map((edu: any) => 
+    `<div class="education-item">
+      <div class="degree">${edu.degree}</div>
+      <div class="institution">${edu.institution}</div>
+      <div class="year">${edu.graduationYear}</div>
+    </div>`
+  ).join('');
+
+  const profilePicture = data.profilePicture ? 
+    `<div class="profile-picture"><img src="${data.profilePicture}" alt="Profile" /></div>` : '';
+
+  return `
+    <div class="professional-resume">
+      <div class="header-section">
+        <div class="header-content">
+          <div class="profile-info">
+            ${profilePicture}
+            <div class="name-section">
+              <h1 class="name">${data.primaryName || 'Your Name'}</h1>
+              <div class="contact-info">
+                <span class="email">${data.primaryEmail}</span>
+                <span class="phone">${data.primaryPhone}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      ${data.summary ? `
+        <div class="summary-section">
+          <h2 class="section-title">Professional Summary</h2>
+          <p class="summary-text">${data.summary}</p>
+        </div>
+      ` : ''}
+      
+      <div class="content-grid">
+        <div class="left-column">
+          ${skills ? `
+            <div class="skills-section">
+              <h3 class="section-title">Skills</h3>
+              <div class="skills-grid">${skills}</div>
+            </div>
+          ` : ''}
+          
+          ${educations ? `
+            <div class="education-section">
+              <h3 class="section-title">Education</h3>
+              <div class="education-list">${educations}</div>
+            </div>
+          ` : ''}
+        </div>
+        
+        <div class="right-column">
+          ${workExperiences ? `
+            <div class="experience-section">
+              <h3 class="section-title">Professional Experience</h3>
+              <div class="experience-list">${workExperiences}</div>
+            </div>
+          ` : ''}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function generateCreativeTemplate(data: any): string {
+  const skills = (data.skills || []).map((skill: any) => 
+    `<div class="skill-badge">${skill.name || skill.skill}</div>`
+  ).join('');
+
+  const workExperiences = (data.workExperiences || []).map((work: any) => {
+    const responsibilities = (work.responsibilities || []).map((resp: any) => 
+      `<li>${typeof resp === 'string' ? resp : resp.description}</li>`
+    ).join('');
+    
+    return `
+      <div class="timeline-item">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content">
+          <div class="job-header">
+            <div class="job-title">${work.jobTitle}</div>
+            <div class="company">${work.company}</div>
+            <div class="duration">${work.startDate} - ${work.endDate}</div>
+          </div>
+          ${responsibilities ? `<ul class="responsibilities">${responsibilities}</ul>` : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  const educations = (data.educations || []).map((edu: any) => 
+    `<div class="education-card">
+      <div class="degree">${edu.degree}</div>
+      <div class="institution">${edu.institution}</div>
+      <div class="year">${edu.graduationYear}</div>
+    </div>`
+  ).join('');
+
+  const profilePicture = data.profilePicture ? 
+    `<div class="profile-picture"><img src="${data.profilePicture}" alt="Profile" /></div>` : '';
+
+  return `
+    <div class="creative-resume">
+      <div class="header-section">
+        <div class="header-background"></div>
+        <div class="header-content">
+          <div class="profile-section">
+            ${profilePicture}
+            <div class="name-section">
+              <h1 class="name">${data.primaryName || 'Your Name'}</h1>
+              <div class="contact-info">
+                <div class="contact-item">
+                  <span class="icon">📧</span>
+                  <span>${data.primaryEmail}</span>
+                </div>
+                <div class="contact-item">
+                  <span class="icon">📱</span>
+                  <span>${data.primaryPhone}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      ${data.summary ? `
+        <div class="summary-section">
+          <h2 class="section-title">
+            <span class="title-icon">💼</span>
+            About Me
+          </h2>
+          <p class="summary-text">${data.summary}</p>
+        </div>
+      ` : ''}
+      
+      <div class="content-sections">
+        ${skills ? `
+          <div class="skills-section">
+            <h3 class="section-title">
+              <span class="title-icon">🛠️</span>
+              Skills & Expertise
+            </h3>
+            <div class="skills-container">${skills}</div>
+          </div>
+        ` : ''}
+        
+        ${workExperiences ? `
+          <div class="experience-section">
+            <h3 class="section-title">
+              <span class="title-icon">🚀</span>
+              Work Experience
+            </h3>
+            <div class="experience-timeline">${workExperiences}</div>
+          </div>
+        ` : ''}
+        
+        ${educations ? `
+          <div class="education-section">
+            <h3 class="section-title">
+              <span class="title-icon">🎓</span>
+              Education
+            </h3>
+            <div class="education-grid">${educations}</div>
+          </div>
+        ` : ''}
+      </div>
+    </div>
+  `;
+}
+
+function generateMinimalDarkTemplate(data: any): string {
+  const skills = (data.skills || []).map((skill: any) => 
+    `<div class="skill-item">${skill.name || skill.skill}</div>`
+  ).join('');
+
+  const workExperiences = (data.workExperiences || []).map((work: any) => {
+    const responsibilities = (work.responsibilities || []).map((resp: any) => 
+      `<li>${typeof resp === 'string' ? resp : resp.description}</li>`
+    ).join('');
+    
+    return `
+      <div class="experience-item">
+        <div class="job-header">
+          <div class="job-title">${work.jobTitle}</div>
+          <div class="company">${work.company}</div>
+          <div class="duration">${work.startDate} - ${work.endDate}</div>
+        </div>
+        ${responsibilities ? `<ul class="responsibilities">${responsibilities}</ul>` : ''}
+      </div>
+    `;
+  }).join('');
+
+  const educations = (data.educations || []).map((edu: any) => 
+    `<div class="education-item">
+      <div class="degree">${edu.degree}</div>
+      <div class="institution">${edu.institution}</div>
+      <div class="year">${edu.graduationYear}</div>
+    </div>`
+  ).join('');
+
+  const profilePicture = data.profilePicture ? 
+    `<div class="profile-picture"><img src="${data.profilePicture}" alt="Profile" /></div>` : '';
+
+  return `
+    <div class="minimal-dark-resume">
+      <div class="header-section">
+        <div class="header-content">
+          <div class="profile-section">
+            ${profilePicture}
+            <div class="name-section">
+              <h1 class="name">${data.primaryName || 'Your Name'}</h1>
+              <div class="contact-info">
+                <div class="contact-item">
+                  <span class="label">Email:</span>
+                  <span class="value">${data.primaryEmail}</span>
+                </div>
+                <div class="contact-item">
+                  <span class="label">Phone:</span>
+                  <span class="value">${data.primaryPhone}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      ${data.summary ? `
+        <div class="summary-section">
+          <p class="summary-text">${data.summary}</p>
+        </div>
+      ` : ''}
+      
+      <div class="content-grid">
+        <div class="left-column">
+          ${skills ? `
+            <div class="skills-section">
+              <h3 class="section-title">Skills</h3>
+              <div class="skills-list">${skills}</div>
+            </div>
+          ` : ''}
+          
+          ${educations ? `
+            <div class="education-section">
+              <h3 class="section-title">Education</h3>
+              <div class="education-list">${educations}</div>
+            </div>
+          ` : ''}
+        </div>
+        
+        <div class="right-column">
+          ${workExperiences ? `
+            <div class="experience-section">
+              <h3 class="section-title">Experience</h3>
+              <div class="experience-list">${workExperiences}</div>
+            </div>
+          ` : ''}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function generateExecutiveTemplate(data: any): string {
+  const skills = (data.skills || []).map((skill: any) => 
+    `<div class="competency-item">
+      <div class="competency-name">${skill.name || skill.skill}</div>
+      <div class="competency-bar">
+        <div class="competency-fill"></div>
+      </div>
+    </div>`
+  ).join('');
+
+  const workExperiences = (data.workExperiences || []).map((work: any) => {
+    const responsibilities = (work.responsibilities || []).map((resp: any) => 
+      `<li>${typeof resp === 'string' ? resp : resp.description}</li>`
+    ).join('');
+    
+    return `
+      <div class="experience-item">
+        <div class="job-header">
+          <div class="job-title">${work.jobTitle}</div>
+          <div class="company">${work.company}</div>
+          <div class="duration">${work.startDate} - ${work.endDate}</div>
+        </div>
+        ${responsibilities ? `<ul class="responsibilities">${responsibilities}</ul>` : ''}
+      </div>
+    `;
+  }).join('');
+
+  const educations = (data.educations || []).map((edu: any) => 
+    `<div class="education-item">
+      <div class="degree">${edu.degree}</div>
+      <div class="institution">${edu.institution}</div>
+      <div class="year">${edu.graduationYear}</div>
+    </div>`
+  ).join('');
+
+  const profilePicture = data.profilePicture ? 
+    `<div class="profile-picture"><img src="${data.profilePicture}" alt="Profile" /></div>` : '';
+
+  return `
+    <div class="executive-resume">
+      <div class="header-section">
+        <div class="header-background"></div>
+        <div class="header-content">
+          <div class="profile-section">
+            ${profilePicture}
+            <div class="name-section">
+              <h1 class="name">${data.primaryName || 'Your Name'}</h1>
+              <div class="title">Executive Professional</div>
+              <div class="contact-info">
+                <div class="contact-item">
+                  <span class="icon">✉</span>
+                  <span>${data.primaryEmail}</span>
+                </div>
+                <div class="contact-item">
+                  <span class="icon">📞</span>
+                  <span>${data.primaryPhone}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      ${data.summary ? `
+        <div class="summary-section">
+          <h2 class="section-title">Executive Summary</h2>
+          <p class="summary-text">${data.summary}</p>
+        </div>
+      ` : ''}
+      
+      <div class="content-grid">
+        <div class="left-column">
+          ${skills ? `
+            <div class="skills-section">
+              <h3 class="section-title">Core Competencies</h3>
+              <div class="competencies-list">${skills}</div>
+            </div>
+          ` : ''}
+          
+          ${educations ? `
+            <div class="education-section">
+              <h3 class="section-title">Education</h3>
+              <div class="education-list">${educations}</div>
+            </div>
+          ` : ''}
+        </div>
+        
+        <div class="right-column">
+          ${workExperiences ? `
+            <div class="experience-section">
+              <h3 class="section-title">Professional Experience</h3>
+              <div class="experience-list">${workExperiences}</div>
+            </div>
+          ` : ''}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function generateColorfulTemplate(data: any): string {
+  const skills = (data.skills || []).map((skill: any, index: number) => 
+    `<div class="skill-badge skill-${(index % 4) + 1}">${skill.name || skill.skill}</div>`
+  ).join('');
+
+  const workExperiences = (data.workExperiences || []).map((work: any, index: number) => {
+    const responsibilities = (work.responsibilities || []).map((resp: any) => 
+      `<li>${typeof resp === 'string' ? resp : resp.description}</li>`
+    ).join('');
+    
+    return `
+      <div class="timeline-item">
+        <div class="timeline-marker marker-${(index % 3) + 1}"></div>
+        <div class="timeline-content">
+          <div class="job-header">
+            <div class="job-title">${work.jobTitle}</div>
+            <div class="company">${work.company}</div>
+            <div class="duration">${work.startDate} - ${work.endDate}</div>
+          </div>
+          ${responsibilities ? `<ul class="responsibilities">${responsibilities}</ul>` : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  const educations = (data.educations || []).map((edu: any, index: number) => 
+    `<div class="education-card card-${(index % 3) + 1}">
+      <div class="degree">${edu.degree}</div>
+      <div class="institution">${edu.institution}</div>
+      <div class="year">${edu.graduationYear}</div>
+    </div>`
+  ).join('');
+
+  const profilePicture = data.profilePicture ? 
+    `<div class="profile-picture"><img src="${data.profilePicture}" alt="Profile" /></div>` : '';
+
+  return `
+    <div class="colorful-resume">
+      <div class="header-section">
+        <div class="header-background">
+          <div class="color-stripes">
+            <div class="stripe stripe-1"></div>
+            <div class="stripe stripe-2"></div>
+            <div class="stripe stripe-3"></div>
+          </div>
+        </div>
+        <div class="header-content">
+          <div class="profile-section">
+            ${profilePicture}
+            <div class="name-section">
+              <h1 class="name">${data.primaryName || 'Your Name'}</h1>
+              <div class="contact-info">
+                <div class="contact-item">
+                  <span class="icon">📧</span>
+                  <span>${data.primaryEmail}</span>
+                </div>
+                <div class="contact-item">
+                  <span class="icon">📱</span>
+                  <span>${data.primaryPhone}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      ${data.summary ? `
+        <div class="summary-section">
+          <h2 class="section-title">
+            <span class="title-decoration">✨</span>
+            About Me
+            <span class="title-decoration">✨</span>
+          </h2>
+          <p class="summary-text">${data.summary}</p>
+        </div>
+      ` : ''}
+      
+      <div class="content-sections">
+        ${skills ? `
+          <div class="skills-section">
+            <h3 class="section-title">
+              <span class="title-icon">🎨</span>
+              Skills & Talents
+            </h3>
+            <div class="skills-container">${skills}</div>
+          </div>
+        ` : ''}
+        
+        ${workExperiences ? `
+          <div class="experience-section">
+            <h3 class="section-title">
+              <span class="title-icon">🚀</span>
+              Work Journey
+            </h3>
+            <div class="experience-timeline">${workExperiences}</div>
+          </div>
+        ` : ''}
+        
+        ${educations ? `
+          <div class="education-section">
+            <h3 class="section-title">
+              <span class="title-icon">🎓</span>
+              Education
+            </h3>
+            <div class="education-grid">${educations}</div>
+          </div>
+        ` : ''}
+      </div>
+    </div>
+  `;
+}
+
 export function getTemplateCSS(templateKey: string): string {
   const baseCSS = `
     body {
@@ -269,6 +780,192 @@ export function getTemplateCSS(templateKey: string): string {
       .experience-list { display: flex; flex-direction: column; gap: 8px; }
       .work-item { margin-bottom: 8px; }
       .job-title { font-weight: 500; color: #1a1a1a; }
+    `,
+    professional: `
+      .professional-resume { background: white; color: #1a1a1a; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+      .header-section { background: linear-gradient(135deg, #1e40af, #3b82f6); color: white; padding: 50px 0; margin-bottom: 40px; position: relative; }
+      .header-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, rgba(30, 64, 175, 0.9), rgba(59, 130, 246, 0.9)); }
+      .header-content { max-width: 800px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 2; }
+      .profile-info { display: flex; align-items: center; gap: 40px; }
+      .profile-picture { width: 140px; height: 140px; border-radius: 50%; overflow: hidden; border: 5px solid rgba(255, 255, 255, 0.3); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); }
+      .profile-picture img { width: 100%; height: 100%; object-fit: cover; }
+      .name { font-size: 42px; font-weight: 800; margin: 0 0 15px 0; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); }
+      .contact-info { display: flex; flex-direction: column; gap: 12px; }
+      .email, .phone { font-size: 18px; opacity: 0.95; display: flex; align-items: center; gap: 8px; }
+      .email::before { content: '📧'; }
+      .phone::before { content: '📱'; }
+      .summary-section { margin-bottom: 40px; background: #f8fafc; padding: 30px; border-radius: 12px; border-left: 5px solid #3b82f6; }
+      .section-title { font-size: 28px; font-weight: 700; color: #1e40af; margin-bottom: 20px; border-bottom: 3px solid #3b82f6; padding-bottom: 10px; }
+      .summary-text { font-size: 18px; line-height: 1.7; color: #374151; }
+      .content-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 50px; }
+      .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; }
+      .skill-item { background: linear-gradient(135deg, #f8fafc, #e2e8f0); border: 2px solid #e2e8f0; padding: 15px; border-radius: 12px; text-align: center; font-weight: 600; color: #1e40af; transition: all 0.3s ease; }
+      .skill-item:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(59, 130, 246, 0.2); }
+      .experience-item { margin-bottom: 30px; padding: 25px; border-left: 5px solid #3b82f6; background: linear-gradient(135deg, #f8fafc, #ffffff); border-radius: 0 12px 12px 0; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); }
+      .job-title { font-size: 22px; font-weight: 700; color: #1e40af; margin-bottom: 8px; }
+      .company { font-size: 18px; color: #6b7280; margin-bottom: 8px; font-weight: 500; }
+      .duration { font-size: 16px; color: #9ca3af; font-weight: 500; }
+      .responsibilities { margin: 15px 0 0 0; padding-left: 25px; }
+      .responsibilities li { margin: 8px 0; color: #374151; line-height: 1.6; }
+      .responsibilities li::marker { color: #3b82f6; }
+      .education-item { margin-bottom: 20px; padding: 20px; background: linear-gradient(135deg, #f8fafc, #ffffff); border-radius: 12px; box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05); }
+      .degree { font-weight: 700; color: #1e40af; margin-bottom: 8px; font-size: 18px; }
+      .institution { color: #374151; margin-bottom: 8px; font-size: 16px; }
+      .year { color: #6b7280; font-size: 16px; font-weight: 500; }
+    `,
+    creative: `
+      .creative-resume { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; min-height: 100vh; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+      .header-section { position: relative; padding: 80px 0; }
+      .header-background { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+      .header-content { position: relative; z-index: 2; max-width: 900px; margin: 0 auto; padding: 0 20px; }
+      .profile-section { display: flex; align-items: center; gap: 50px; }
+      .profile-picture { width: 180px; height: 180px; border-radius: 50%; overflow: hidden; border: 6px solid rgba(255,255,255,0.4); box-shadow: 0 15px 40px rgba(0,0,0,0.3); }
+      .profile-picture img { width: 100%; height: 100%; object-fit: cover; }
+      .name { font-size: 48px; font-weight: 900; margin: 0 0 20px 0; text-shadow: 3px 3px 6px rgba(0,0,0,0.4); }
+      .contact-info { display: flex; flex-direction: column; gap: 15px; }
+      .contact-item { display: flex; align-items: center; gap: 15px; font-size: 18px; }
+      .icon { font-size: 24px; }
+      .content-sections { background: white; color: #1a1a1a; margin: 50px 20px; padding: 50px; border-radius: 25px; box-shadow: 0 25px 50px rgba(0,0,0,0.15); }
+      .section-title { font-size: 32px; font-weight: 800; color: #667eea; margin-bottom: 25px; display: flex; align-items: center; gap: 15px; }
+      .title-icon { font-size: 28px; }
+      .summary-text { font-size: 20px; line-height: 1.8; color: #374151; }
+      .skills-container { display: flex; flex-wrap: wrap; gap: 20px; }
+      .skill-badge { background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 15px 25px; border-radius: 30px; font-weight: 700; font-size: 16px; box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3); transition: all 0.3s ease; }
+      .skill-badge:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4); }
+      .experience-timeline { position: relative; }
+      .timeline-item { display: flex; gap: 25px; margin-bottom: 40px; }
+      .timeline-marker { width: 25px; height: 25px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 50%; flex-shrink: 0; margin-top: 8px; box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3); }
+      .timeline-content { flex: 1; background: linear-gradient(135deg, #f8fafc, #ffffff); padding: 25px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+      .job-title { font-size: 24px; font-weight: 800; color: #667eea; margin-bottom: 8px; }
+      .company { font-size: 18px; color: #6b7280; margin-bottom: 8px; font-weight: 600; }
+      .duration { font-size: 16px; color: #9ca3af; font-weight: 500; }
+      .responsibilities { margin: 15px 0 0 0; padding-left: 25px; }
+      .responsibilities li { margin: 8px 0; color: #374151; line-height: 1.6; }
+      .responsibilities li::marker { color: #667eea; }
+      .education-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+      .education-card { background: linear-gradient(135deg, #f8fafc, #e2e8f0); padding: 25px; border-radius: 20px; text-align: center; box-shadow: 0 5px 20px rgba(0,0,0,0.08); transition: all 0.3s ease; }
+      .education-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.12); }
+      .degree { font-weight: 800; color: #667eea; margin-bottom: 10px; font-size: 20px; }
+      .institution { color: #374151; margin-bottom: 8px; font-size: 18px; }
+      .year { color: #6b7280; font-size: 16px; font-weight: 600; }
+    `,
+    'minimal-dark': `
+      .minimal-dark-resume { background: #0f0f0f; color: #e5e7eb; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+      .header-section { background: linear-gradient(135deg, #1a1a1a, #2d2d2d); padding: 60px 0; margin-bottom: 40px; position: relative; }
+      .header-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, rgba(26, 26, 26, 0.9), rgba(45, 45, 45, 0.9)); }
+      .header-content { max-width: 800px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 2; }
+      .profile-section { display: flex; align-items: center; gap: 40px; }
+      .profile-picture { width: 140px; height: 140px; border-radius: 50%; overflow: hidden; border: 4px solid #4b5563; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
+      .profile-picture img { width: 100%; height: 100%; object-fit: cover; }
+      .name { font-size: 42px; font-weight: 800; margin: 0 0 20px 0; color: #f9fafb; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
+      .contact-info { display: flex; flex-direction: column; gap: 12px; }
+      .contact-item { display: flex; gap: 12px; align-items: center; }
+      .label { color: #9ca3af; font-weight: 600; font-size: 16px; }
+      .value { color: #e5e7eb; font-size: 16px; }
+      .summary-section { margin-bottom: 40px; background: linear-gradient(135deg, #1a1a1a, #2d2d2d); padding: 30px; border-radius: 12px; border-left: 5px solid #6b7280; }
+      .summary-text { font-size: 18px; line-height: 1.7; color: #d1d5db; }
+      .content-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 50px; }
+      .section-title { font-size: 24px; font-weight: 700; color: #f9fafb; margin-bottom: 20px; border-bottom: 3px solid #6b7280; padding-bottom: 10px; }
+      .skills-list { display: flex; flex-wrap: wrap; gap: 12px; }
+      .skill-item { background: linear-gradient(135deg, #374151, #4b5563); color: #f9fafb; padding: 12px 20px; border-radius: 25px; font-size: 15px; font-weight: 600; border: 1px solid #4b5563; transition: all 0.3s ease; }
+      .skill-item:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(107, 114, 128, 0.3); }
+      .experience-item { margin-bottom: 30px; padding: 25px; border-left: 5px solid #6b7280; background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 0 12px 12px 0; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3); }
+      .job-title { font-size: 22px; font-weight: 700; color: #f9fafb; margin-bottom: 8px; }
+      .company { font-size: 18px; color: #9ca3af; margin-bottom: 8px; font-weight: 500; }
+      .duration { font-size: 16px; color: #6b7280; font-weight: 500; }
+      .responsibilities { margin: 15px 0 0 0; padding-left: 25px; }
+      .responsibilities li { margin: 8px 0; color: #d1d5db; line-height: 1.6; }
+      .responsibilities li::marker { color: #6b7280; }
+      .education-item { margin-bottom: 20px; padding: 20px; background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2); }
+      .degree { font-weight: 700; color: #f9fafb; margin-bottom: 8px; font-size: 18px; }
+      .institution { color: #d1d5db; margin-bottom: 8px; font-size: 16px; }
+      .year { color: #9ca3af; font-size: 16px; font-weight: 500; }
+    `,
+    executive: `
+      .executive-resume { background: white; color: #1a1a1a; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+      .header-section { background: linear-gradient(135deg, #1f2937, #374151); color: white; padding: 60px 0; margin-bottom: 50px; position: relative; }
+      .header-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, rgba(31, 41, 55, 0.95), rgba(55, 65, 81, 0.95)); }
+      .header-content { max-width: 900px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 2; }
+      .profile-section { display: flex; align-items: center; gap: 50px; }
+      .profile-picture { width: 160px; height: 160px; border-radius: 50%; overflow: hidden; border: 6px solid rgba(255, 255, 255, 0.3); box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3); }
+      .profile-picture img { width: 100%; height: 100%; object-fit: cover; }
+      .name { font-size: 48px; font-weight: 900; margin: 0 0 15px 0; text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4); }
+      .title { font-size: 22px; color: #d1d5db; margin-bottom: 25px; font-weight: 500; }
+      .contact-info { display: flex; flex-direction: column; gap: 15px; }
+      .contact-item { display: flex; align-items: center; gap: 15px; font-size: 18px; }
+      .icon { font-size: 22px; }
+      .summary-section { margin-bottom: 50px; background: linear-gradient(135deg, #f8fafc, #ffffff); padding: 40px; border-radius: 15px; border-left: 6px solid #3b82f6; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); }
+      .section-title { font-size: 32px; font-weight: 800; color: #1f2937; margin-bottom: 25px; border-bottom: 4px solid #3b82f6; padding-bottom: 12px; }
+      .summary-text { font-size: 20px; line-height: 1.8; color: #374151; }
+      .content-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 60px; }
+      .competencies-list { display: flex; flex-direction: column; gap: 20px; }
+      .competency-item { display: flex; flex-direction: column; gap: 8px; }
+      .competency-name { font-weight: 700; color: #1f2937; font-size: 18px; }
+      .competency-bar { height: 12px; background: #e5e7eb; border-radius: 6px; overflow: hidden; box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1); }
+      .competency-fill { height: 100%; background: linear-gradient(90deg, #3b82f6, #1d4ed8); width: 85%; border-radius: 6px; }
+      .experience-item { margin-bottom: 35px; padding: 30px; border: 2px solid #e5e7eb; border-radius: 15px; background: linear-gradient(135deg, #f9fafb, #ffffff); box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08); }
+      .job-title { font-size: 24px; font-weight: 800; color: #1f2937; margin-bottom: 10px; }
+      .company { font-size: 18px; color: #6b7280; margin-bottom: 10px; font-weight: 600; }
+      .duration { font-size: 16px; color: #9ca3af; font-weight: 500; }
+      .responsibilities { margin: 20px 0 0 0; padding-left: 25px; }
+      .responsibilities li { margin: 10px 0; color: #374151; line-height: 1.7; }
+      .responsibilities li::marker { color: #3b82f6; }
+      .education-item { margin-bottom: 25px; padding: 25px; background: linear-gradient(135deg, #f8fafc, #ffffff); border-radius: 15px; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08); }
+      .degree { font-weight: 800; color: #1f2937; margin-bottom: 10px; font-size: 20px; }
+      .institution { color: #374151; margin-bottom: 8px; font-size: 18px; }
+      .year { color: #6b7280; font-size: 16px; font-weight: 600; }
+    `,
+    colorful: `
+      .colorful-resume { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%); color: #1a1a1a; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; min-height: 100vh; }
+      .header-section { position: relative; padding: 80px 0; }
+      .header-background { position: absolute; top: 0; left: 0; right: 0; bottom: 0; }
+      .color-stripes { position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; }
+      .stripe { flex: 1; height: 100%; }
+      .stripe-1 { background: linear-gradient(135deg, #ff6b6b, #ff8e8e); }
+      .stripe-2 { background: linear-gradient(135deg, #4ecdc4, #44a08d); }
+      .stripe-3 { background: linear-gradient(135deg, #45b7d1, #96c93d); }
+      .header-content { position: relative; z-index: 2; max-width: 900px; margin: 0 auto; padding: 0 20px; }
+      .profile-section { display: flex; align-items: center; gap: 50px; }
+      .profile-picture { width: 180px; height: 180px; border-radius: 50%; overflow: hidden; border: 6px solid rgba(255, 255, 255, 0.8); box-shadow: 0 15px 40px rgba(0,0,0,0.3); }
+      .profile-picture img { width: 100%; height: 100%; object-fit: cover; }
+      .name { font-size: 52px; font-weight: 900; margin: 0 0 20px 0; color: white; text-shadow: 3px 3px 6px rgba(0,0,0,0.4); }
+      .contact-info { display: flex; flex-direction: column; gap: 15px; }
+      .contact-item { display: flex; align-items: center; gap: 15px; font-size: 18px; color: white; }
+      .icon { font-size: 24px; }
+      .content-sections { background: white; color: #1a1a1a; margin: 50px 20px; padding: 50px; border-radius: 30px; box-shadow: 0 30px 60px rgba(0,0,0,0.2); }
+      .section-title { font-size: 32px; font-weight: 800; color: #ff6b6b; margin-bottom: 25px; display: flex; align-items: center; gap: 15px; }
+      .title-icon { font-size: 28px; }
+      .title-decoration { font-size: 24px; }
+      .summary-text { font-size: 20px; line-height: 1.8; color: #374151; }
+      .skills-container { display: flex; flex-wrap: wrap; gap: 20px; }
+      .skill-badge { padding: 15px 25px; border-radius: 30px; font-weight: 700; color: white; font-size: 16px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: all 0.3s ease; }
+      .skill-badge:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
+      .skill-1 { background: linear-gradient(135deg, #ff6b6b, #ff8e8e); }
+      .skill-2 { background: linear-gradient(135deg, #4ecdc4, #44a08d); }
+      .skill-3 { background: linear-gradient(135deg, #45b7d1, #96c93d); }
+      .skill-4 { background: linear-gradient(135deg, #f093fb, #f5576c); }
+      .experience-timeline { position: relative; }
+      .timeline-item { display: flex; gap: 25px; margin-bottom: 40px; }
+      .timeline-marker { width: 25px; height: 25px; border-radius: 50%; flex-shrink: 0; margin-top: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+      .marker-1 { background: linear-gradient(135deg, #ff6b6b, #ff8e8e); }
+      .marker-2 { background: linear-gradient(135deg, #4ecdc4, #44a08d); }
+      .marker-3 { background: linear-gradient(135deg, #45b7d1, #96c93d); }
+      .timeline-content { flex: 1; background: linear-gradient(135deg, #f8fafc, #ffffff); padding: 25px; border-radius: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+      .job-title { font-size: 24px; font-weight: 800; color: #ff6b6b; margin-bottom: 8px; }
+      .company { font-size: 18px; color: #6b7280; margin-bottom: 8px; font-weight: 600; }
+      .duration { font-size: 16px; color: #9ca3af; font-weight: 500; }
+      .responsibilities { margin: 15px 0 0 0; padding-left: 25px; }
+      .responsibilities li { margin: 8px 0; color: #374151; line-height: 1.6; }
+      .responsibilities li::marker { color: #ff6b6b; }
+      .education-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+      .education-card { padding: 25px; border-radius: 20px; text-align: center; color: white; box-shadow: 0 8px 25px rgba(0,0,0,0.2); transition: all 0.3s ease; }
+      .education-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.3); }
+      .card-1 { background: linear-gradient(135deg, #ff6b6b, #ff8e8e); }
+      .card-2 { background: linear-gradient(135deg, #4ecdc4, #44a08d); }
+      .card-3 { background: linear-gradient(135deg, #45b7d1, #96c93d); }
+      .degree { font-weight: 800; margin-bottom: 10px; font-size: 20px; }
+      .institution { opacity: 0.95; margin-bottom: 8px; font-size: 18px; }
+      .year { opacity: 0.9; font-size: 16px; font-weight: 600; }
     `
   };
 

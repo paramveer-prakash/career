@@ -10,7 +10,7 @@ export async function GET(
     const { templateKey, resumeId } = await params;
     
     // Validate template key
-    const validTemplates = ['modern', 'classic', 'minimal'];
+    const validTemplates = ['modern', 'classic', 'minimal', 'professional', 'creative', 'minimal-dark', 'executive', 'colorful'];
     if (!validTemplates.includes(templateKey)) {
       return NextResponse.json(
         { error: 'Template not found' },
