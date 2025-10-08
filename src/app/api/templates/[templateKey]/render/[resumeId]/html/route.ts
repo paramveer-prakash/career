@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { generateHtml } from '@/lib/html-generator';
+import { appConfig } from '@/lib/config';
 
 export async function GET(
   request: NextRequest,
@@ -17,8 +18,12 @@ export async function GET(
       );
     }
 
-    // Fetch resume data
-    const resumeData = await fetchResumeData(resumeId);
+    // Extract authorization token from request headers
+    const authHeader = request.headers.get('authorization');
+    const token = authHeader?.replace('Bearer ', '') || null;
+
+    // Fetch resume data with authentication
+    const resumeData = await fetchResumeData(resumeId, token);
     
     if (!resumeData) {
       return NextResponse.json(
@@ -47,22 +52,34 @@ export async function GET(
   }
 }
 
-async function fetchResumeData(resumeId: string) {
+async function fetchResumeData(resumeId: string, token: string | null = null) {
   try {
     // First, try to fetch from your backend API
-    if (process.env.NEXT_PUBLIC_API_URL) {
+    if (appConfig.apiUrl) {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/resumes/${resumeId}`, {
-          headers: {
-            'Authorization': `Bearer ${process.env.API_TOKEN}`,
-          },
+        const headers: Record<string, string> = {
+          'Content-Type': 'application/json',
+        };
+        
+        // Add authorization header if token is provided
+        if (token) {
+          headers['Authorization'] = `Bearer ${token}`;
+        }
+        
+        const response = await fetch(`${appConfig.apiUrl}/api/v1/resumes/${resumeId}`, {
+          headers,
         });
         
+        console.log("Backend API response status:", response);
         if (response.ok) {
           return await response.json();
+        } else if (response.status === 401) {
+          console.log('Authentication failed - token may be invalid or expired');
+        } else if (response.status === 403) {
+          console.log('Access forbidden - insufficient permissions');
         }
       } catch (error) {
-        console.log('Backend API not available, using test data');
+        console.log('Backend API not available, using test data:', error);
       }
     }
     

@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useParams } from 'next/navigation'
 import { api } from '@/lib/api'
+import { createAuthHeaders } from '@/lib/auth-utils'
 import { ResumePreview, ResumeTemplateKey } from '@/components/templates/preview'
 
 export default function PreviewPage(){
@@ -59,17 +60,59 @@ export default function PreviewPage(){
         <div className="flex items-center gap-2">
           <button
             onClick={async()=>{
-              // Use Next.js API for HTML preview
+              // Use Next.js API for HTML preview with authentication
               const path = `/api/templates/${template}/render/${id}/html`
-              const newWindow = window.open(path, '_blank')
+              const token = localStorage.getItem('auth-store') ? 
+                JSON.parse(localStorage.getItem('auth-store')!).state?.access_token : null;
+              
+              if (token) {
+                // Open in new window with authentication header
+                const newWindow = window.open('', '_blank');
+                if (newWindow) {
+                  try {
+                    const response = await fetch(path, {
+                      headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                      }
+                    });
+                    
+                    if (response.ok) {
+                      const html = await response.text();
+                      newWindow.document.write(html);
+                      newWindow.document.close();
+                    } else {
+                      newWindow.document.write('<h1>Error loading resume</h1>');
+                      newWindow.document.close();
+                    }
+                  } catch (error) {
+                    newWindow.document.write('<h1>Error loading resume</h1>');
+                    newWindow.document.close();
+                  }
+                }
+              } else {
+                // Fallback: open directly (will use test data)
+                window.open(path, '_blank');
+              }
             }}
             className="px-3 py-2 rounded-md bg-purple-600 text-white hover:bg-purple-700"
           >Preview HTML</button>
           <button
             onClick={async()=>{
-              // Use Next.js API for PDF download
+              // Use Next.js API for PDF download with authentication
               const path = `/api/templates/${template}/render/${id}/pdf`
-              const response = await fetch(path)
+              const token = localStorage.getItem('auth-store') ? 
+                JSON.parse(localStorage.getItem('auth-store')!).state?.access_token : null;
+              
+              const headers: Record<string, string> = {
+                'Content-Type': 'application/json',
+              };
+              
+              if (token) {
+                headers['Authorization'] = `Bearer ${token}`;
+              }
+              
+              const response = await fetch(path, { headers });
               if (response.ok) {
                 const blob = await response.blob()
                 const url = window.URL.createObjectURL(blob)
@@ -81,16 +124,27 @@ export default function PreviewPage(){
                 a.remove()
                 window.URL.revokeObjectURL(url)
               } else {
-                console.error('Failed to generate PDF')
+                console.error('Failed to generate PDF:', response.status, response.statusText)
               }
             }}
             className="px-3 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700"
           >Download PDF</button>
           <button
             onClick={async()=>{
-              // For now, we'll use HTML as fallback since we don't have DOCX generation yet
+              // Download HTML with authentication
               const path = `/api/templates/${template}/render/${id}/html`
-              const response = await fetch(path)
+              const token = localStorage.getItem('auth-store') ? 
+                JSON.parse(localStorage.getItem('auth-store')!).state?.access_token : null;
+              
+              const headers: Record<string, string> = {
+                'Content-Type': 'application/json',
+              };
+              
+              if (token) {
+                headers['Authorization'] = `Bearer ${token}`;
+              }
+              
+              const response = await fetch(path, { headers });
               if (response.ok) {
                 const html = await response.text()
                 const blob = new Blob([html], { type: 'text/html' })
@@ -103,7 +157,7 @@ export default function PreviewPage(){
                 a.remove()
                 window.URL.revokeObjectURL(url)
               } else {
-                console.error('Failed to generate HTML')
+                console.error('Failed to generate HTML:', response.status, response.statusText)
               }
             }}
             className="px-3 py-2 rounded-md bg-green-600 text-white hover:bg-green-700"
