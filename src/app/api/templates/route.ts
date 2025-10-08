@@ -42,6 +42,11 @@ export async function GET() {
       name: 'Colorful',
       description: 'Rainbow stripes, vibrant colors, playful design',
     },
+    {
+      key: 'tech-modern',
+      name: 'Tech Modern',
+      description: 'Dark theme with green accents, perfect for developers',
+    },
   ];
 
   return NextResponse.json(templates);

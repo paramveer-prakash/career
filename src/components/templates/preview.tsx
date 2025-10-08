@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import React from 'react';
 import { ClassicTemplate } from "./classic";
 import { MinimalTemplate } from "./minimal";
 import { ModernTemplate } from "./modern";
@@ -7,10 +8,11 @@ import { CreativeTemplate } from "./creative";
 import { MinimalDarkTemplate } from "./minimal-dark";
 import { ExecutiveTemplate } from "./executive";
 import { ColorfulTemplate } from "./colorful";
+import { TechModernTemplate } from "./tech-modern";
 
-export type ResumeTemplateKey = 'classic' | 'minimal' | 'modern' | 'professional' | 'creative' | 'minimal-dark' | 'executive' | 'colorful';
+export type ResumeTemplateKey = 'classic' | 'minimal' | 'modern' | 'professional' | 'creative' | 'minimal-dark' | 'executive' | 'colorful' | 'tech-modern';
 
-const templateMap: Record<ResumeTemplateKey, (p:{data:any})=>JSX.Element> = {
+const templateMap: Record<ResumeTemplateKey, (p:{data:any})=>React.JSX.Element> = {
   classic: ({data}) => <ClassicTemplate data={data} />,
   minimal: ({data}) => <MinimalTemplate data={data} />,
   modern: ({data}) => <ModernTemplate data={data} />,
@@ -19,6 +21,7 @@ const templateMap: Record<ResumeTemplateKey, (p:{data:any})=>JSX.Element> = {
   'minimal-dark': ({data}) => <MinimalDarkTemplate data={data} />,
   executive: ({data}) => <ExecutiveTemplate data={data} />,
   colorful: ({data}) => <ColorfulTemplate data={data} />,
+  'tech-modern': ({data}) => <TechModernTemplate data={data} />,
 };
 
 export function ResumePreview({ data, template }:{ data:any, template: ResumeTemplateKey }){

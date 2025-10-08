@@ -11,7 +11,7 @@ export async function GET(
     const { templateKey, resumeId } = await params;
     
     // Validate template key
-    const validTemplates = ['modern', 'classic', 'minimal', 'professional', 'creative', 'minimal-dark', 'executive', 'colorful'];
+    const validTemplates = ['modern', 'classic', 'minimal', 'professional', 'creative', 'minimal-dark', 'executive', 'colorful', 'tech-modern'];
     if (!validTemplates.includes(templateKey)) {
       return NextResponse.json(
         { error: 'Template not found' },
@@ -111,17 +111,90 @@ async function generatePDF(html: string): Promise<Buffer> {
   
   try {
     const page = await browser.newPage();
-    await page.setContent(html, { waitUntil: 'networkidle0' });
+    
+    // Set viewport to match browser preview
+    await page.setViewport({
+      width: 1200,
+      height: 800,
+      deviceScaleFactor: 1
+    });
+    
+    // Add CSS to ensure consistent rendering
+    const htmlWithPDFCSS = html.replace(
+      '<style>',
+      `<style>
+        /* PDF-specific CSS adjustments */
+        @media print {
+          * {
+            -webkit-print-color-adjust: exact !important;
+            color-adjust: exact !important;
+          }
+          body {
+            font-size: 12px !important;
+            line-height: 1.4 !important;
+            margin: 0 !important;
+            padding: 10px !important;
+          }
+          .resume-container {
+            max-width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+          }
+          /* Scale down large elements for PDF */
+          h1 { font-size: 24px !important; }
+          h2 { font-size: 18px !important; }
+          h3 { font-size: 16px !important; }
+          .name { font-size: 28px !important; }
+          .section-title { font-size: 16px !important; }
+          .profile-picture { 
+            width: 80px !important; 
+            height: 80px !important; 
+          }
+          .header-section { 
+            padding: 20px 0 !important; 
+            margin-bottom: 20px !important; 
+          }
+          .content-grid { 
+            gap: 20px !important; 
+          }
+          .experience-item, .education-item { 
+            margin-bottom: 15px !important; 
+            padding: 15px !important; 
+          }
+          .skill-item { 
+            padding: 8px 12px !important; 
+            font-size: 12px !important; 
+          }
+          /* Ensure gradients and colors print correctly */
+          .bg-gradient-to-r, .bg-gradient-to-br, .bg-gradient-to-l {
+            -webkit-print-color-adjust: exact !important;
+            color-adjust: exact !important;
+          }
+        }
+      `
+    );
+    
+    await page.setContent(htmlWithPDFCSS, { waitUntil: 'networkidle0' });
+    
+    // Wait for fonts to load
+    await page.evaluateHandle('document.fonts.ready');
+    
+    // Wait a bit more for any animations or transitions
+    await new Promise(resolve => setTimeout(resolve, 1000));
     
     const pdfBuffer = await page.pdf({
       format: 'A4',
       printBackground: true,
+      preferCSSPageSize: false,
       margin: {
-        top: '0.5in',
-        right: '0.5in',
-        bottom: '0.5in',
-        left: '0.5in'
-      }
+        top: '0.3in',
+        right: '0.3in',
+        bottom: '0.3in',
+        left: '0.3in'
+      },
+      scale: 0.75, // Scale down to fit better
+      displayHeaderFooter: false,
+      timeout: 30000 // Increase timeout for complex layouts
     });
     
     return Buffer.from(pdfBuffer);

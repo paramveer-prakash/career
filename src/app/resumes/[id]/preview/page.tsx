@@ -54,6 +54,7 @@ export default function PreviewPage(){
     { key:'minimal-dark', name:'Minimal Dark', desc:'Dark theme, sleek design' },
     { key:'executive', name:'Executive', desc:'Dark header, competency bars' },
     { key:'colorful', name:'Colorful', desc:'Rainbow stripes, vibrant colors' },
+    { key:'tech-modern', name:'Tech Modern', desc:'Dark theme with green accents, perfect for developers' },
   ],[])
 
   const nextTemplate = () => {

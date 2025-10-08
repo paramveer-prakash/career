@@ -28,6 +28,9 @@ export function generateHtml(templateKey: string, data: any): string {
     case 'colorful':
       htmlContent = generateColorfulTemplate(data);
       break;
+    case 'tech-modern':
+      htmlContent = generateTechModernTemplate(data);
+      break;
     default:
       htmlContent = generateModernTemplate(data);
   }
@@ -725,6 +728,44 @@ export function getTemplateCSS(templateKey: string): string {
       max-width: 800px;
       margin: 0 auto;
     }
+    
+    /* PDF-specific adjustments */
+    @media print {
+      body {
+        font-size: 12px;
+        line-height: 1.4;
+        padding: 10px;
+      }
+      .resume-container {
+        max-width: 100%;
+        margin: 0;
+      }
+      /* Ensure consistent sizing across templates */
+      h1 { font-size: 24px !important; }
+      h2 { font-size: 18px !important; }
+      h3 { font-size: 16px !important; }
+      .name { font-size: 28px !important; }
+      .section-title { font-size: 16px !important; }
+      .profile-picture { 
+        width: 80px !important; 
+        height: 80px !important; 
+      }
+      .header-section { 
+        padding: 20px 0 !important; 
+        margin-bottom: 20px !important; 
+      }
+      .content-grid { 
+        gap: 20px !important; 
+      }
+      .experience-item, .education-item { 
+        margin-bottom: 15px !important; 
+        padding: 15px !important; 
+      }
+      .skill-item { 
+        padding: 8px 12px !important; 
+        font-size: 12px !important; 
+      }
+    }
   `;
 
   const templateSpecificCSS = {
@@ -966,8 +1007,126 @@ export function getTemplateCSS(templateKey: string): string {
       .degree { font-weight: 800; margin-bottom: 10px; font-size: 20px; }
       .institution { opacity: 0.95; margin-bottom: 8px; font-size: 18px; }
       .year { opacity: 0.9; font-size: 16px; font-weight: 600; }
+    `,
+    'tech-modern': `
+      .tech-modern-resume { background: #111827; color: #f9fafb; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+      .header-section { background: linear-gradient(135deg, #10b981, #3b82f6); color: white; padding: 60px 0; margin-bottom: 40px; position: relative; }
+      .header-content { max-width: 1000px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 2; }
+      .profile-section { display: flex; align-items: center; gap: 40px; }
+      .profile-picture { width: 160px; height: 160px; border-radius: 50%; overflow: hidden; border: 4px solid rgba(255, 255, 255, 0.3); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); }
+      .profile-picture img { width: 100%; height: 100%; object-fit: cover; }
+      .name { font-size: 48px; font-weight: 900; margin: 0 0 15px 0; text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4); }
+      .title { font-size: 22px; color: rgba(255, 255, 255, 0.9); margin-bottom: 25px; font-weight: 500; }
+      .contact-info { display: flex; flex-direction: column; gap: 12px; }
+      .email, .phone { font-size: 18px; opacity: 0.95; display: flex; align-items: center; gap: 8px; }
+      .summary-section { margin-bottom: 40px; background: linear-gradient(135deg, #1f2937, #374151); padding: 30px; border-radius: 12px; border-left: 5px solid #10b981; }
+      .section-title { font-size: 28px; font-weight: 700; color: #10b981; margin-bottom: 20px; border-bottom: 3px solid #10b981; padding-bottom: 10px; }
+      .summary-text { font-size: 18px; line-height: 1.7; color: #d1d5db; }
+      .content-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 50px; }
+      .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; }
+      .skill-item { background: linear-gradient(135deg, #1f2937, #374151); border: 2px solid #10b981; padding: 15px; border-radius: 12px; text-align: center; font-weight: 600; color: #10b981; transition: all 0.3s ease; }
+      .skill-item:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3); }
+      .experience-item { margin-bottom: 30px; padding: 25px; border-left: 5px solid #10b981; background: linear-gradient(135deg, #1f2937, #374151); border-radius: 0 12px 12px 0; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3); }
+      .job-title { font-size: 22px; font-weight: 700; color: #10b981; margin-bottom: 8px; }
+      .company { font-size: 18px; color: #9ca3af; margin-bottom: 8px; font-weight: 500; }
+      .duration { font-size: 16px; color: #6b7280; font-weight: 500; }
+      .responsibilities { margin: 15px 0 0 0; padding-left: 25px; }
+      .responsibilities li { margin: 8px 0; color: #d1d5db; line-height: 1.6; }
+      .responsibilities li::marker { color: #10b981; }
+      .education-item { margin-bottom: 20px; padding: 20px; background: linear-gradient(135deg, #1f2937, #374151); border-radius: 12px; box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2); }
+      .degree { font-weight: 700; color: #10b981; margin-bottom: 8px; font-size: 18px; }
+      .institution { color: #d1d5db; margin-bottom: 8px; font-size: 16px; }
+      .year { color: #9ca3af; font-size: 16px; font-weight: 500; }
     `
   };
 
   return baseCSS + (templateSpecificCSS[templateKey as keyof typeof templateSpecificCSS] || '');
+}
+
+function generateTechModernTemplate(data: any): string {
+  const skills = (data.skills || []).map((skill: any) => 
+    `<div class="skill-item">${skill.name || skill.skill}</div>`
+  ).join('');
+
+  const workExperiences = (data.workExperiences || []).map((work: any) => {
+    const responsibilities = (work.responsibilities || []).map((resp: any) => 
+      `<li>${typeof resp === 'string' ? resp : resp.description}</li>`
+    ).join('');
+    
+    return `
+      <div class="experience-item">
+        <div class="job-header">
+          <div class="job-title">${work.jobTitle}</div>
+          <div class="company">${work.company}</div>
+          <div class="duration">${work.startDate} - ${work.endDate}</div>
+        </div>
+        ${responsibilities ? `<ul class="responsibilities">${responsibilities}</ul>` : ''}
+      </div>
+    `;
+  }).join('');
+
+  const educations = (data.educations || []).map((edu: any) => 
+    `<div class="education-item">
+      <div class="degree">${edu.degree}</div>
+      <div class="institution">${edu.institution}</div>
+      <div class="year">${edu.graduationYear}</div>
+    </div>`
+  ).join('');
+
+  const profilePicture = data.profilePicture ? 
+    `<div class="profile-picture"><img src="${data.profilePicture}" alt="Profile" /></div>` : '';
+
+  return `
+    <div class="tech-modern-resume">
+      <div class="header-section">
+        <div class="header-content">
+          <div class="profile-section">
+            ${profilePicture}
+            <div class="name-section">
+              <h1 class="name">${data.primaryName || 'Your Name'}</h1>
+              <div class="title">Tech Professional</div>
+              <div class="contact-info">
+                <span class="email">💻 ${data.primaryEmail}</span>
+                <span class="phone">📱 ${data.primaryPhone}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      ${data.summary ? `
+        <div class="summary-section">
+          <h2 class="section-title">Tech Summary</h2>
+          <p class="summary-text">${data.summary}</p>
+        </div>
+      ` : ''}
+      
+      <div class="content-grid">
+        <div class="left-column">
+          ${skills ? `
+            <div class="skills-section">
+              <h3 class="section-title">Tech Stack</h3>
+              <div class="skills-grid">${skills}</div>
+            </div>
+          ` : ''}
+          
+          ${educations ? `
+            <div class="education-section">
+              <h3 class="section-title">Education</h3>
+              <div class="education-list">${educations}</div>
+            </div>
+          ` : ''}
+        </div>
+        
+        <div class="right-column">
+          ${workExperiences ? `
+            <div class="experience-section">
+              <h3 class="section-title">Tech Experience</h3>
+              <div class="experience-list">${workExperiences}</div>
+            </div>
+          ` : ''}
+        </div>
+      </div>
+    </div>
+  `;
 }
