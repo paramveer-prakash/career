@@ -135,61 +135,12 @@ export function TemplateGallery({
               }`}
             >
               {/* Template Preview - 150x200 Dimensions */}
-              <div className="w-full h-[200px] relative overflow-hidden border border-gray-200">
-                {template.key === 'modern' && (
-                  <div className="w-full h-full bg-blue-500 flex flex-col items-center justify-center text-white">
-                    <div className="text-lg font-bold mb-2">MODERN</div>
-                    <div className="text-sm text-center px-2">Blue gradient<br/>with chips</div>
-                  </div>
-                )}
-                {template.key === 'classic' && (
-                  <div className="w-full h-full bg-white flex flex-col items-center justify-center text-gray-800 border-l-4 border-blue-600">
-                    <div className="text-lg font-bold mb-2 text-gray-800">CLASSIC</div>
-                    <div className="text-sm text-center px-2 text-gray-600">Clean &<br/>professional</div>
-                  </div>
-                )}
-                {template.key === 'minimal' && (
-                  <div className="w-full h-full bg-gray-100 flex flex-col items-center justify-center text-gray-800">
-                    <div className="text-lg font-bold mb-2 text-gray-800">MINIMAL</div>
-                    <div className="text-sm text-center px-2 text-gray-600">Two-column<br/>layout</div>
-                  </div>
-                )}
-                {template.key === 'professional' && (
-                  <div className="w-full h-full bg-gray-800 flex flex-col items-center justify-center text-white">
-                    <div className="text-lg font-bold mb-2">PROFESSIONAL</div>
-                    <div className="text-sm text-center px-2">Corporate<br/>style</div>
-                  </div>
-                )}
-                {template.key === 'creative' && (
-                  <div className="w-full h-full bg-purple-500 flex flex-col items-center justify-center text-white">
-                    <div className="text-lg font-bold mb-2">CREATIVE</div>
-                    <div className="text-sm text-center px-2">Artistic<br/>design</div>
-                  </div>
-                )}
-                {template.key === 'minimal-dark' && (
-                  <div className="w-full h-full bg-gray-900 flex flex-col items-center justify-center text-green-400">
-                    <div className="text-lg font-bold mb-2">MINIMAL DARK</div>
-                    <div className="text-sm text-center px-2">Dark theme<br/>with green</div>
-                  </div>
-                )}
-                {template.key === 'executive' && (
-                  <div className="w-full h-full bg-blue-900 flex flex-col items-center justify-center text-white">
-                    <div className="text-lg font-bold mb-2">EXECUTIVE</div>
-                    <div className="text-sm text-center px-2">Leadership<br/>focused</div>
-                  </div>
-                )}
-                {template.key === 'colorful' && (
-                  <div className="w-full h-full bg-gradient-to-br from-pink-400 to-purple-500 flex flex-col items-center justify-center text-white">
-                    <div className="text-lg font-bold mb-2">COLORFUL</div>
-                    <div className="text-sm text-center px-2">Vibrant<br/>colors</div>
-                  </div>
-                )}
-                {template.key === 'tech-modern' && (
-                  <div className="w-full h-full bg-gray-900 flex flex-col items-center justify-center text-green-400">
-                    <div className="text-lg font-bold mb-2">TECH MODERN</div>
-                    <div className="text-sm text-center px-2">Developer<br/>theme</div>
-                  </div>
-                )}
+              <div className="w-full h-[200px] relative overflow-hidden bg-gray-50 border border-gray-200">
+                <img
+                  src={template.preview}
+                  alt={`${template.name} template preview`}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                />
                 
                 {/* Selection Indicator */}
                 {selectedTemplate === template.key && (
