@@ -1,3 +1,6 @@
+// Import the new template registry
+import { getTemplateCSS as getRegistryCSS } from './template-registry';
+
 // CSS content cache
 const cssCache: Record<string, string> = {};
 
@@ -7,12 +10,24 @@ export function loadTemplateCSS(templateKey: string): string {
     return cssCache[templateKey];
   }
 
-  // Load CSS from embedded content instead of filesystem
+  // Try to get CSS from the new template registry first
+  try {
+    const registryCSS = getRegistryCSS(templateKey);
+    if (registryCSS) {
+      cssCache[templateKey] = registryCSS;
+      return registryCSS;
+    }
+  } catch (error) {
+    // Fall back to legacy CSS if template not found in registry
+    console.log(`Template ${templateKey} not found in registry, using legacy CSS`);
+  }
+
+  // Load CSS from embedded content (legacy fallback)
   const cssContent = getTemplateCSS(templateKey);
-  
+
   // Cache the CSS content
   cssCache[templateKey] = cssContent;
-  
+
   return cssContent;
 }
 

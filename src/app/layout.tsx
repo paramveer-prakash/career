@@ -4,6 +4,8 @@ import "./globals.css";
 import { OIDCAuthProvider } from "@/components/providers/oidc-auth-provider";
 import { AuthProvider } from "@/components/providers/auth-provider";
 import { Header } from "@/components/header";
+// Initialize custom templates
+import "@/lib/templates";
 
 const inter = Inter({
   subsets: ["latin"],

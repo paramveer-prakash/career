@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { getAllTemplates, getTemplatePreview } from '@/lib/templates/template-registry';
 import { ResumeTemplateKey } from './preview';
 
 interface TemplateInfo {
@@ -9,7 +10,30 @@ interface TemplateInfo {
   preview: string; // Base64 or URL to preview image
 }
 
-const templates: TemplateInfo[] = [
+// Get templates from the new registry or use fallback
+const getTemplatesFromRegistry = (): TemplateInfo[] => {
+  try {
+    const registryTemplates = getAllTemplates();
+    
+    if (registryTemplates.length === 0) {
+      return getFallbackTemplates();
+    }
+    
+    return registryTemplates.map(template => ({
+      key: template.key as ResumeTemplateKey,
+      name: template.name,
+      description: template.description,
+      category: template.category,
+      preview: getTemplatePreview(template.key)
+    }));
+  } catch (error) {
+    console.log('Registry not available, using fallback templates', error);
+    return getFallbackTemplates();
+  }
+};
+
+// Fallback templates for when registry is not available
+const getFallbackTemplates = (): TemplateInfo[] => [
   {
     key: 'modern',
     name: 'Modern',
@@ -57,7 +81,7 @@ const templates: TemplateInfo[] = [
     name: 'Executive',
     description: 'Leadership, sophisticated, premium',
     category: 'professional',
-    preview: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDMwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjRkZGRkZGIi8+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9ImV4ZWNHcmFkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KPHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6IzFmMjkzNztzdG9wLW9wYWNpdHk6MSIgLz4KPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMzc0MTUxO3N0b3Atb3BhY2l0eToxIiAvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMTIwIiBmaWxsPSJ1cmwoI2V4ZWNHcmFkKSIvPgo8Y2lyY2xlIGN4PSIxMDAiIGN5PSI2MCIgcj0iNDAiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSI2Ii8+Cjx0ZXh0IHg9IjE2MCIgeT0iNDAiIGZpbGw9IndoaXRlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjgiIGZvbnQtd2VpZ2h0PSJib2xkIj5Kb2huIERvZTwvdGV4dD4KPHRleHQgeD0iMTYwIiB5PSI2NSIgZmlsbD0iI2QxZDVkYiIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2Ij5DaGllZiBUZWNobm9sb2d5IE9mZmljZXI8L3RleHQ+Cjx0ZXh0IHg9IjE2MCIgeT0iOTAiIGZpbGw9IiNkMWQ1ZGIiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCI+am9obkBleGFtcGxlLmNvbTwvdGV4dD4KPHJlY3QgeD0iMjAiIHk9IjE0MCIgd2lkdGg9IjI2MCIgaGVpZ2h0PSI4MCIgZmlsbD0iI2Y4ZmFmYyIgc3Ryb2tlPSIjM2I4MmY2IiBzdHJva2Utd2lkdGg9IjYiIHJ4PSI4Ii8+Cjx0ZXh0IHg9IjMwIiB5PSIxNjAiIGZpbGw9IiMxZjI5MzciIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZm9udC13ZWlnaHQ9ImJvbGQiPlN1bW1hcnk8L3RleHQ+Cjx0ZXh0IHg9IjMwIiB5PSIxODAiIGZpbGw9IiMzNzQxNTEiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZm9udC13ZWlnaHQ9ImJvbGQiPkV4ZWN1dGl2ZSB3aXRoIDEwKyB5ZWFycyBvZiBsZWFkZXJzaGlwIGV4cGVyaWVuY2UuPC90ZXh0Pgo8cmVjdCB4PSIyMCIgeT0iMjQwIiB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjZTU1NzViIiBzdHJva2Utd2lkdGg9IjMiIHJ4PSI2Ii8+Cjx0ZXh0IHg9IjMwIiB5PSIyNjAiIGZpbGw9IiMxZjI5MzciIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNiIgZm9udC13ZWlnaHQ9ImJvbGQiPkNvbXBldGVuY2llczwvdGV4dD4KPHJlY3QgeD0iMzAiIHk9IjI4MCIgd2lkdGg9IjEwMCIgaGVpZ2h0PSI4IiBmaWxsPSIjZTU1NzViIiByeD0iNCIvPgo8cmVjdCB4PSIzMCIgeT0iMjkwIiB3aWR0aD0iODAiIGhlaWdodD0iOCIkZmlsbD0iIzNiODJmNiIgcng9IjQiLz4KPHRleHQgeD0iMzUiIHk9IjMwNSIgZmlsbD0iIzM3NDE1MSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEwIj5TdHJhdGVneTwvdGV4dD4KPHJlY3QgeD0iMTYwIiB5PSIyNDAiIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiNlNTU3NWIiIHN0cm9rZS13aWR0aD0iMyIgcng9IjYiLz4KPHRleHQgeD0iMTcwIiB5PSIyNjAiIGZpbGw9IiMxZjI5MzciIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNiIgZm9udC13ZWlnaHQ9ImJvbGQiPkV4cGVyaWVuY2U8L3RleHQ+CjxyZWN0IHg9IjE3MCIgeT0iMjgwIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjQwIiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiNlNTU3NWIiIHN0cm9rZS13aWR0aD0iMiIgcng9IjYiLz4KPHRleHQgeD0iMTc1IiB5PSIyOTUiIGZpbGw9IiMxZjI5MzciIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZm9udC13ZWlnaHQ9ImJvbGQiPkNUTyAmIEZvdW5kZXI8L3RleHQ+Cjx0ZXh0IHg9IjE3NSIgeT0iMzEwIiBmaWxsPSIjNmI3MjgwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTIiPlRlY2ggQ29ycDwvdGV4dD4KPHRleHQgeD0iMTc1IiB5PSIzMjUiIGZpbGw9IiM5Y2EzYWYiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMCI+MjAyMC1QcmVzZW50PC90ZXh0Pgo8L3N2Zz4K'
+    preview: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDE1MCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9ImV4ZWNHcmFkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KPHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6IzM3NDE1MTtzdG9wLW9wYWNpdHk6MSIgLz4KPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMWYyOTM3O3N0b3Atb3BhY2l0eToxIiAvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+CjxyZWN0IHdpZHRoPSIxNTAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRkZGRkZGIi8+CjxyZWN0IHdpZHRoPSIxNTAiIGhlaWdodD0iNjAiIGZpbGw9InVybCgjZXhlY0dyYWQpIi8+CjxjaXJjbGUgY3g9IjQwIiBjeT0iMzAiIHI9IjE1IiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMyIvPgo8dGV4dCB4PSI2NSIgeT0iMjAiIGZpbGw9IndoaXRlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTIiIGZvbnQtd2VpZ2h0PSJib2xkIj5Kb2huIERvZTwvdGV4dD4KPHRleHQgeD0iNjUiIHk9IjMzIiBmaWxsPSIjZDFkNWRiIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iOCI+RXhlY3V0aXZlPC90ZXh0Pgo8dGV4dCB4PSI2NSIgeT0iNDUiIGZpbGw9IiNkMWQ1ZGIiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSI2Ij5qb2huQGV4YW1wbGUuY29tPC90ZXh0Pgo8cmVjdCB4PSI4IiB5PSI3MCIgd2lkdGg9IjEzNCIgaGVpZ2h0PSIzMCIgZmlsbD0iI2Y4ZmFmYyIgc3Ryb2tlPSIjM2I4MmY2IiBzdHJva2Utd2lkdGg9IjMiIHJ4PSI0Ii8+Cjx0ZXh0IHg9IjEyIiB5PSI4NSIgZmlsbD0iIzFmMjkzNyIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEwIiBmb250LXdlaWdodD0iYm9sZCI+U3VtbWFyeTwvdGV4dD4KPHRleHQgeD0iMTIiIHk9Ijk1IiBmaWxsPSIjMzc0MTUxIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNiI+RXhlY3V0aXZlIGxlYWRlciB3aXRoIGV4cGVyaWVuY2U8L3RleHQ+CjxyZWN0IHg9IjgiIHk9IjExMCIgd2lkdGg9IjY1IiBoZWlnaHQ9IjgwIiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiNlNWU3ZWIiIHN0cm9rZS13aWR0aD0iMSIgcng9IjMiLz4KPHRleHQgeD0iMTIiIHk9IjEyNSIgZmlsbD0iIzFmMjkzNyIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjgiIGZvbnQtd2VpZ2h0PSJib2xkIj5Db21wZXRlbmNpZXM8L3RleHQ+CjxyZWN0IHg9IjEyIiB5PSIxMzUiIHdpZHRoPSI1MCIgaGVpZ2h0PSI0IiBmaWxsPSIjZTU1NzViIiByeD0iMiIvPgo8cmVjdCB4PSIxMiIgeT0iMTQxIiB3aWR0aD0iNDAiIGhlaWdodD0iNCIkZmlsbD0iIzNiODJmNiIgcng9IjIiLz4KPHRleHQgeD0iMTQiIHk9IjE1NSIgZmlsbD0iIzM3NDE1MSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjYiPlN0cmF0ZWd5PC90ZXh0Pgo8cmVjdCB4PSIxMiIgeT0iMTY1IiB3aWR0aD0iNTAiIGhlaWdodD0iNCIgZmlsbD0iI2U1NTc1YiIgcng9IjIiLz4KPHRleHQgeD0iMTQiIHk9IjE4NSIgZmlsbD0iIzM3NDE1MSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjYiPkxlYWRlcnNoaXA8L3RleHQ+CjxyZWN0IHg9Ijc3IiB5PSIxMTAiIHdpZHRoPSI2NSIgaGVpZ2h0PSI4MCIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjZTVlN2ViIiBzdHJva2Utd2lkdGg9IjEiIHJ4PSIzIi8+Cjx0ZXh0IHg9IjgxIiB5PSIxMjUiIGZpbGw9IiMxZjI5MzciIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSI4IiBmb250LXdlaWdodD0iYm9sZCI+RXhwZXJpZW5jZTwvdGV4dD4KPHJlY3QgeD0iODEiIHk9IjEzNSIgd2lkdGg9IjU1IiBoZWlnaHQ9IjIwIiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiNlNWU3ZWIiIHN0cm9rZS13aWR0aD0iMSIgcng9IjMiLz4KPHRleHQgeD0iODMiIHk9IjE0NSIgZmlsbD0iIzFmMjkzNyIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjciIGZvbnQtd2VpZ2h0PSJib2xkIj5DVE8gJiBGb3VuZGVyPC90ZXh0Pgo8dGV4dCB4PSI4MyIgeT0iMTU1IiBmaWxsPSIjNmI3MjgwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNiI+VGVjaCBDb3JwPC90ZXh0Pgo8dGV4dCB4PSI4MyIgeT0iMTY1IiBmaWxsPSIjOWNhM2FmIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNSI+MjAyMC1QcmVzZW50PC90ZXh0Pgo8L3N2Zz4K'
   },
   {
     key: 'colorful',
@@ -75,6 +99,9 @@ const templates: TemplateInfo[] = [
   }
 ];
 
+// Get templates from registry or fallback (dynamic loading)
+const getTemplates = (): TemplateInfo[] => getTemplatesFromRegistry();
+
 interface TemplateGalleryProps {
   selectedTemplate: ResumeTemplateKey;
   onTemplateSelect: (template: ResumeTemplateKey) => void;
@@ -89,6 +116,42 @@ export function TemplateGallery({
   compact = false
 }: TemplateGalleryProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [templates, setTemplates] = useState<TemplateInfo[]>([]);
+  
+  // Load templates dynamically with useEffect
+  useEffect(() => {
+    const loadTemplates = () => {
+      const loadedTemplates = getTemplates();
+      
+      // If we only have 3 templates (built-in only), try to reinitialize
+      if (loadedTemplates.length === 3) {
+        // Try to reinitialize templates
+        try {
+          // Import and call initializeTemplates
+          import('@/lib/templates').then(({ initializeTemplates }) => {
+            initializeTemplates();
+            // Try loading again after a short delay
+            setTimeout(() => {
+              const retryTemplates = getTemplates();
+              setTemplates(retryTemplates);
+            }, 200);
+          });
+        } catch (error) {
+          console.error('Failed to reinitialize templates:', error);
+        }
+      }
+      
+      setTemplates(loadedTemplates);
+    };
+    
+    // Load immediately
+    loadTemplates();
+    
+    // Also try loading after a short delay to ensure registry is ready
+    const timeout = setTimeout(loadTemplates, 100);
+    
+    return () => clearTimeout(timeout);
+  }, []);
 
   const categories = [
     { key: 'all', label: 'All Templates', count: templates.length },
