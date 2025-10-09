@@ -48,23 +48,7 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="bg-background/80 backdrop-blur-sm">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <span className="text-2xl font-bold text-foreground">Career – Resume Manager</span>
-            </div>
-            <Button 
-              onClick={() => signinRedirect()}
-              className="bg-primary text-primary-foreground hover:bg-primary/90 px-6 py-2 rounded-xl font-medium transition-all duration-200"
-            >
-              Sign In
-            </Button>
-          </div>
-        </div>
-      </header>
+    <div className="min-h-full bg-white">
 
       {/* Hero Section */}
       <main className="container mx-auto px-4 py-16">

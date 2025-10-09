@@ -18,7 +18,7 @@ export default function Page(){
   if(!resume) return <FullPageLoader text="Loading resume..." show={true} />;
 
   return (
-    <div className="space-y-8">
+    <div className="container mx-auto px-4 py-6 space-y-8">
       <section className="space-y-4 rounded-xl border border-gray-200 bg-white p-4">
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-semibold">Primary Info</h2>

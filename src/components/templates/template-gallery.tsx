@@ -15,21 +15,21 @@ const templates: TemplateInfo[] = [
     name: 'Modern',
     description: 'Bold headings, chips, accent gradient',
     category: 'modern',
-    preview: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDMwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjRkZGRkZGIi8+CjxyZWN0IHg9IjIwIiB5PSIyMCIgd2lkdGg9IjI2MCIgaGVpZ2h0PSI2MCIgZmlsbD0iIzNiODJmNiIgcng9IjgiLz4KPHRleHQgeD0iMzAiIHk9IjQwIiBmaWxsPSJ3aGl0ZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE4IiBmb250LXdlaWdodD0iYm9sZCI+Sm9obiBEb2U8L3RleHQ+Cjx0ZXh0IHg9IjMwIiB5PSI1NSIgZmlsbD0iI2ZmZmZmZiIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEyIj5Tb2Z0d2FyZSBFbmdpbmVlcjwvdGV4dD4KPHJlY3QgeD0iMjAiIHk9IjEwMCIgd2lkdGg9IjEyMCIgaGVpZ2h0PSIyMDAiIGZpbGw9IiNmOWZhZmIiIHJ4PSI0Ii8+Cjx0ZXh0IHg9IjMwIiB5PSIxMjAiIGZpbGw9IiMzMzMiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZm9udC13ZWlnaHQ9ImJvbGQiPlNraWxsczwvdGV4dD4KPHJlY3QgeD0iMzAiIHk9IjE0MCIgd2lkdGg9IjgwIiBoZWlnaHQ9IjI0IiBmaWxsPSIjZWZmNmZmIiBzdHJva2U9IiNkYmVhZmUiIHJ4PSIxMiIvPgo8dGV4dCB4PSIzNSIgeT0iMTU1IiBmaWxsPSIjMWU0MGFmIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTAiPkphdmFzY3JpcHQ8L3RleHQ+CjxyZWN0IHg9IjE1MCIgeT0iMTAwIiB3aWR0aD0iMTMwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2ZmZmZmZiIgcng9IjQiLz4KPHRleHQgeD0iMTYwIiB5PSIxMjAiIGZpbGw9IiMzMzMiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZm9udC13ZWlnaHQ9ImJvbGQiPkV4cGVyaWVuY2U8L3RleHQ+CjxyZWN0IHg9IjE2MCIgeT0iMTQwIiB3aWR0aD0iMTEwIiBoZWlnaHQ9IjQwIiBmaWxsPSIjZjlmYWZiIiByeD0iNCIvPgo8dGV4dCB4PSIxNjUiIHk9IjE1NSIgZmlsbD0iIzMzMyIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEyIj5TZW5pb3IgRGV2ZWxvcGVyPC90ZXh0Pgo8dGV4dCB4PSIxNjUiIHk9IjE3MCIgZmlsbD0iIzY2NiIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEwIj5UZWNoIENvcnAgMjAyMC0yMDI0PC90ZXh0Pgo8L3N2Zz4K'
+    preview: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDE1MCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxNTAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRkZGRkZGIi8+CjxyZWN0IHg9IjEwIiB5PSIxMCIgd2lkdGg9IjEzMCIgaGVpZ2h0PSIzMCIgZmlsbD0iIzNiODJmNiIgcng9IjQiLz4KPHRleHQgeD0iMTUiIHk9IjI1IiBmaWxsPSJ3aGl0ZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEyIiBmb250LXdlaWdodD0iYm9sZCI+Sm9obiBEb2U8L3RleHQ+Cjx0ZXh0IHg9IjE1IiB5PSI0MCIgZmlsbD0iIzMzMyIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEwIj5Tb2Z0d2FyZSBFbmdpbmVlcjwvdGV4dD4KPHJlY3QgeD0iMTAiIHk9IjU1IiB3aWR0aD0iNjAiIGhlaWdodD0iMTAwIiBmaWxsPSIjZjlmYWZiIiByeD0iMiIvPgo8dGV4dCB4PSIxNSIgeT0iNzAiIGZpbGw9IiMzMzMiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMCIgZm9udC13ZWlnaHQ9ImJvbGQiPlNraWxsczwvdGV4dD4KPHJlY3QgeD0iMTUiIHk9IjkwIiB3aWR0aD0iNDAiIGhlaWdodD0iMTIiIGZpbGw9IiNlZmY2ZmYiIHN0cm9rZT0iIzNiODJmNiIgcng9IjYiLz4KPHRleHQgeD0iMTciIHk9Ijk4IiBmaWxsPSIjMzMzIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iOCI+SmF2YVNjcmlwdDwvdGV4dD4KPHJlY3QgeD0iODAiIHk9IjU1IiB3aWR0aD0iNjAiIGhlaWdodD0iMTAwIiBmaWxsPSIjZmZmZmZmIiByeD0iMiIvPgo8dGV4dCB4PSI4NSIgeT0iNzAiIGZpbGw9IiMzMzMiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMCIgZm9udC13ZWlnaHQ9ImJvbGQiPkV4cGVyaWVuY2U8L3RleHQ+CjxyZWN0IHg9Ijg1IiB5PSI5MCIgd2lkdGg9IjUwIiBoZWlnaHQ9IjIwIiBmaWxsPSIjZjlmYWZiIiByeD0iMiIvPgo8dGV4dCB4PSI4NyIgeT0iMTAzIiBmaWxsPSIjMzMzIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iOCI+U2VuaW9yIERldjwvdGV4dD4KPHJlY3QgeD0iMTAiIHk9IjE2NSIgd2lkdGg9IjEzMCIgaGVpZ2h0PSIzMCIgZmlsbD0iI2Y5ZmFmYiIgcng9IjIiLz4KPHRleHQgeD0iMTUiIHk9IjE4NSIgZmlsbD0iIzMzMyIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEwIiBmb250LXdlaWdodD0iYm9sZCI+RWR1Y2F0aW9uPC90ZXh0Pgo8L3N2Zz4K'
   },
   {
     key: 'classic',
     name: 'Classic',
     description: 'Conventional, readable, clean',
     category: 'professional',
-    preview: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDMwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjRkZGRkZGIi8+Cjx0ZXh0IHg9IjIwIiB5PSIzMCIgZmlsbD0iIzMzMyIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjI0IiBmb250LXdlaWdodD0iYm9sZCI+Sm9obiBEb2U8L3RleHQ+Cjx0ZXh0IHg9IjIwIiB5PSI1MCIgZmlsbD0iIzY2NiIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0Ij5qb2huQGV4YW1wbGUuY29tICB8ICA1NTUtMDEyMyB8ICBOZXcgWW9yazwvdGV4dD4KPHJlY3QgeD0iMjAiIHk9IjgwIiB3aWR0aD0iMjYwIiBoZWlnaHQ9IjIiIGZpbGw9IiMwMDdhY2MiLz4KPHRleHQgeD0iMjAiIHk9IjEwMCIgZmlsbD0iIzMzMyIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmb250LXdlaWdodD0iYm9sZCI+U3VtbWFyeTwvdGV4dD4KPHRleHQgeD0iMjAiIHk9IjEyMCIgZmlsbD0iIzMzMyIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEyIiB3aWR0aD0iMjYwIj5FeHBlcmllbmNlZCBzb2Z0d2FyZSBlbmdpbmVlciB3aXRoIDUrIHllYXJzIG9mIGV4cGVyaWVuY2UgaW4gZnVsbC1zdGFjayBkZXZlbG9wbWVudC48L3RleHQ+Cjx0ZXh0IHg9IjIwIiB5PSIxNjAiIGZpbGw9IiMzMzMiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNiIgZm9udC13ZWlnaHQ9ImJvbGQiPlNraWxsczwvdGV4dD4KPHJlY3QgeD0iMjAiIHk9IjE4MCIgd2lkdGg9IjgwIiBoZWlnaHQ9IjI0IiBmaWxsPSIjZjNmNGY2IiBzdHJva2U9IiNlNWU3ZWIiIHJ4PSI0Ii8+Cjx0ZXh0IHg9IjI1IiB5PSIxOTUiIGZpbGw9IiMzMzMiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMCI+SmF2YVNjcmlwdDwvdGV4dD4KPHRleHQgeD0iMjAiIHk9IjIzMCIgZmlsbD0iIzMzMyIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmb250LXdlaWdodD0iYm9sZCI+RXhwZXJpZW5jZTwvdGV4dD4KPHJlY3QgeD0iMjAiIHk9IjI1MCIgd2lkdGg9IjI2MCIgaGVpZ2h0PSI2MCIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjZTBlMGUwIiBzdHJva2Utd2lkdGg9IjEiIHJ4PSI0Ii8+Cjx0ZXh0IHg9IjMwIiB5PSIyNzAiIGZpbGw9IiMzMzMiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZm9udC13ZWlnaHQ9ImJvbGQiPlNlbmlvciBEZXZlbG9wZXI8L3RleHQ+Cjx0ZXh0IHg9IjMwIiB5PSIyODUiIGZpbGw9IiM2NjYiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMiI+VGVjaCBDb3JwPC90ZXh0Pgo8dGV4dCB4PSIzMCIgeT0iMzAwIiBmaWxsPSIjNjY2IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTAiPjIwMjAtMjAyNDwvdGV4dD4KPC9zdmc+'
+    preview: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDE1MCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxNTAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRkZGRkZGIi8+Cjx0ZXh0IHg9IjEwIiB5PSIyMCIgZmlsbD0iIzMzMyIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiBmb250LXdlaWdodD0iYm9sZCI+Sm9obiBEb2U8L3RleHQ+Cjx0ZXh0IHg9IjEwIiB5PSIzNSIgZmlsbD0iIzY2NiIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEwIj5qb2huQGV4YW1wbGUuY29tPC90ZXh0Pgo8cmVjdCB4PSIxMCIgeT0iNTAiIHdpZHRoPSIxMzAiIGhlaWdodD0iMiIgZmlsbD0iIzAwN2FjYyIvPgo8dGV4dCB4PSIxMCIgeT0iNjUiIGZpbGw9IiMzMzMiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMiIgZm9udC13ZWlnaHQ9ImJvbGQiPlN1bW1hcnk8L3RleHQ+Cjx0ZXh0IHg9IjEwIiB5PSI4MCIgZmlsbD0iIzMzMyIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEwIj5FeHBlcmllbmNlZCBzb2Z0d2FyZSBlbmdpbmVlci48L3RleHQ+Cjx0ZXh0IHg9IjEwIiB5PSIxMDAiIGZpbGw9IiMzMzMiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMiIgZm9udC13ZWlnaHQ9ImJvbGQiPlNraWxsczwvdGV4dD4KPHJlY3QgeD0iMTAiIHk9IjExNSIgd2lkdGg9IjYwIiBoZWlnaHQ9IjE1IiBmaWxsPSIjZjNmNGY2IiBzdHJva2U9IiNlNWU3ZWIiIHJ4PSIyIi8+Cjx0ZXh0IHg9IjEyIiB5PSIxMjUiIGZpbGw9IiMzMzMiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSI4Ij5KYXZhU2NyaXB0PC90ZXh0Pgo8dGV4dCB4PSIxMCIgeT0iMTQwIiBmaWxsPSIjMzMzIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTIiIGZvbnQtd2VpZ2h0PSJib2xkIj5FeHBlcmllbmNlPC90ZXh0Pgo8cmVjdCB4PSIxMCIgeT0iMTU1IiB3aWR0aD0iMTMwIiBoZWlnaHQ9IjMwIiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiNlMGUwZTAiIHN0cm9rZS13aWR0aD0iMSIgcng9IjIiLz4KPHRleHQgeD0iMTUiIHk9IjE3NSIgZmlsbD0iIzMzMyIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEwIj5TZW5pb3IgRGV2ZWxvcGVyPC90ZXh0Pgo8dGV4dCB4PSIxNSIgeT0iMTkwIiBmaWxsPSIjNjY2IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iOCI+VGVjaCBDb3JwPC90ZXh0Pgo8L3N2Zz4K'
   },
   {
     key: 'minimal',
     name: 'Minimal',
     description: 'Sparse, two-column, airy',
     category: 'minimal',
-    preview: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDMwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjRkZGRkZGIi8+Cjx0ZXh0IHg9IjIwIiB5PSIzMCIgZmlsbD0iIzMzMyIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjIwIiBmb250LXdlaWdodD0iYm9sZCI+Sm9obiBEb2U8L3RleHQ+Cjx0ZXh0IHg9IjIwIiB5PSI1MCIgZmlsbD0iIzY2NiIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEyIj5qb2huQGV4YW1wbGUuY29tPC90ZXh0Pgo8dGV4dCB4PSIyMCIgeT0iNzAiIGZpbGw9IiM2NjYiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMiI+NTU1LTAxMjM8L3RleHQ+Cjx0ZXh0IHg9IjIwIiB5PSI5MCIgZmlsbD0iIzMzMyIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiBmb250LXdlaWdodD0iYm9sZCI+U3VtbWFyeTwvdGV4dD4KPHRleHQgeD0iMjAiIHk9IjExMCIgZmlsbD0iIzMzMyIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEyIiB3aWR0aD0iMTIwIj5FeHBlcmllbmNlZCBzb2Z0d2FyZSBlbmdpbmVlci48L3RleHQ+Cjx0ZXh0IHg9IjE2MCIgeT0iMTMwIiBmaWxsPSIjMzMzIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtd2VpZ2h0PSJib2xkIj5Ta2lsbHM8L3RleHQ+Cjx0ZXh0IHg9IjE2MCIgeT0iMTUwIiBmaWxsPSIjMzMzIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTIiPkphemFTY3JpcHQ8L3RleHQ+Cjx0ZXh0IHg9IjE2MCIgeT0iMTY1IiBmaWxsPSIjMzMzIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTIiPlJlYWN0PC90ZXh0Pgo8dGV4dCB4PSIxNjAiIHk9IjE4MCIgZmlsbD0iIzMzMyIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiBmb250LXdlaWdodD0iYm9sZCI+RXhwZXJpZW5jZTwvdGV4dD4KPHRleHQgeD0iMTYwIiB5PSIyMDAiIGZpbGw9IiMzMzMiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMiI+U2VuaW9yIERldmVsb3BlcjwvdGV4dD4KPHRleHQgeD0iMTYwIiB5PSIyMTUiIGZpbGw9IiM2NjYiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMCI+VGVjaCBDb3JwPC90ZXh0Pgo8dGV4dCB4PSIxNjAiIHk9IjIzMCIgZmlsbD0iIzMzMyIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiBmb250LXdlaWdodD0iYm9sZCI+RWR1Y2F0aW9uPC90ZXh0Pgo8dGV4dCB4PSIxNjAiIHk9IjI1MCIgZmlsbD0iIzMzMyIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEyIj5CUyBDb21wdXRlciBTY2llbmNlPC90ZXh0Pgo8dGV4dCB4PSIxNjAiIHk9IjI2NSIgZmlsbD0iIzY2NiIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEwIj5Vbml2ZXJzaXR5PC90ZXh0Pgo8L3N2Zz4K'
+    preview: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDE1MCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxNTAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRkZGRkZGIi8+Cjx0ZXh0IHg9IjEwIiB5PSIyMCIgZmlsbD0iIzMzMyIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiBmb250LXdlaWdodD0iYm9sZCI+Sm9obiBEb2U8L3RleHQ+Cjx0ZXh0IHg9IjEwIiB5PSIzNSIgZmlsbD0iIzY2NiIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEwIj5qb2huQGV4YW1wbGUuY29tPC90ZXh0Pgo8cmVjdCB4PSIxMCIgeT0iNTUiIHdpZHRoPSI2NSIgaGVpZ2h0PSIxMDAiIGZpbGw9IiNmOWZhZmIiIHJ4PSIyIi8+Cjx0ZXh0IHg9IjE1IiB5PSI3NSIgZmlsbD0iIzMzMyIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEwIiBmb250LXdlaWdodD0iYm9sZCI+U2tpbGxzPC90ZXh0Pgo8dGV4dCB4PSIxNSIgeT0iOTUiIGZpbGw9IiMzMzMiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSI4Ij5KYXZhU2NyaXB0PC90ZXh0Pgo8dGV4dCB4PSI4NSIgeT0iNzUiIGZpbGw9IiMzMzMiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMCIgZm9udC13ZWlnaHQ9ImJvbGQiPkV4cGVyaWVuY2U8L3RleHQ+Cjx0ZXh0IHg9Ijg1IiB5PSI5NSIgZmlsbD0iIzMzMyIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjgiPlNlbmlvciBEZXY8L3RleHQ+Cjx0ZXh0IHg9IjEwIiB5PSIxNjUiIGZpbGw9IiMzMzMiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMCIgZm9udC13ZWlnaHQ9ImJvbGQiPkVkdWNhdGlvbjwvdGV4dD4KPHJlY3QgeD0iMTAiIHk9IjE4MCIgd2lkdGg9IjEzMCIgaGVpZ2h0PSIxNSIgZmlsbD0iI2Y5ZmFmYiIgcng9IjIiLz4KPHRleHQgeD0iMTUiIHk9IjE5MCIgZmlsbD0iIzMzMyIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjgiPkJTIENvbXB1dGVyIFNjaWVuY2U8L3RleHQ+Cjwvc3ZnPgo='
   },
   {
     key: 'professional',
@@ -79,12 +79,14 @@ interface TemplateGalleryProps {
   selectedTemplate: ResumeTemplateKey;
   onTemplateSelect: (template: ResumeTemplateKey) => void;
   className?: string;
+  compact?: boolean;
 }
 
 export function TemplateGallery({ 
   selectedTemplate, 
   onTemplateSelect, 
-  className = '' 
+  className = '',
+  compact = false
 }: TemplateGalleryProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
@@ -99,6 +101,127 @@ export function TemplateGallery({
   const filteredTemplates = selectedCategory === 'all' 
     ? templates 
     : templates.filter(t => t.category === selectedCategory);
+
+  if (compact) {
+    return (
+      <div className={`space-y-4 ${className}`}>
+        {/* Category Filter - Compact */}
+        <div className="flex flex-wrap gap-1">
+          {categories.map((category) => (
+            <button
+              key={category.key}
+              onClick={() => setSelectedCategory(category.key)}
+              className={`px-2 py-1 rounded text-xs font-medium transition-colors ${
+                selectedCategory === category.key
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              }`}
+            >
+              {category.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Template Grid - A4 Tiles */}
+        <div className="grid grid-cols-2 gap-3">
+          {filteredTemplates.map((template) => (
+            <div
+              key={template.key}
+              onClick={() => onTemplateSelect(template.key)}
+              className={`group cursor-pointer rounded-lg border transition-all duration-200 hover:shadow-lg relative overflow-hidden ${
+                selectedTemplate === template.key
+                  ? 'border-blue-500 bg-blue-50 shadow-md'
+                  : 'border-gray-200 bg-white hover:border-gray-300'
+              }`}
+            >
+              {/* Template Preview - 150x200 Dimensions */}
+              <div className="w-full h-[200px] relative overflow-hidden border border-gray-200">
+                {template.key === 'modern' && (
+                  <div className="w-full h-full bg-blue-500 flex flex-col items-center justify-center text-white">
+                    <div className="text-lg font-bold mb-2">MODERN</div>
+                    <div className="text-sm text-center px-2">Blue gradient<br/>with chips</div>
+                  </div>
+                )}
+                {template.key === 'classic' && (
+                  <div className="w-full h-full bg-white flex flex-col items-center justify-center text-gray-800 border-l-4 border-blue-600">
+                    <div className="text-lg font-bold mb-2 text-gray-800">CLASSIC</div>
+                    <div className="text-sm text-center px-2 text-gray-600">Clean &<br/>professional</div>
+                  </div>
+                )}
+                {template.key === 'minimal' && (
+                  <div className="w-full h-full bg-gray-100 flex flex-col items-center justify-center text-gray-800">
+                    <div className="text-lg font-bold mb-2 text-gray-800">MINIMAL</div>
+                    <div className="text-sm text-center px-2 text-gray-600">Two-column<br/>layout</div>
+                  </div>
+                )}
+                {template.key === 'professional' && (
+                  <div className="w-full h-full bg-gray-800 flex flex-col items-center justify-center text-white">
+                    <div className="text-lg font-bold mb-2">PROFESSIONAL</div>
+                    <div className="text-sm text-center px-2">Corporate<br/>style</div>
+                  </div>
+                )}
+                {template.key === 'creative' && (
+                  <div className="w-full h-full bg-purple-500 flex flex-col items-center justify-center text-white">
+                    <div className="text-lg font-bold mb-2">CREATIVE</div>
+                    <div className="text-sm text-center px-2">Artistic<br/>design</div>
+                  </div>
+                )}
+                {template.key === 'minimal-dark' && (
+                  <div className="w-full h-full bg-gray-900 flex flex-col items-center justify-center text-green-400">
+                    <div className="text-lg font-bold mb-2">MINIMAL DARK</div>
+                    <div className="text-sm text-center px-2">Dark theme<br/>with green</div>
+                  </div>
+                )}
+                {template.key === 'executive' && (
+                  <div className="w-full h-full bg-blue-900 flex flex-col items-center justify-center text-white">
+                    <div className="text-lg font-bold mb-2">EXECUTIVE</div>
+                    <div className="text-sm text-center px-2">Leadership<br/>focused</div>
+                  </div>
+                )}
+                {template.key === 'colorful' && (
+                  <div className="w-full h-full bg-gradient-to-br from-pink-400 to-purple-500 flex flex-col items-center justify-center text-white">
+                    <div className="text-lg font-bold mb-2">COLORFUL</div>
+                    <div className="text-sm text-center px-2">Vibrant<br/>colors</div>
+                  </div>
+                )}
+                {template.key === 'tech-modern' && (
+                  <div className="w-full h-full bg-gray-900 flex flex-col items-center justify-center text-green-400">
+                    <div className="text-lg font-bold mb-2">TECH MODERN</div>
+                    <div className="text-sm text-center px-2">Developer<br/>theme</div>
+                  </div>
+                )}
+                
+                {/* Selection Indicator */}
+                {selectedTemplate === template.key && (
+                  <div className="absolute top-2 right-2 w-5 h-5 bg-blue-600 rounded-full flex items-center justify-center">
+                    <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                )}
+
+                {/* Hover Overlay with Name and Description */}
+                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-60 transition-all duration-200 flex items-end">
+                  <div className="w-full p-3 transform translate-y-full group-hover:translate-y-0 transition-transform duration-200">
+                    <h3 className="font-semibold text-white text-sm mb-1">{template.name}</h3>
+                    <p className="text-xs text-gray-200 line-clamp-2">{template.description}</p>
+                    <span className={`inline-block mt-2 px-2 py-0.5 rounded-full text-xs font-medium ${
+                      template.category === 'professional' ? 'bg-blue-500 text-white' :
+                      template.category === 'modern' ? 'bg-green-500 text-white' :
+                      template.category === 'creative' ? 'bg-purple-500 text-white' :
+                      'bg-gray-500 text-white'
+                    }`}>
+                      {template.category}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={`space-y-6 ${className}`}>

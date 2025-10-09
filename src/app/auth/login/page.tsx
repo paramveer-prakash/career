@@ -19,14 +19,14 @@ export default function LoginPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-full flex items-center justify-center">
         <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center p-4">
+    <div className="min-h-full bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center p-4">
       <div className="max-w-md w-full">
         {/* Back to home button */}
         <div className="mb-8">

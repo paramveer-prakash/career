@@ -40,7 +40,7 @@ export default function Page(){
   if(loading) return <div className="p-6">Loading...</div>;
 
   return (
-    <div className="space-y-6">
+    <div className="container mx-auto px-4 py-6 space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold">My Resumes</h1>
         <form className="flex items-center gap-2" onSubmit={async(e)=>{

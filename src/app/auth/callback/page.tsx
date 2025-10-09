@@ -20,7 +20,7 @@ export default function AuthCallbackPage() {
   }, [isAuthenticated, isLoading, error, router])
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="min-h-full flex items-center justify-center">
       <div className="text-center">
         {isLoading ? (
           <>

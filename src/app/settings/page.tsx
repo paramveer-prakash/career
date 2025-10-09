@@ -32,7 +32,7 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-full bg-white">
       {/* Header */}
       <div className="border-b border-gray-200">
         <div className="max-w-4xl mx-auto px-3 sm:px-4 lg:px-8">
