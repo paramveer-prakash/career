@@ -3,7 +3,7 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from 'react-oidc-context'
-import { Button } from '@/components/ui/button'
+import { PrimaryButton } from '@/components/ui/button'
 import { Shield, Zap } from 'lucide-react'
 
 export default function HomePage() {
@@ -63,13 +63,13 @@ export default function HomePage() {
           </div>
 
           <div className="mb-12">
-            <Button
+            <PrimaryButton
               onClick={() => signinRedirect()}
               size="lg"
-              className="text-lg px-8 py-3 bg-blue-600 text-white hover:bg-blue-700 rounded-xl font-medium transition-all duration-200"
+              className="text-lg px-8 py-3 rounded-xl font-medium shadow-lg hover:shadow-xl"
             >
               Get Started
-            </Button>
+            </PrimaryButton>
           </div>
 
           {/* Features */}

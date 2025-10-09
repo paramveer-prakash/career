@@ -4,6 +4,7 @@ import { useParams } from 'next/navigation'
 import { api } from '@/lib/api'
 import { ResumePreview, ResumeTemplateKey } from '@/components/templates/preview'
 import { LoadingButton, FullPageLoader } from '@/components/ui/loader'
+import { SecondaryButton } from '@/components/ui/button'
 import { TemplateGallery } from '@/components/templates/template-gallery'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -151,12 +152,11 @@ export default function PreviewPage(){
             >
               Download PDF
             </LoadingButton>
-            <a 
-              href={`/resumes/${id}`} 
-              className="px-4 py-2 rounded-md bg-gray-100 text-gray-900 hover:bg-gray-200 transition-colors"
-            >
-              Back to Editor
-            </a>
+                <SecondaryButton asChild>
+                  <a href={`/resumes/${id}`}>
+                    Back to Editor
+                  </a>
+                </SecondaryButton>
           </div>
         </div>
       </div>

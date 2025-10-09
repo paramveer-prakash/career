@@ -1,41 +1,103 @@
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import React from 'react';
+import { Loader } from './loader';
+import { buttonVariants, buttonSizes } from '@/lib/design-system';
 
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link"
-  size?: "default" | "sm" | "lg" | "icon"
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: 'primary' | 'secondary' | 'destructive' | 'outline' | 'ghost' | 'success';
+  size?: 'sm' | 'md' | 'lg';
+  loading?: boolean;
+  loadingText?: string;
+  children: React.ReactNode;
+  className?: string;
+  asChild?: boolean;
 }
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant = "default", size = "default", ...props }, ref) => {
-    const baseClasses = "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
-    
-    const variants = {
-      default: "bg-blue-600 text-white hover:bg-blue-700",
-      destructive: "bg-red-600 text-white hover:bg-red-700",
-      outline: "border border-gray-300 bg-transparent hover:bg-gray-100",
-      secondary: "bg-gray-100 text-gray-900 hover:bg-gray-200",
-      ghost: "hover:bg-gray-100",
-      link: "text-blue-600 underline-offset-4 hover:underline"
-    }
-    
-    const sizes = {
-      default: "h-10 px-4 py-2",
-      sm: "h-9 rounded-md px-3",
-      lg: "h-11 rounded-md px-8",
-      icon: "h-10 w-10"
-    }
-
-    return (
-      <button
-        className={cn(baseClasses, variants[variant], sizes[size], className)}
-        ref={ref}
-        {...props}
-      />
-    )
+export function Button({
+  variant = 'primary',
+  size = 'md',
+  loading = false,
+  loadingText,
+  children,
+  className = '',
+  disabled,
+  asChild = false,
+  ...props
+}: ButtonProps) {
+  const baseClasses = 'inline-flex items-center justify-center font-medium rounded-lg border transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2';
+  
+  const variantConfig = buttonVariants[variant];
+  const sizeConfig = buttonSizes[size];
+  
+  const variantClasses = [
+    variantConfig.base,
+    variantConfig.hover,
+    variantConfig.focus,
+    variantConfig.disabled,
+  ].join(' ');
+  
+  const sizeClasses = [
+    sizeConfig.padding,
+    sizeConfig.fontSize,
+    sizeConfig.gap,
+  ].join(' ');
+  
+  const isDisabled = disabled || loading;
+  
+  const buttonClasses = `${baseClasses} ${variantClasses} ${sizeClasses} ${className}`;
+  
+  if (asChild && React.isValidElement(children)) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const childProps = children.props as any;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return React.cloneElement(children as any, {
+      className: `${buttonClasses} ${childProps.className || ''}`,
+      disabled: isDisabled,
+      ...props,
+    });
   }
-)
-Button.displayName = "Button"
+  
+  return (
+    <button
+      className={buttonClasses}
+      disabled={isDisabled}
+      {...props}
+    >
+      {loading ? (
+        <>
+          <Loader 
+            size="sm" 
+            color={variant === 'outline' || variant === 'ghost' ? 'secondary' : 'white'} 
+          />
+          {loadingText || 'Loading...'}
+        </>
+      ) : (
+        children
+      )}
+    </button>
+  );
+}
 
-export { Button }
+// Convenience components for common use cases
+export function PrimaryButton(props: Omit<ButtonProps, 'variant'>) {
+  return <Button variant="primary" {...props} />;
+}
+
+export function SecondaryButton(props: Omit<ButtonProps, 'variant'>) {
+  return <Button variant="secondary" {...props} />;
+}
+
+export function DestructiveButton(props: Omit<ButtonProps, 'variant'>) {
+  return <Button variant="destructive" {...props} />;
+}
+
+export function OutlineButton(props: Omit<ButtonProps, 'variant'>) {
+  return <Button variant="outline" {...props} />;
+}
+
+export function GhostButton(props: Omit<ButtonProps, 'variant'>) {
+  return <Button variant="ghost" {...props} />;
+}
+
+export function SuccessButton(props: Omit<ButtonProps, 'variant'>) {
+  return <Button variant="success" {...props} />;
+}

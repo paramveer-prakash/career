@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { api } from '@/lib/api';
 import { LoadingButton, FullPageLoader } from '@/components/ui/loader';
+import { Button, PrimaryButton, SuccessButton, DestructiveButton } from '@/components/ui/button';
 
 export default function Page(){
   const params=useParams();
@@ -95,12 +96,12 @@ function SkillsEditor({resumeId}:{resumeId:string}){
     <div className="space-y-3">
       <div className="flex gap-2">
         <input className="border border-gray-300 bg-white px-3 py-2 rounded flex-1" placeholder="Add skill" value={newSkill} onChange={e=>setNewSkill(e.target.value)} />
-        <button className="px-3 py-2 rounded bg-blue-600 text-white hover:bg-blue-700" onClick={async()=>{ if(!newSkill) return; await api.post(`/api/v1/resumes/${resumeId}/skills`, { name:newSkill }); const r=await api.get(`/api/v1/resumes/${resumeId}/skills`); const d=r.data; setItems(Array.isArray(d)?d:(Array.isArray(d?.content)?d.content:[])); setNewSkill(''); }}>Add</button>
+        <PrimaryButton size="sm" onClick={async()=>{ if(!newSkill) return; await api.post(`/api/v1/resumes/${resumeId}/skills`, { name:newSkill }); const r=await api.get(`/api/v1/resumes/${resumeId}/skills`); const d=r.data; setItems(Array.isArray(d)?d:(Array.isArray(d?.content)?d.content:[])); setNewSkill(''); }}>Add</PrimaryButton>
       </div>
       <ul className="space-y-2">{items.map((s:any)=> (
         <li key={s.id} className="flex justify-between items-center p-3 rounded-lg border border-gray-200 bg-white">
           <span>{s.name}</span>
-          <button className="text-red-600 hover:text-red-700" onClick={async()=>{ await api.delete(`/api/v1/resumes/${resumeId}/skills/${s.id}`); const r=await api.get(`/api/v1/resumes/${resumeId}/skills`); const d=r.data; setItems(Array.isArray(d)?d:(Array.isArray(d?.content)?d.content:[])); }}>Delete</button>
+          <Button variant="ghost" size="sm" className="text-red-600 hover:text-red-700 hover:bg-red-50" onClick={async()=>{ await api.delete(`/api/v1/resumes/${resumeId}/skills/${s.id}`); const r=await api.get(`/api/v1/resumes/${resumeId}/skills`); const d=r.data; setItems(Array.isArray(d)?d:(Array.isArray(d?.content)?d.content:[])); }}>Delete</Button>
         </li>
       ))}</ul>
     </div>
@@ -112,7 +113,7 @@ function WorkExpEditor({resumeId}:{resumeId:string}){
   useEffect(()=>{(async()=>{try{const r=await api.get(`/api/v1/resumes/${resumeId}/work-experiences`); const d=r.data; setItems(Array.isArray(d)?d:(Array.isArray(d?.content)?d.content:[]));}catch(e){console.error('Failed to load work experiences', e); setItems([]);}})();},[resumeId]);
   return (
     <div className="space-y-2">
-      <button className="px-3 py-1 rounded bg-blue-600 text-white" onClick={async()=>{ await api.post(`/api/v1/resumes/${resumeId}/work-experiences`, { jobTitle:'New role' }); const r=await api.get(`/api/v1/resumes/${resumeId}/work-experiences`); setItems(r.data||[]); }}>Add experience</button>
+      <PrimaryButton size="sm" onClick={async()=>{ await api.post(`/api/v1/resumes/${resumeId}/work-experiences`, { jobTitle:'New role' }); const r=await api.get(`/api/v1/resumes/${resumeId}/work-experiences`); setItems(r.data||[]); }}>Add experience</PrimaryButton>
       <ul className="space-y-2">{items.map((w:any)=> (
         <li key={w.id} className="border rounded p-3 space-y-3">
           <input className="border px-2 py-1 rounded w-full" value={w.jobTitle||''} onChange={e=>{ const v={...w, jobTitle:e.target.value}; setItems(items.map(x=>x.id===w.id?v:x)); }} />
@@ -124,8 +125,8 @@ function WorkExpEditor({resumeId}:{resumeId:string}){
             </ul>
           )}
           <div className="flex gap-2">
-            <button className="px-2 py-1 rounded bg-green-600 text-white" onClick={async()=>{ await api.put(`/api/v1/resumes/${resumeId}/work-experiences/${w.id}`, w); }}>Save</button>
-            <button className="px-2 py-1 rounded bg-red-600 text-white" onClick={async()=>{ await api.delete(`/api/v1/resumes/${resumeId}/work-experiences/${w.id}`); const r=await api.get(`/api/v1/resumes/${resumeId}/work-experiences`); setItems(r.data||[]); }}>Delete</button>
+            <SuccessButton size="sm" onClick={async()=>{ await api.put(`/api/v1/resumes/${resumeId}/work-experiences/${w.id}`, w); }}>Save</SuccessButton>
+            <DestructiveButton size="sm" onClick={async()=>{ await api.delete(`/api/v1/resumes/${resumeId}/work-experiences/${w.id}`); const r=await api.get(`/api/v1/resumes/${resumeId}/work-experiences`); setItems(r.data||[]); }}>Delete</DestructiveButton>
           </div>
         </li>
       ))}</ul>

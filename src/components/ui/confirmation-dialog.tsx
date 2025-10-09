@@ -105,7 +105,7 @@ export function ConfirmationDialog({
           
           <Button
             onClick={handleConfirm}
-            variant={variant === 'destructive' ? 'destructive' : 'default'}
+            variant={variant === 'destructive' ? 'destructive' : 'primary'}
             className="px-4 sm:px-6 text-sm sm:text-base"
           >
             {confirmText}
