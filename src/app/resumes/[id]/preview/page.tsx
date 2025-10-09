@@ -1,10 +1,10 @@
 'use client'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
 import { api } from '@/lib/api'
-import { createAuthHeaders } from '@/lib/auth-utils'
 import { ResumePreview, ResumeTemplateKey } from '@/components/templates/preview'
 import { LoadingButton, FullPageLoader } from '@/components/ui/loader'
+import { TemplateGallery } from '@/components/templates/template-gallery'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export default function PreviewPage(){
@@ -13,7 +13,6 @@ export default function PreviewPage(){
   const [resume,setResume]=useState<any>(null)
   const [loading,setLoading]=useState(true)
   const [template,setTemplate]=useState<ResumeTemplateKey>('modern')
-  const [currentTemplateIndex, setCurrentTemplateIndex] = useState(0)
   const [downloadingPDF, setDownloadingPDF] = useState(false)
   const [previewingHTML, setPreviewingHTML] = useState(false)
 
@@ -49,29 +48,6 @@ export default function PreviewPage(){
     } finally { setLoading(false) }
   })()},[id])
 
-  const templates: { key:ResumeTemplateKey, name:string, desc:string }[] = useMemo(()=>[
-    { key:'modern', name:'Modern', desc:'Bold headings, chips, accent gradient' },
-    { key:'classic', name:'Classic', desc:'Conventional, readable, clean' },
-    { key:'minimal', name:'Minimal', desc:'Sparse, two-column, airy' },
-    { key:'professional', name:'Professional', desc:'Clean blue header, profile picture support' },
-    { key:'creative', name:'Creative', desc:'Purple gradient, timeline design, emoji icons' },
-    { key:'minimal-dark', name:'Minimal Dark', desc:'Dark theme, sleek design' },
-    { key:'executive', name:'Executive', desc:'Dark header, competency bars' },
-    { key:'colorful', name:'Colorful', desc:'Rainbow stripes, vibrant colors' },
-    { key:'tech-modern', name:'Tech Modern', desc:'Dark theme with green accents, perfect for developers' },
-  ],[])
-
-  const nextTemplate = () => {
-    const nextIndex = (currentTemplateIndex + 1) % templates.length
-    setCurrentTemplateIndex(nextIndex)
-    setTemplate(templates[nextIndex].key)
-  }
-
-  const prevTemplate = () => {
-    const prevIndex = currentTemplateIndex === 0 ? templates.length - 1 : currentTemplateIndex - 1
-    setCurrentTemplateIndex(prevIndex)
-    setTemplate(templates[prevIndex].key)
-  }
 
   if(loading) return <FullPageLoader text="Loading resume..." show={true} />
   if(!resume) return <div className="p-6">Resume not found</div>
@@ -176,99 +152,13 @@ export default function PreviewPage(){
         </div>
       </div>
 
-      {/* Template Carousel */}
+      {/* Template Gallery */}
       <div className="bg-gray-50 rounded-xl p-6">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-gray-900">Choose Template</h2>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={prevTemplate}
-              className="p-2 rounded-full bg-white border border-gray-300 hover:bg-gray-50 transition-colors"
-              aria-label="Previous template"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-            <span className="text-sm text-gray-600">
-              {currentTemplateIndex + 1} of {templates.length}
-            </span>
-            <button
-              onClick={nextTemplate}
-              className="p-2 rounded-full bg-white border border-gray-300 hover:bg-gray-50 transition-colors"
-              aria-label="Next template"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          </div>
-        </div>
-        
-        {/* Current Template Display */}
-        <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <h3 className="text-xl font-semibold text-gray-900">{templates[currentTemplateIndex].name}</h3>
-              <p className="text-sm text-gray-600">{templates[currentTemplateIndex].desc}</p>
-            </div>
-            <button
-              onClick={() => setTemplate(templates[currentTemplateIndex].key)}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                template === templates[currentTemplateIndex].key
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-blue-100 text-blue-700 hover:bg-blue-200'
-              }`}
-            >
-              {template === templates[currentTemplateIndex].key ? 'Selected' : 'Select'}
-            </button>
-          </div>
-        </div>
-
-        {/* Template Dots */}
-        <div className="flex justify-center gap-2 mt-4">
-          {templates.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => {
-                setCurrentTemplateIndex(index)
-                setTemplate(templates[index].key)
-              }}
-              className={`w-2 h-2 rounded-full transition-colors ${
-                index === currentTemplateIndex ? 'bg-blue-600' : 'bg-gray-300'
-              }`}
-              aria-label={`Go to template ${index + 1}`}
-            />
-          ))}
-        </div>
-
-        {/* Quick Template Grid (Optional - for direct selection) */}
-        <div className="mt-6">
-          <details className="group">
-            <summary className="cursor-pointer text-sm text-gray-600 hover:text-gray-900">
-              View all templates
-            </summary>
-            <div className="mt-3 grid grid-cols-2 md:grid-cols-4 gap-3">
-              {templates.map((t, index) => (
-                <button
-                  key={t.key}
-                  onClick={() => {
-                    setCurrentTemplateIndex(index)
-                    setTemplate(t.key)
-                  }}
-                  className={`text-left p-3 rounded-lg border transition-colors ${
-                    template === t.key
-                      ? 'border-blue-500 bg-blue-50'
-                      : 'border-gray-200 bg-white hover:bg-gray-50'
-                  }`}
-                >
-                  <div className="font-medium text-sm">{t.name}</div>
-                  <div className="text-xs text-gray-600 mt-1">{t.desc}</div>
-                </button>
-              ))}
-            </div>
-          </details>
-        </div>
+        <h2 className="text-lg font-semibold text-gray-900 mb-6">Choose Template</h2>
+        <TemplateGallery
+          selectedTemplate={template}
+          onTemplateSelect={setTemplate}
+        />
       </div>
 
       <ResumePreview data={resume} template={template} />
