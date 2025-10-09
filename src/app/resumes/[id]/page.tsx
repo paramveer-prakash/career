@@ -4,16 +4,18 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { api } from '@/lib/api';
+import { LoadingButton, FullPageLoader } from '@/components/ui/loader';
 
 export default function Page(){
   const params=useParams();
   const id=params?.id as string;
   const [resume,setResume]=useState<any>(null);
   const [saving,setSaving]=useState(false);
+  const [deleting,setDeleting]=useState(false);
 
   useEffect(()=>{(async()=>{ if(!id) return; try{ const r=await api.get('/api/v1/resumes/'+id); setResume(r.data);} catch(e){ console.error('Failed to load resume', e); setResume(null);} })();},[id]);
 
-  if(!resume) return <div className="p-6">Loading...</div>;
+  if(!resume) return <FullPageLoader text="Loading resume..." show={true} />;
 
   return (
     <div className="space-y-8">
@@ -22,8 +24,40 @@ export default function Page(){
           <h2 className="text-xl font-semibold">Primary Info</h2>
           <div className="flex gap-2">
             <a href={`/resumes/${id}/preview`} className="px-4 py-2 rounded bg-gray-100 text-gray-900 hover:bg-gray-200">Preview</a>
-            <button onClick={async()=>{ setSaving(true); await api.put('/api/v1/resumes/'+id, resume); setSaving(false); }} className="px-4 py-2 rounded bg-green-600 text-white hover:bg-green-700">{saving?'Saving...':'Save'}</button>
-            <button onClick={async()=>{ if(!confirm('Delete this resume?')) return; await api.delete('/api/v1/resumes/'+id); window.location.href='/resumes'; }} className="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700">Delete</button>
+            <LoadingButton
+              loading={saving}
+              loadingText="Saving..."
+              onClick={async()=>{ 
+                setSaving(true); 
+                try {
+                  await api.put('/api/v1/resumes/'+id, resume); 
+                } finally {
+                  setSaving(false); 
+                }
+              }} 
+              variant="primary"
+              className="bg-green-600 hover:bg-green-700"
+            >
+              Save
+            </LoadingButton>
+            <LoadingButton
+              loading={deleting}
+              loadingText="Deleting..."
+              onClick={async()=>{ 
+                if(!confirm('Delete this resume?')) return; 
+                setDeleting(true);
+                try {
+                  await api.delete('/api/v1/resumes/'+id); 
+                  window.location.href='/resumes'; 
+                } finally {
+                  setDeleting(false);
+                }
+              }} 
+              variant="primary"
+              className="bg-red-600 hover:bg-red-700"
+            >
+              Delete
+            </LoadingButton>
           </div>
         </div>
         <label className="space-y-1 block"><span className="text-sm text-gray-600">Resume Title</span><textarea className="border border-gray-300 bg-white px-3 py-2 rounded w-full" rows={4} value={resume.title||''} onChange={e=>setResume({...resume, title:e.target.value})} /></label>

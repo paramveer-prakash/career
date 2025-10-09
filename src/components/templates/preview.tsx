@@ -31,7 +31,7 @@ export function ResumePreview({ data, template }:{ data:any, template: ResumeTem
     return (
       <div className="rounded-xl border border-gray-200 bg-white p-6">
         <div className="text-center text-gray-500">
-          Template "{template}" not found. Using default template.
+          Template &quot;{template}&quot; not found. Using default template.
         </div>
         <ModernTemplate data={data} />
       </div>

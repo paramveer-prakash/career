@@ -1,5 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { loadTemplateCSS } from './templates/css-loader';
+
 export function generateHtml(templateKey: string, data: any): string {
-  const css = getTemplateCSS(templateKey);
+  const css = loadTemplateCSS(templateKey);
   
   let htmlContent = '';
   
@@ -773,7 +776,10 @@ function generateColorfulTemplate(data: any): string {
   `;
 }
 
-export function getTemplateCSS(templateKey: string): string {
+// getTemplateCSS function removed - now using CSS loader from separate files
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function getTemplateCSS(templateKey: string): string {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const baseCSS = `
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -828,6 +834,7 @@ export function getTemplateCSS(templateKey: string): string {
     }
   `;
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const templateSpecificCSS = {
     modern: `
       .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
@@ -1132,7 +1139,8 @@ export function getTemplateCSS(templateKey: string): string {
     `
   };
 
-  return baseCSS + (templateSpecificCSS[templateKey as keyof typeof templateSpecificCSS] || '');
+  // getTemplateCSS function removed - now using CSS loader from separate files
+  return '';
 }
 
 function generateTechModernTemplate(data: any): string {
