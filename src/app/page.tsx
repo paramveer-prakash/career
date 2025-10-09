@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from 'react-oidc-context'
 import { PrimaryButton } from '@/components/ui/button'
@@ -9,6 +9,7 @@ import { Shield, Zap } from 'lucide-react'
 export default function HomePage() {
   const { isAuthenticated, isLoading, signinRedirect, user } = useAuth()
   const router = useRouter()
+  const [signingIn, setSigningIn] = useState(false)
 
   useEffect(() => {
     // Check for existing authentication immediately
@@ -64,7 +65,17 @@ export default function HomePage() {
 
           <div className="mb-12">
             <PrimaryButton
-              onClick={() => signinRedirect()}
+              onClick={async () => {
+                setSigningIn(true);
+                try {
+                  await signinRedirect();
+                } catch (error) {
+                  console.error('Sign in error:', error);
+                  setSigningIn(false);
+                }
+              }}
+              loading={signingIn}
+              loadingText="Signing in..."
               size="lg"
               className="text-lg px-8 py-3 rounded-xl font-medium shadow-lg hover:shadow-xl"
             >

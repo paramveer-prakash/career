@@ -32,6 +32,7 @@ export const viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
+  themeColor: '#ffffff',
 };
 
 export default function RootLayout({
@@ -41,7 +42,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${sora.variable} ${jetbrainsMono.variable}`}>
-      <body className="font-sans antialiased">
+      <head>
+        <style dangerouslySetInnerHTML={{
+          __html: `
+            html { background-color: white !important; }
+            body { background-color: white !important; }
+            * { background-color: transparent; }
+          `
+        }} />
+      </head>
+      <body className="font-sans antialiased bg-white">
         <OIDCAuthProvider>
           <AuthProvider>
             <div className="min-h-screen flex flex-col">

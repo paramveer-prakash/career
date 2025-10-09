@@ -4,8 +4,9 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { api } from '@/lib/api';
-import { LoadingButton, FullPageLoader } from '@/components/ui/loader';
+import { FullPageLoader } from '@/components/ui/loader';
 import { Button, PrimaryButton, SuccessButton, DestructiveButton } from '@/components/ui/button';
+import { SecondaryLinkButton } from '@/components/ui/link-button';
 
 export default function Page(){
   const params=useParams();
@@ -24,8 +25,14 @@ export default function Page(){
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-semibold">Primary Info</h2>
           <div className="flex gap-2">
-            <a href={`/resumes/${id}/preview`} className="px-4 py-2 rounded bg-gray-100 text-gray-900 hover:bg-gray-200">Preview</a>
-            <LoadingButton
+            <SecondaryLinkButton 
+              href={`/resumes/${id}/preview`}
+              loadingText="Loading preview..."
+            >
+              Preview
+            </SecondaryLinkButton>
+            <SuccessButton
+              className="text-gray-900"
               loading={saving}
               loadingText="Saving..."
               onClick={async()=>{ 
@@ -35,13 +42,12 @@ export default function Page(){
                 } finally {
                   setSaving(false); 
                 }
-              }} 
-              variant="primary"
-              className="bg-green-600 hover:bg-green-700"
+              }}
             >
               Save
-            </LoadingButton>
-            <LoadingButton
+            </SuccessButton>
+            <DestructiveButton
+              className="text-gray-900"
               loading={deleting}
               loadingText="Deleting..."
               onClick={async()=>{ 
@@ -49,16 +55,15 @@ export default function Page(){
                 setDeleting(true);
                 try {
                   await api.delete('/api/v1/resumes/'+id); 
-                  window.location.href='/resumes'; 
+                  // Use window.location for a clean redirect without flash
+                  window.location.href = '/resumes';
                 } finally {
                   setDeleting(false);
                 }
-              }} 
-              variant="primary"
-              className="bg-red-600 hover:bg-red-700"
+              }}
             >
               Delete
-            </LoadingButton>
+            </DestructiveButton>
           </div>
         </div>
         <label className="space-y-1 block"><span className="text-sm text-gray-600">Resume Title</span><textarea className="border border-gray-300 bg-white px-3 py-2 rounded w-full" rows={4} value={resume.title||''} onChange={e=>setResume({...resume, title:e.target.value})} /></label>
@@ -139,13 +144,13 @@ function EduEditor({resumeId}:{resumeId:string}){
   useEffect(()=>{(async()=>{try{const r=await api.get(`/api/v1/resumes/${resumeId}/educations`); const d=r.data; setItems(Array.isArray(d)?d:(Array.isArray(d?.content)?d.content:[]));}catch(e){console.error('Failed to load educations', e); setItems([]);}})();},[resumeId]);
   return (
     <div className="space-y-2">
-      <button className="px-3 py-1 rounded bg-blue-600 text-white" onClick={async()=>{ await api.post(`/api/v1/resumes/${resumeId}/educations`, { institution:'New school' }); const r=await api.get(`/api/v1/resumes/${resumeId}/educations`); setItems(r.data||[]); }}>Add education</button>
+      <button className="px-3 py-1 rounded bg-blue-600 text-gray-900" onClick={async()=>{ await api.post(`/api/v1/resumes/${resumeId}/educations`, { institution:'New school' }); const r=await api.get(`/api/v1/resumes/${resumeId}/educations`); setItems(r.data||[]); }}>Add education</button>
       <ul className="space-y-2">{items.map((e:any)=> (
         <li key={e.id} className="border rounded p-3 space-y-2">
           <input className="border px-2 py-1 rounded w-full" value={e.institution||''} onChange={ev=>{ const v={...e, institution:ev.target.value}; setItems(items.map(x=>x.id===e.id?v:x)); }} />
           <div className="flex gap-2">
-            <button className="px-2 py-1 rounded bg-green-600 text-white" onClick={async()=>{ await api.put(`/api/v1/resumes/${resumeId}/educations/${e.id}`, e); }}>Save</button>
-            <button className="px-2 py-1 rounded bg-red-600 text-white" onClick={async()=>{ await api.delete(`/api/v1/resumes/${resumeId}/educations/${e.id}`); const r=await api.get(`/api/v1/resumes/${resumeId}/educations`); setItems(r.data||[]); }}>Delete</button>
+            <button className="px-2 py-1 rounded bg-green-600 text-gray-900" onClick={async()=>{ await api.put(`/api/v1/resumes/${resumeId}/educations/${e.id}`, e); }}>Save</button>
+            <button className="px-2 py-1 rounded bg-red-600 text-gray-900" onClick={async()=>{ await api.delete(`/api/v1/resumes/${resumeId}/educations/${e.id}`); const r=await api.get(`/api/v1/resumes/${resumeId}/educations`); setItems(r.data||[]); }}>Delete</button>
           </div>
         </li>
       ))}</ul>

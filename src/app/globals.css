@@ -160,6 +160,36 @@ h6 { font-size: 0.875rem; }
   transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
 }
 
+/* Comprehensive flash prevention */
+html {
+  background-color: white !important;
+  color-scheme: light;
+}
+
+body {
+  background-color: white !important;
+  color: #1a1a1a;
+  transition: none;
+}
+
+/* Prevent flash during navigation */
+#__next {
+  background-color: white;
+  min-height: 100vh;
+}
+
+/* Smooth transitions without flash */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Prevent layout shift */
+main {
+  background-color: white;
+  min-height: calc(100vh - 4rem);
+}
+
 /* Mobile-specific improvements */
 @media (max-width: 768px) {
   /* Prevent zoom on input focus on iOS */

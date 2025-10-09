@@ -104,7 +104,7 @@ export const designSystem = {
 // Button variant configurations
 export const buttonVariants = {
   primary: {
-    base: 'bg-primary-600 text-white border-transparent',
+    base: 'bg-primary-600 border-transparent',
     hover: 'hover:bg-primary-700',
     focus: 'focus:ring-primary-500',
     disabled: 'disabled:bg-primary-300 disabled:cursor-not-allowed',
@@ -116,8 +116,8 @@ export const buttonVariants = {
     disabled: 'disabled:bg-neutral-50 disabled:cursor-not-allowed',
   },
   destructive: {
-    base: 'bg-semantic-error text-white border-transparent',
-    hover: 'hover:bg-red-700',
+    base: 'bg-semantic-error text-gray-900 border-transparent',
+    hover: 'hover:bg-red-700 hover:text-gray-900',
     focus: 'focus:ring-red-500',
     disabled: 'disabled:bg-red-300 disabled:cursor-not-allowed',
   },
@@ -134,8 +134,8 @@ export const buttonVariants = {
     disabled: 'disabled:bg-transparent disabled:cursor-not-allowed',
   },
   success: {
-    base: 'bg-semantic-success text-white border-transparent',
-    hover: 'hover:bg-green-700',
+    base: 'bg-semantic-success text-gray-900 border-transparent',
+    hover: 'hover:bg-green-700 hover:text-gray-900',
     focus: 'focus:ring-green-500',
     disabled: 'disabled:bg-green-300 disabled:cursor-not-allowed',
   },

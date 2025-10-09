@@ -113,7 +113,7 @@ export function TemplateGallery({
               onClick={() => setSelectedCategory(category.key)}
               className={`px-2 py-1 rounded text-xs font-medium transition-colors ${
                 selectedCategory === category.key
-                  ? 'bg-blue-600 text-white'
+                  ? 'bg-blue-600 text-gray-1100'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}
             >
