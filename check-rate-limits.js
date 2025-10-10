@@ -5,6 +5,7 @@
  * Run this to see your current usage before trying to create new conversations
  */
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const axios = require('axios');
 
 const BASE_URL = 'http://localhost:8080';

@@ -62,7 +62,19 @@ export function AIChat({ resumeId, resume, isOpen, onClose, onOpenInterviewPrep,
 
   const handleSuggestionClick = async (suggestion: string) => {
     setInputMessage(suggestion);
-    await handleSendMessage();
+    // Wait for state update, then send message
+    setTimeout(async () => {
+      if (!loading) {
+        const resumeContext = {
+          skills: resume.skills?.map(s => s.name) || [],
+          workExperiences: resume.workExperiences?.map(w => w.jobTitle) || [],
+          education: resume.educations?.map(e => e.degree).filter((degree): degree is string => Boolean(degree)) || [],
+          currentRole: resume.title
+        };
+        await sendMessage(suggestion, resumeContext);
+        setInputMessage('');
+      }
+    }, 0);
   };
 
 
@@ -96,11 +108,15 @@ export function AIChat({ resumeId, resume, isOpen, onClose, onOpenInterviewPrep,
     return (
       <div className="h-full flex flex-col">
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+        <div className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0">
           {messages.length === 0 ? (
             <div className="text-center py-8">
-              <div className="text-4xl mb-4">🤖</div>
-              <p className="text-gray-500 text-sm">Start a conversation to get AI-powered resume advice!</p>
+              <div className="w-16 h-16 bg-gradient-to-br from-sky-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                </svg>
+              </div>
+              <p className="text-slate-500 text-sm">Start a conversation to get AI-powered resume advice!</p>
             </div>
           ) : (
             messages.map((message) => (
@@ -149,14 +165,14 @@ export function AIChat({ resumeId, resume, isOpen, onClose, onOpenInterviewPrep,
 
         {/* Suggestions */}
         {suggestions.length > 0 && (
-          <div className="px-4 py-2 border-t border-gray-200 bg-gray-50">
-            <p className="text-xs font-medium text-gray-700 mb-2">Quick suggestions:</p>
-            <div className="flex flex-wrap gap-1">
+          <div className="px-4 py-3 border-t border-slate-200 bg-slate-50/50 max-h-32 overflow-y-auto">
+            <p className="text-xs font-medium text-slate-700 mb-2">Quick suggestions:</p>
+            <div className="flex flex-wrap gap-1.5">
               {suggestions.map((suggestion, index) => (
                 <button
                   key={index}
                   onClick={() => handleSuggestionClick(suggestion)}
-                  className="px-2 py-1 text-xs bg-white border border-gray-200 rounded hover:bg-gray-50 transition-colors"
+                  className="px-2.5 py-1.5 text-xs bg-white border border-slate-200 rounded-lg hover:bg-slate-50 hover:border-slate-300 transition-colors shadow-sm"
                 >
                   {suggestion}
                 </button>
@@ -166,21 +182,22 @@ export function AIChat({ resumeId, resume, isOpen, onClose, onOpenInterviewPrep,
         )}
 
         {/* Input */}
-        <div className="p-4 border-t border-gray-200">
+        <div className="p-4 border-t border-slate-200 bg-white flex-shrink-0">
           <div className="flex gap-2">
             <textarea
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder="Ask me anything about your resume..."
-              className="flex-1 px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 resize-none text-sm"
+              className="flex-1 px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all duration-200 resize-none text-sm"
               rows={2}
               disabled={loading}
+              style={{ minHeight: '40px' }}
             />
             <button
               onClick={handleSendMessage}
               disabled={!inputMessage.trim() || loading}
-              className="px-4 py-2 bg-gradient-to-r from-purple-500 to-blue-600 text-white rounded-lg hover:from-purple-600 hover:to-blue-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed font-medium text-sm"
+              className="px-4 py-2 bg-gradient-to-r from-sky-500 to-blue-600 text-white rounded-lg hover:from-sky-600 hover:to-blue-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed font-medium text-sm"
             >
               {loading ? '...' : 'Send'}
             </button>
@@ -188,6 +205,10 @@ export function AIChat({ resumeId, resume, isOpen, onClose, onOpenInterviewPrep,
           {error && (
             <p className="mt-2 text-xs text-red-600">{error}</p>
           )}
+          {/* Debug info - remove in production */}
+          <div className="mt-2 text-xs text-gray-400">
+            Input length: {inputMessage.length} | Loading: {loading ? 'Yes' : 'No'}
+          </div>
         </div>
       </div>
     );
@@ -198,7 +219,7 @@ export function AIChat({ resumeId, resume, isOpen, onClose, onOpenInterviewPrep,
     <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
       <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[80vh] overflow-hidden border-2 border-gray-200 flex flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-gradient-to-r from-purple-500 to-blue-600 text-white">
+        <div className="flex items-center justify-between p-6 border-b border-slate-200 bg-gradient-to-r from-sky-500 to-blue-600 text-white">
           <div className="flex items-center">
             <span className="text-2xl mr-3">🤖</span>
             <div>
@@ -244,8 +265,12 @@ export function AIChat({ resumeId, resume, isOpen, onClose, onOpenInterviewPrep,
         <div className="flex-1 overflow-y-auto p-6 space-y-4">
           {messages.length === 0 ? (
             <div className="text-center py-8">
-              <div className="text-4xl mb-4">🤖</div>
-              <p className="text-gray-500">Start a conversation to get AI-powered resume advice!</p>
+              <div className="w-20 h-20 bg-gradient-to-br from-sky-500 to-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+                <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                </svg>
+              </div>
+              <p className="text-slate-500">Start a conversation to get AI-powered resume advice!</p>
             </div>
           ) : (
             messages.map((message) => (
@@ -294,14 +319,14 @@ export function AIChat({ resumeId, resume, isOpen, onClose, onOpenInterviewPrep,
 
         {/* Suggestions */}
         {suggestions.length > 0 && (
-          <div className="px-6 py-3 border-t border-gray-200 bg-gray-50">
-            <p className="text-sm font-medium text-gray-700 mb-2">Quick suggestions:</p>
+          <div className="px-6 py-3 border-t border-slate-200 bg-slate-50/50 max-h-40 overflow-y-auto">
+            <p className="text-sm font-medium text-slate-700 mb-2">Quick suggestions:</p>
             <div className="flex flex-wrap gap-2">
               {suggestions.map((suggestion, index) => (
                 <button
                   key={index}
                   onClick={() => handleSuggestionClick(suggestion)}
-                  className="px-3 py-1.5 text-sm bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+                  className="px-3 py-1.5 text-sm bg-white border border-slate-200 rounded-lg hover:bg-slate-50 hover:border-slate-300 transition-colors shadow-sm"
                 >
                   {suggestion}
                 </button>
@@ -312,21 +337,22 @@ export function AIChat({ resumeId, resume, isOpen, onClose, onOpenInterviewPrep,
 
 
         {/* Input */}
-        <div className="p-6 border-t border-gray-200">
+        <div className="p-6 border-t border-slate-200 bg-white flex-shrink-0">
           <div className="flex gap-3">
             <textarea
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder="Ask me anything about your resume..."
-              className="flex-1 px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 resize-none"
+              className="flex-1 px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all duration-200 resize-none"
               rows={2}
               disabled={loading}
+              style={{ minHeight: '48px' }}
             />
             <button
               onClick={handleSendMessage}
               disabled={!inputMessage.trim() || loading}
-              className="px-6 py-3 bg-gradient-to-r from-purple-500 to-blue-600 text-white rounded-xl hover:from-purple-600 hover:to-blue-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+              className="px-6 py-3 bg-gradient-to-r from-sky-500 to-blue-600 text-white rounded-xl hover:from-sky-600 hover:to-blue-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed font-medium"
             >
               {loading ? 'Sending...' : 'Send'}
             </button>
@@ -334,6 +360,10 @@ export function AIChat({ resumeId, resume, isOpen, onClose, onOpenInterviewPrep,
           {error && (
             <p className="mt-2 text-sm text-red-600">{error}</p>
           )}
+          {/* Debug info - remove in production */}
+          <div className="mt-2 text-xs text-gray-400">
+            Input length: {inputMessage.length} | Loading: {loading ? 'Yes' : 'No'}
+          </div>
         </div>
       </div>
     </div>

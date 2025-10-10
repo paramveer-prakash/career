@@ -91,20 +91,21 @@ export default function ResumeEditorPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
-      <div className="container mx-auto px-4 py-8 max-w-6xl">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-sky-50 to-blue-50">
+      <div className="container mx-auto px-6 py-12 max-w-7xl">
         {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-6">
+        <div className="mb-12">
+          <div className="flex items-center justify-between mb-8">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">Resume Editor</h1>
-              <p className="text-gray-600">Create and edit your professional resume</p>
+              <h1 className="text-4xl font-bold text-slate-900 mb-3 tracking-tight">Resume Editor</h1>
+              <p className="text-xl text-slate-600 font-medium">Create and edit your professional resume</p>
             </div>
-            <div className="flex gap-3">
+            <div className="flex gap-4">
               <SecondaryLinkButton 
                 href={`/resumes/${id}/preview`}
                 loadingText="Loading preview..."
-                className="px-6 py-2.5"
+                size="lg"
+                className="px-8 py-3 rounded-xl font-semibold"
               >
                 👁️ Preview
               </SecondaryLinkButton>
@@ -112,7 +113,8 @@ export default function ResumeEditorPage() {
                 loading={saving}
                 loadingText="Saving..."
                 onClick={handleSave}
-                className="px-6 py-2.5"
+                size="lg"
+                className="px-8 py-3 rounded-xl font-semibold"
               >
                 💾 Save Resume
               </SuccessButton>
@@ -120,7 +122,8 @@ export default function ResumeEditorPage() {
                 loading={deleting}
                 loadingText="Deleting..."
                 onClick={openDeleteDialog}
-                className="px-6 py-2.5"
+                size="lg"
+                className="px-8 py-3 rounded-xl font-semibold"
               >
                 🗑️ Delete
               </DestructiveButton>
@@ -129,9 +132,9 @@ export default function ResumeEditorPage() {
         </div>
 
         {/* Main Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           {/* Left Column - Primary Info */}
-          <div className="lg:col-span-1 space-y-6">
+          <div className="lg:col-span-1 space-y-8">
             <PrimaryInfoSection 
               resume={resume} 
               onUpdate={updateResume} 
@@ -139,7 +142,7 @@ export default function ResumeEditorPage() {
           </div>
 
           {/* Right Column - Sections */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-8">
             <SkillsSection resumeId={id} resume={resume} />
             <WorkExperienceSection resumeId={id} resume={resume} />
             <EducationSection resumeId={id} resume={resume} />

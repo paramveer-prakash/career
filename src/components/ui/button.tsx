@@ -3,8 +3,8 @@ import { Loader } from './loader';
 import { buttonVariants, buttonSizes } from '@/lib/design-system';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'destructive' | 'outline' | 'ghost' | 'success';
-  size?: 'sm' | 'md' | 'lg';
+  variant?: 'primary' | 'secondary' | 'destructive' | 'outline' | 'ghost' | 'success' | 'accent';
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   loading?: boolean;
   loadingText?: string;
   children: React.ReactNode;
@@ -23,7 +23,7 @@ export function Button({
   asChild = false,
   ...props
 }: ButtonProps) {
-  const baseClasses = 'inline-flex items-center justify-center font-medium rounded-lg border transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2';
+  const baseClasses = 'inline-flex items-center justify-center font-medium rounded-lg border transition-all duration-200 focus:outline-none transform active:scale-95';
   
   const variantConfig = buttonVariants[variant];
   const sizeConfig = buttonSizes[size];
@@ -100,4 +100,8 @@ export function GhostButton(props: Omit<ButtonProps, 'variant'>) {
 
 export function SuccessButton(props: Omit<ButtonProps, 'variant'>) {
   return <Button variant="success" {...props} />;
+}
+
+export function AccentButton(props: Omit<ButtonProps, 'variant'>) {
+  return <Button variant="accent" {...props} />;
 }

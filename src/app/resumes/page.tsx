@@ -46,32 +46,34 @@ export default function ResumesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
-      <div className="container mx-auto px-4 py-8 max-w-7xl">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-sky-50 to-blue-50">
+      <div className="container mx-auto px-6 py-12 max-w-7xl">
         {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-6">
+        <div className="mb-12">
+          <div className="flex items-center justify-between mb-8">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">My Resumes</h1>
-              <p className="text-gray-600">Manage and edit your professional resumes</p>
+              <h1 className="text-4xl font-bold text-slate-900 mb-3 tracking-tight">My Resumes</h1>
+              <p className="text-xl text-slate-600 font-medium">Manage and edit your professional resumes</p>
             </div>
-            <div className="text-right">
-              <div className="text-2xl font-bold text-gray-900">{resumes.length}</div>
-              <div className="text-sm text-gray-500">Total Resumes</div>
+            <div className="text-right bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-slate-200/60">
+              <div className="text-3xl font-bold text-slate-900">{resumes.length}</div>
+              <div className="text-sm text-slate-500 font-medium">Total Resumes</div>
             </div>
           </div>
         </div>
 
         {/* Upload Section */}
-        <div className="mb-8">
-          <div className="bg-white/80 backdrop-blur-sm border border-gray-100 rounded-2xl shadow-lg p-6">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center">
-                <span className="text-white font-bold text-lg">📤</span>
+        <div className="mb-12">
+          <div className="bg-white/90 backdrop-blur-sm border border-slate-200/60 rounded-3xl shadow-xl p-8">
+            <div className="flex items-center gap-4 mb-8">
+              <div className="w-16 h-16 bg-gradient-to-br from-sky-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg">
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                </svg>
               </div>
               <div>
-                <h2 className="text-lg font-semibold text-gray-900">Upload New Resume</h2>
-                <p className="text-sm text-gray-500">Add a new resume to your collection</p>
+                <h2 className="text-2xl font-bold text-slate-900">Upload New Resume</h2>
+                <p className="text-lg text-slate-600 font-medium">Add a new resume to your collection</p>
               </div>
             </div>
             <FileUploadSection onUploadSuccess={refreshResumes} />
@@ -81,7 +83,7 @@ export default function ResumesPage() {
         {/* Resumes Grid */}
         {resumes.length > 0 ? (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
               {resumes.map((resume) => (
                 <ResumeCard
                   key={resume.id}
@@ -93,34 +95,50 @@ export default function ResumesPage() {
             </div>
 
             {/* Quick Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 text-center">
-                <div className="text-3xl mb-2">📄</div>
-                <div className="text-2xl font-bold text-gray-900">{resumes.length}</div>
-                <div className="text-gray-600">Total Resumes</div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-xl border border-slate-200/60 p-8 text-center hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+                <div className="w-12 h-12 bg-gradient-to-br from-sky-500 to-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                </div>
+                <div className="text-3xl font-bold text-slate-900 mb-2">{resumes.length}</div>
+                <div className="text-slate-600 font-medium">Total Resumes</div>
               </div>
-              <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 text-center">
-                <div className="text-3xl mb-2">📅</div>
-                <div className="text-2xl font-bold text-gray-900">
+              <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-xl border border-slate-200/60 p-8 text-center hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+                <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-green-600 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <div className="text-3xl font-bold text-slate-900 mb-2">
                   {resumes.filter(r => r.updatedAt && new Date(r.updatedAt) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)).length}
                 </div>
-                <div className="text-gray-600">Updated This Week</div>
+                <div className="text-slate-600 font-medium">Updated This Week</div>
               </div>
-              <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 text-center">
-                <div className="text-3xl mb-2">🏷️</div>
-                <div className="text-2xl font-bold text-gray-900">
+              <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-xl border border-slate-200/60 p-8 text-center hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+                <div className="w-12 h-12 bg-gradient-to-br from-fuchsia-500 to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                  </svg>
+                </div>
+                <div className="text-3xl font-bold text-slate-900 mb-2">
                   {resumes.filter(r => r.title && r.title.length > 0).length}
                 </div>
-                <div className="text-gray-600">With Titles</div>
+                <div className="text-slate-600 font-medium">With Titles</div>
               </div>
             </div>
           </>
         ) : (
           /* Empty State */
           <div className="text-center py-16">
-            <div className="text-8xl mb-6">📄</div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">No Resumes Yet</h2>
-            <p className="text-gray-600 mb-8 max-w-md mx-auto">
+            <div className="w-24 h-24 bg-gradient-to-br from-slate-400 to-slate-600 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+              <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+            <h2 className="text-2xl font-bold text-slate-900 mb-4">No Resumes Yet</h2>
+            <p className="text-slate-600 mb-8 max-w-md mx-auto">
               Get started by uploading your first resume. You can upload PDF, DOC, DOCX, or TXT files.
             </p>
             <div className="max-w-md mx-auto">

@@ -1,22 +1,28 @@
 @import "tailwindcss";
 
 :root {
-  /* Light theme defaults */
+  /* Light theme defaults - Enterprise Grade */
   --background: #ffffff;
   --foreground: #0f172a; /* slate-900 */
   --muted: #f8fafc; /* slate-50 */
   --muted-foreground: #64748b; /* slate-500 */
-  --border: #e5e7eb; /* gray-200 */
+  --border: #e2e8f0; /* slate-200 */
   --input: #ffffff;
-  --primary: #2563eb; /* blue-600 */
+  --primary: #0284c7; /* sky-600 - sophisticated blue */
   --primary-foreground: #ffffff;
   --secondary: #f1f5f9; /* slate-100 */
   --secondary-foreground: #0f172a;
-  --accent: #f8fafc;
-  --accent-foreground: #0f172a;
-  --destructive: #ef4444;
+  --accent: #d946ef; /* fuchsia-500 */
+  --accent-foreground: #ffffff;
+  --destructive: #dc2626; /* red-600 */
   --destructive-foreground: #ffffff;
-  --ring: #3b82f6; /* blue-500 */
+  --success: #059669; /* emerald-600 */
+  --success-foreground: #ffffff;
+  --warning: #d97706; /* amber-600 */
+  --warning-foreground: #ffffff;
+  --info: #0891b2; /* cyan-600 */
+  --info-foreground: #ffffff;
+  --ring: #0ea5e9; /* sky-500 */
   --radius: 0.75rem;
 
   /* Chat specific colors - light */
@@ -32,22 +38,28 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    /* Enhanced dark theme for better contrast */
+    /* Enhanced dark theme for better contrast - Enterprise Grade */
     --background: #0f0f0f;
     --foreground: #f0f0f0;
     --muted: #1a1a1a;
     --muted-foreground: #a3a3a3;
-    --border: transparent;
+    --border: #262626;
     --input: #1a1a1a;
-    --primary: #4285f4;
+    --primary: #0ea5e9; /* sky-500 */
     --primary-foreground: #ffffff;
     --secondary: #1a1a1a;
     --secondary-foreground: #f0f0f0;
-    --accent: #1a1a1a;
-    --accent-foreground: #f0f0f0;
-    --destructive: #ef4444;
+    --accent: #e879f9; /* fuchsia-400 */
+    --accent-foreground: #ffffff;
+    --destructive: #ef4444; /* red-500 */
     --destructive-foreground: #ffffff;
-    --ring: #4285f4;
+    --success: #10b981; /* emerald-500 */
+    --success-foreground: #ffffff;
+    --warning: #f59e0b; /* amber-500 */
+    --warning-foreground: #ffffff;
+    --info: #06b6d4; /* cyan-500 */
+    --info-foreground: #ffffff;
+    --ring: #0ea5e9;
     
     /* Chat specific dark colors - Enhanced contrast */
     --chat-bg: #0f0f0f;

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from 'react-oidc-context'
 import { PrimaryButton } from '@/components/ui/button'
-import { Shield, Zap } from 'lucide-react'
+import { Shield } from 'lucide-react'
 
 export default function HomePage() {
   const { isAuthenticated, isLoading, signinRedirect, user } = useAuth()
@@ -49,21 +49,24 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-sky-50 to-blue-50">
 
       {/* Hero Section */}
-      <main className="container mx-auto px-4 py-16">
-        <div className="text-center max-w-5xl mx-auto">
-          <div className="mb-12">
-            <h1 className="text-5xl sm:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-              Build better resumes faster
+      <main className="container mx-auto px-6 py-20 max-w-7xl">
+        <div className="text-center max-w-6xl mx-auto">
+          <div className="mb-16">
+            <h1 className="text-6xl sm:text-7xl font-bold text-slate-900 mb-8 leading-tight tracking-tight">
+              Build better resumes
+              <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
+                faster
+              </span>
             </h1>
-            <p className="text-lg sm:text-xl text-gray-600 mb-10 max-w-3xl mx-auto leading-relaxed">
-              Upload, parse, and edit your resumes section-by-section with a clean, structured editor.
+            <p className="text-xl sm:text-2xl text-slate-600 mb-12 max-w-4xl mx-auto leading-relaxed font-medium">
+              Upload, parse, and edit your resumes section-by-section with a clean, structured editor powered by AI.
             </p>
           </div>
 
-          <div className="mb-12">
+          <div className="mb-16">
             <PrimaryButton
               onClick={async () => {
                 setSigningIn(true);
@@ -76,48 +79,52 @@ export default function HomePage() {
               }}
               loading={signingIn}
               loadingText="Signing in..."
-              size="lg"
-              className="text-lg px-8 py-3 rounded-xl font-medium shadow-lg hover:shadow-xl"
+              size="xl"
+              className="text-xl px-12 py-4 rounded-2xl font-semibold shadow-xl hover:shadow-2xl"
             >
               Get Started
             </PrimaryButton>
           </div>
 
           {/* Features */}
-          <div className="grid md:grid-cols-3 gap-6 mt-14">
-            <div className="text-left p-6 rounded-2xl border border-gray-100 bg-white/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center mb-4 shadow-lg">
-                <Zap className="w-6 h-6 text-white" />
+          <div className="grid md:grid-cols-3 gap-8 mt-20">
+            <div className="text-left p-8 rounded-3xl border border-slate-200/60 bg-white/90 backdrop-blur-sm shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 group">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-500 to-blue-600 flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                </svg>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                Fast uploads
+              <h3 className="text-2xl font-bold text-slate-900 mb-4">
+                Fast Uploads
               </h3>
-              <p className="text-gray-600 leading-relaxed">
-                Upload multiple resumes (PDF/DOC/DOCX/TXT) and parse them into structured data.
+              <p className="text-slate-600 text-lg leading-relaxed">
+                Upload multiple resumes (PDF/DOC/DOCX/TXT) and parse them into structured data instantly.
               </p>
             </div>
 
-            <div className="text-left p-6 rounded-2xl border border-gray-100 bg-white/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center mb-4 shadow-lg">
-                <span className="text-white font-bold text-lg">✏️</span>
+            <div className="text-left p-8 rounded-3xl border border-slate-200/60 bg-white/90 backdrop-blur-sm shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 group">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-600 flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                </svg>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                Structured editor
+              <h3 className="text-2xl font-bold text-slate-900 mb-4">
+                Structured Editor
               </h3>
-              <p className="text-gray-600 leading-relaxed">
-                Edit primary info, skills, work experience, and education with dedicated CRUD.
+              <p className="text-slate-600 text-lg leading-relaxed">
+                Edit primary info, skills, work experience, and education with dedicated CRUD operations.
               </p>
             </div>
 
-            <div className="text-left p-6 rounded-2xl border border-gray-100 bg-white/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center mb-4 shadow-lg">
-                <Shield className="w-6 h-6 text-white" />
+            <div className="text-left p-8 rounded-3xl border border-slate-200/60 bg-white/90 backdrop-blur-sm shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 group">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-fuchsia-500 to-purple-600 flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                <Shield className="w-8 h-8 text-white" />
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              <h3 className="text-2xl font-bold text-slate-900 mb-4">
                 Secure & Private
               </h3>
-              <p className="text-gray-600 leading-relaxed">
-                Your data is protected with enterprise-grade authentication (AWS Cognito).
+              <p className="text-slate-600 text-lg leading-relaxed">
+                Your data is protected with enterprise-grade authentication and encryption (AWS Cognito).
               </p>
             </div>
           </div>
