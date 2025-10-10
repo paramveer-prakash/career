@@ -32,9 +32,9 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="min-h-full bg-white">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
       {/* Header */}
-      <div className="border-b border-gray-200">
+      <div className="bg-white/80 backdrop-blur-sm border-b border-gray-200">
         <div className="max-w-4xl mx-auto px-3 sm:px-4 lg:px-8">
           <div className="flex items-center justify-between h-14 sm:h-16">
             <div className="flex items-center space-x-2 sm:space-x-4">
@@ -59,10 +59,10 @@ export default function SettingsPage() {
         <div className="space-y-6 sm:space-y-8">
           
           {/* Account Section */}
-          <div className="bg-white border border-gray-200 rounded-lg p-4 sm:p-6">
+          <div className="bg-white/80 backdrop-blur-sm border border-gray-100 rounded-2xl shadow-lg p-4 sm:p-6">
             <div className="flex items-center space-x-3 mb-6">
-              <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                <User className="w-5 h-5 text-blue-600" />
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
+                <User className="w-5 h-5 text-white" />
               </div>
               <div>
                 <h2 className="text-lg font-semibold text-gray-900">Account</h2>
@@ -102,10 +102,10 @@ export default function SettingsPage() {
 
 
           {/* Privacy & Security */}
-          <div className="bg-white border border-gray-200 rounded-lg p-4 sm:p-6">
+          <div className="bg-white/80 backdrop-blur-sm border border-gray-100 rounded-2xl shadow-lg p-4 sm:p-6">
             <div className="flex items-center space-x-3 mb-6">
-              <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
-                <Shield className="w-5 h-5 text-orange-600" />
+              <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-red-600 rounded-xl flex items-center justify-center shadow-lg">
+                <Shield className="w-5 h-5 text-white" />
               </div>
               <div>
                 <h2 className="text-lg font-semibold text-gray-900">Privacy & Security</h2>

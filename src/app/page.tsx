@@ -49,7 +49,7 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-full bg-white">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
 
       {/* Hero Section */}
       <main className="container mx-auto px-4 py-16">
@@ -85,8 +85,8 @@ export default function HomePage() {
 
           {/* Features */}
           <div className="grid md:grid-cols-3 gap-6 mt-14">
-            <div className="text-left p-6 rounded-2xl border border-gray-200 bg-white shadow-sm hover:shadow-md transition-all duration-200">
-              <div className="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center mb-4">
+            <div className="text-left p-6 rounded-2xl border border-gray-100 bg-white/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center mb-4 shadow-lg">
                 <Zap className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">
@@ -97,7 +97,10 @@ export default function HomePage() {
               </p>
             </div>
 
-            <div className="text-left p-6 rounded-2xl border border-gray-200 bg-white shadow-sm hover:shadow-md transition-all duration-200">
+            <div className="text-left p-6 rounded-2xl border border-gray-100 bg-white/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center mb-4 shadow-lg">
+                <span className="text-white font-bold text-lg">✏️</span>
+              </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">
                 Structured editor
               </h3>
@@ -106,8 +109,8 @@ export default function HomePage() {
               </p>
             </div>
 
-            <div className="text-left p-6 rounded-2xl border border-gray-200 bg-white shadow-sm hover:shadow-md transition-all duration-200">
-              <div className="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center mb-4">
+            <div className="text-left p-6 rounded-2xl border border-gray-100 bg-white/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center mb-4 shadow-lg">
                 <Shield className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">
@@ -122,10 +125,10 @@ export default function HomePage() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-white mt-16 border-t border-gray-200">
+      <footer className="bg-white/80 backdrop-blur-sm mt-16 border-t border-gray-200">
         <div className="container mx-auto px-4 py-12">
           <div className="text-center text-gray-600">
-            <p className="font-medium">© 2025 Career.</p>
+            <p className="font-medium">© 2025 Career - Professional Resume Builder</p>
           </div>
         </div>
       </footer>

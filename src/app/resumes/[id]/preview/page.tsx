@@ -53,7 +53,7 @@ export default function PreviewPage(){
   if(!resume) return <div className="p-6">Resume not found</div>
 
   return (
-    <div className="h-[calc(100vh-4rem)] flex flex-col bg-gray-50">
+    <div className="h-[calc(100vh-4rem)] flex flex-col bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
       {/* Header */}
       {/*<div className="bg-white border-b border-gray-200 px-4 py-4">
         <div className="flex items-center justify-between">
@@ -163,7 +163,7 @@ export default function PreviewPage(){
       {/* Main Content - Three Column Layout */}
       <div className="flex-1 flex overflow-hidden">
         {/* Left Column - Template Selection */}
-        <div className="w-80 bg-white border-r border-gray-200 flex flex-col">
+        <div className="w-80 bg-white/80 backdrop-blur-sm border-r border-gray-200 flex flex-col">
           <div className="p-4 border-b border-gray-200">
             <h2 className="text-lg font-semibold text-gray-900">Templates</h2>
             <p className="text-sm text-gray-600 mt-1">Select a template to preview</p>
@@ -180,8 +180,8 @@ export default function PreviewPage(){
         </div>
 
         {/* Middle Column - Resume Preview (Widest) */}
-        <div className="flex-1 flex flex-col bg-gray-50">
-          <div className="p-4 border-b border-gray-200 bg-white">
+        <div className="flex-1 flex flex-col bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+          <div className="p-4 border-b border-gray-200 bg-white/80 backdrop-blur-sm">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600">{resume?.title} : Preview</p>
@@ -191,7 +191,7 @@ export default function PreviewPage(){
           </div>
           <div className="flex-1 overflow-y-auto p-6">
             <div className="max-w-5xl mx-auto">
-              <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+              <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
                 <ResumePreview data={resume} template={template} />
               </div>
             </div>
@@ -199,7 +199,7 @@ export default function PreviewPage(){
         </div>
 
         {/* Right Column - Action Icons */}
-        <div className="w-16 bg-white border-l border-gray-200 flex flex-col items-center py-6 space-y-4">
+        <div className="w-16 bg-white/80 backdrop-blur-sm border-l border-gray-200 flex flex-col items-center py-6 space-y-4">
           {/* Back to Editor */}
           <a 
             href={`/resumes/${id}`}

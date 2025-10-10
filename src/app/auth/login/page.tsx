@@ -26,7 +26,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-full bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex items-center justify-center p-4">
       <div className="max-w-md w-full">
         {/* Back to home button */}
         <div className="mb-8">
@@ -41,16 +41,16 @@ export default function LoginPage() {
         </div>
 
         {/* Login card */}
-        <div className="bg-white rounded-lg shadow-lg p-8">
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-100 p-8">
           <div className="text-center mb-8">
-            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center mx-auto mb-4">
-              <Bot className="w-8 h-8 text-white" />
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center mx-auto mb-4 shadow-lg">
+              <span className="text-white font-bold text-2xl">C</span>
             </div>
             <h1 className="text-2xl font-bold text-gray-900 mb-2">
-              Welcome to AI Chat
+              Welcome to Career
             </h1>
             <p className="text-gray-600">
-              Sign in to start your conversation with Amazon Nova Pro
+              Sign in to start building your professional resume
             </p>
           </div>
 
@@ -76,11 +76,11 @@ export default function LoginPage() {
             <ul className="space-y-2 text-sm text-gray-600">
               <li className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-blue-500"></div>
-                Advanced AI conversations
+                Professional resume builder
               </li>
               <li className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-blue-500"></div>
-                Conversation history
+                Multiple templates
               </li>
               <li className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-blue-500"></div>
