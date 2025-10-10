@@ -12,6 +12,7 @@ import { SkillsSection } from '@/components/resume/sections/skills-section';
 import { WorkExperienceSection } from '@/components/resume/sections/work-experience-section';
 import { EducationSection } from '@/components/resume/sections/education-section';
 import { CertificationsSection } from '@/components/resume/sections/certifications-section';
+import { AIAssistantSidebar } from '@/components/ui/ai-assistant-sidebar';
 
 export default function ResumeEditorPage() {
   const params = useParams();
@@ -25,6 +26,7 @@ export default function ResumeEditorPage() {
     resumeId: null,
     resumeTitle: ''
   });
+  const [aiAssistantOpen, setAiAssistantOpen] = useState(false);
 
   const handleSave = async () => {
     if (!resume) return;
@@ -156,6 +158,14 @@ export default function ResumeEditorPage() {
         confirmText="Delete Resume"
         cancelText="Cancel"
         variant="destructive"
+      />
+
+      {/* AI Assistant Sidebar */}
+      <AIAssistantSidebar
+        resumeId={id}
+        resume={resume}
+        isOpen={aiAssistantOpen}
+        onToggle={() => setAiAssistantOpen(!aiAssistantOpen)}
       />
     </div>
   );

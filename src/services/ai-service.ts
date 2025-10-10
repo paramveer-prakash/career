@@ -43,6 +43,80 @@ export interface SummaryGenerationResponse {
   alternativeSummaries?: string[];
 }
 
+// Chat and Interactive AI Types
+export interface ChatMessage {
+  id: string;
+  role: 'user' | 'assistant';
+  content: string;
+  timestamp: Date;
+  type?: 'question' | 'advice' | 'suggestion' | 'clarification';
+}
+
+export interface ResumeContext {
+  skills: string[];
+  workExperiences: string[];
+  education: string[];
+  currentRole?: string;
+}
+
+export interface ChatRequest {
+  resumeId: string;
+  message: string;
+  conversationHistory?: ChatMessage[];
+  resumeContext?: ResumeContext;
+}
+
+export interface ChatResponse {
+  success: boolean;
+  message?: string;
+  suggestions?: string[];
+  followUpQuestions?: string[];
+  error?: string;
+}
+
+export interface InterviewQuestion {
+  id: string;
+  question: string;
+  category: 'technical' | 'behavioral' | 'situational' | 'company-specific';
+  difficulty: 'easy' | 'medium' | 'hard';
+  suggestedAnswer?: string;
+  tips?: string[];
+}
+
+export interface InterviewPreparationRequest {
+  resumeId: string;
+  jobTitle?: string;
+  company?: string;
+  jobDescription?: string;
+}
+
+export interface InterviewPreparationResponse {
+  success: boolean;
+  questions?: InterviewQuestion[];
+  preparationTips?: string[];
+  error?: string;
+}
+
+export interface CareerGuidanceRequest {
+  resumeId: string;
+  currentGoals?: string;
+  targetRole?: string;
+  timeHorizon?: 'short-term' | 'medium-term' | 'long-term';
+}
+
+export interface CareerGuidanceResponse {
+  success: boolean;
+  recommendations?: Array<{
+    action: string;
+    priority: 'high' | 'medium' | 'low';
+    timeline: string;
+    resources?: string[];
+  }>;
+  skillGaps?: string[];
+  nextSteps?: string[];
+  error?: string;
+}
+
 // Dummy AI Service Implementation
 export class AIService {
   // Simulate API delay
@@ -320,5 +394,257 @@ export class AIService {
       'Highlight any recognition or awards received',
       'Describe the challenges overcome or problems solved'
     ];
+  }
+
+  // Interactive AI Assistant Methods
+
+  // 1. Resume Chatbot
+  static async chatWithResume(request: ChatRequest): Promise<ChatResponse> {
+    console.log('AI Service: Chat with resume for:', request);
+    await this.simulateDelay(1500);
+
+    const { message, resumeContext } = request;
+    const messageLower = message.toLowerCase();
+
+    // Analyze the user's question and provide contextual advice
+    if (messageLower.includes('summary') || messageLower.includes('objective')) {
+      return {
+        success: true,
+        message: "Your professional summary should be 2-3 sentences that highlight your key strengths and career focus. Based on your experience, I'd suggest emphasizing your technical expertise and leadership skills. Would you like me to help you craft a compelling summary?",
+        suggestions: [
+          "Generate a professional summary",
+          "Review your current summary",
+          "Get tips for writing summaries"
+        ],
+        followUpQuestions: [
+          "What's your target role?",
+          "What are your key achievements?",
+          "What makes you unique?"
+        ]
+      };
+    }
+
+    if (messageLower.includes('skill') || messageLower.includes('competenc')) {
+      return {
+        success: true,
+        message: "Your skills section should include both technical and soft skills relevant to your target role. I notice you have strong technical skills. Consider adding leadership, communication, or project management skills to show your versatility.",
+        suggestions: [
+          "Analyze skill gaps for a specific job",
+          "Get skill recommendations",
+          "Review your current skills"
+        ],
+        followUpQuestions: [
+          "What role are you targeting?",
+          "What skills are most important?",
+          "How can I improve my skills section?"
+        ]
+      };
+    }
+
+    if (messageLower.includes('experience') || messageLower.includes('work')) {
+      return {
+        success: true,
+        message: "Your work experience should use action verbs and quantify achievements where possible. Each bullet point should show impact and results. I can help you enhance your experience descriptions to make them more compelling.",
+        suggestions: [
+          "Enhance work experience descriptions",
+          "Add quantifiable achievements",
+          "Improve action verbs"
+        ],
+        followUpQuestions: [
+          "Which experience needs improvement?",
+          "How can I quantify my achievements?",
+          "What action verbs should I use?"
+        ]
+      };
+    }
+
+    if (messageLower.includes('format') || messageLower.includes('layout') || messageLower.includes('design')) {
+      return {
+        success: true,
+        message: "A clean, professional format is crucial for ATS compatibility and readability. Use consistent formatting, clear headings, and plenty of white space. I can suggest improvements to make your resume more visually appealing and ATS-friendly.",
+        suggestions: [
+          "Review resume formatting",
+          "Check ATS compatibility",
+          "Improve visual design"
+        ],
+        followUpQuestions: [
+          "Is my resume ATS-friendly?",
+          "How can I improve the layout?",
+          "What format works best?"
+        ]
+      };
+    }
+
+    // Default response for general questions
+    return {
+      success: true,
+      message: "I'm here to help you improve your resume! I can assist with writing summaries, enhancing work experience descriptions, analyzing skill gaps, and providing formatting advice. What specific area would you like to focus on?",
+      suggestions: [
+        "Improve my professional summary",
+        "Enhance my work experience",
+        "Analyze my skills",
+        "Check my resume format"
+      ],
+      followUpQuestions: [
+        "What's your biggest resume challenge?",
+        "What role are you targeting?",
+        "How can I make my resume stand out?"
+      ]
+    };
+  }
+
+  // 2. Interview Preparation
+  static async generateInterviewQuestions(request: InterviewPreparationRequest): Promise<InterviewPreparationResponse> {
+    console.log('AI Service: Generating interview questions for:', request);
+    await this.simulateDelay(2000);
+
+    const { jobTitle, company, jobDescription } = request;
+
+    const questions: InterviewQuestion[] = [
+      {
+        id: '1',
+        question: 'Tell me about yourself and your background.',
+        category: 'behavioral',
+        difficulty: 'easy',
+        suggestedAnswer: 'Start with your current role, highlight 2-3 key achievements, and connect them to the role you\'re applying for.',
+        tips: ['Keep it under 2 minutes', 'Focus on relevant experience', 'End with why you\'re interested in this role']
+      },
+      {
+        id: '2',
+        question: 'What are your greatest strengths?',
+        category: 'behavioral',
+        difficulty: 'easy',
+        suggestedAnswer: 'Choose 2-3 strengths that are relevant to the role and provide specific examples.',
+        tips: ['Be specific with examples', 'Connect strengths to job requirements', 'Show how you\'ve used these strengths']
+      },
+      {
+        id: '3',
+        question: 'Describe a challenging project you worked on and how you overcame obstacles.',
+        category: 'behavioral',
+        difficulty: 'medium',
+        suggestedAnswer: 'Use the STAR method: Situation, Task, Action, Result. Focus on your problem-solving skills.',
+        tips: ['Use the STAR method', 'Focus on your role', 'Quantify the results']
+      },
+      {
+        id: '4',
+        question: 'Where do you see yourself in 5 years?',
+        category: 'behavioral',
+        difficulty: 'medium',
+        suggestedAnswer: 'Show career progression within the company while demonstrating commitment to growth.',
+        tips: ['Be realistic', 'Show growth mindset', 'Connect to the company']
+      },
+      {
+        id: '5',
+        question: 'Why do you want to work for our company?',
+        category: 'company-specific',
+        difficulty: 'medium',
+        suggestedAnswer: 'Research the company\'s values, mission, and recent achievements. Connect your goals to theirs.',
+        tips: ['Research the company', 'Connect to your values', 'Show genuine interest']
+      }
+    ];
+
+    // Add technical questions if it's a technical role
+    if (jobTitle?.toLowerCase().includes('developer') || jobTitle?.toLowerCase().includes('engineer')) {
+      questions.push(
+        {
+          id: '6',
+          question: 'Explain a complex technical problem you solved recently.',
+          category: 'technical',
+          difficulty: 'hard',
+          suggestedAnswer: 'Walk through your problem-solving process, the technologies used, and the outcome.',
+          tips: ['Be specific about technologies', 'Explain your thought process', 'Show learning and growth']
+        },
+        {
+          id: '7',
+          question: 'How do you stay updated with the latest technologies?',
+          category: 'technical',
+          difficulty: 'medium',
+          suggestedAnswer: 'Mention specific resources, communities, courses, or projects you work on.',
+          tips: ['Be specific about resources', 'Show continuous learning', 'Mention practical application']
+        }
+      );
+    }
+
+    const preparationTips = [
+      'Research the company thoroughly - mission, values, recent news',
+      'Prepare 3-5 questions to ask the interviewer',
+      'Practice the STAR method for behavioral questions',
+      'Prepare specific examples for common questions',
+      'Review the job description and match your experience',
+      'Prepare for technical questions if applicable',
+      'Practice your elevator pitch (tell me about yourself)',
+      'Prepare questions about team culture and growth opportunities'
+    ];
+
+    return {
+      success: true,
+      questions,
+      preparationTips
+    };
+  }
+
+  // 3. Career Path Guidance
+  static async getCareerGuidance(request: CareerGuidanceRequest): Promise<CareerGuidanceResponse> {
+    console.log('AI Service: Getting career guidance for:', request);
+    await this.simulateDelay(1800);
+
+    const { targetRole, timeHorizon, currentGoals } = request;
+
+    const recommendations = [
+      {
+        action: 'Enhance your technical skills with advanced certifications',
+        priority: 'high' as const,
+        timeline: '3-6 months',
+        resources: ['AWS Certification', 'Google Cloud Platform', 'Advanced Java/Spring Boot']
+      },
+      {
+        action: 'Develop leadership and management skills',
+        priority: 'high' as const,
+        timeline: '6-12 months',
+        resources: ['Project Management Certification', 'Leadership workshops', 'Mentoring opportunities']
+      },
+      {
+        action: 'Build a strong professional network',
+        priority: 'medium' as const,
+        timeline: 'Ongoing',
+        resources: ['LinkedIn networking', 'Industry conferences', 'Professional associations']
+      },
+      {
+        action: 'Contribute to open source projects',
+        priority: 'medium' as const,
+        timeline: '3-9 months',
+        resources: ['GitHub contributions', 'Technical blogging', 'Community involvement']
+      },
+      {
+        action: 'Consider advanced education or specialized training',
+        priority: 'low' as const,
+        timeline: '1-2 years',
+        resources: ['Master\'s degree', 'Specialized bootcamps', 'Executive education programs']
+      }
+    ];
+
+    const skillGaps = [
+      'Cloud Architecture and DevOps',
+      'Machine Learning and AI',
+      'Data Analytics and Visualization',
+      'Agile/Scrum Methodologies',
+      'Cross-functional Team Leadership'
+    ];
+
+    const nextSteps = [
+      'Identify 2-3 priority skills to develop this quarter',
+      'Set up informational interviews with professionals in your target role',
+      'Create a learning plan with specific milestones',
+      'Update your resume and LinkedIn profile regularly',
+      'Seek feedback from mentors and peers',
+      'Consider taking on stretch assignments at work'
+    ];
+
+    return {
+      success: true,
+      recommendations,
+      skillGaps,
+      nextSteps
+    };
   }
 }
