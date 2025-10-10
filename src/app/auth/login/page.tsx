@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import { useAuth } from 'react-oidc-context'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
-import { Bot, ArrowLeft } from 'lucide-react'
+import { ArrowLeft } from 'lucide-react'
 import { routes } from "@/lib/config";
 
 export default function LoginPage() {

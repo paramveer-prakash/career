@@ -3,8 +3,6 @@
 
 import { useEffect, useState } from 'react';
 import { api } from '@/lib/api';
-import { PrimaryButton, DestructiveButton } from '@/components/ui/button';
-import { PrimaryLinkButton, SecondaryLinkButton } from '@/components/ui/link-button';
 
 export default function Page(){
   const [items, setItems] = useState<any[]>([]);
@@ -18,21 +16,6 @@ export default function Page(){
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [conflictFile, setConflictFile] = useState<File | null>(null);
 
-  const formatUpdatedAt = (value: any) => {
-    try {
-      const d = new Date(value);
-      if (isNaN(d.getTime())) return String(value ?? '');
-      return d.toLocaleString(undefined, {
-        year: 'numeric',
-        month: 'short',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-      });
-    } catch {
-      return String(value ?? '');
-    }
-  };
 
   const getTimeAgo = (value: any) => {
     try {
@@ -73,20 +56,20 @@ export default function Page(){
     setUploadError(null);
     setSelectedFile(file);
     
+    // Simulate progress for better UX
+    const progressInterval = setInterval(() => {
+      setUploadProgress(prev => {
+        if (prev >= 90) {
+          clearInterval(progressInterval);
+          return 90;
+        }
+        return prev + 10;
+      });
+    }, 200);
+    
     try {
       const form = new FormData();
       form.append('file', file);
-      
-      // Simulate progress for better UX
-      const progressInterval = setInterval(() => {
-        setUploadProgress(prev => {
-          if (prev >= 90) {
-            clearInterval(progressInterval);
-            return 90;
-          }
-          return prev + 10;
-        });
-      }, 200);
       
       await api.post('/api/v1/resumes/upload', form, { headers: { 'Content-Type': 'multipart/form-data' }});
       

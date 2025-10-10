@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { api } from '@/lib/api';
 import { FullPageLoader } from '@/components/ui/loader';
-import { Button, PrimaryButton, SuccessButton, DestructiveButton } from '@/components/ui/button';
+import { PrimaryButton, SuccessButton, DestructiveButton } from '@/components/ui/button';
 import { SecondaryLinkButton } from '@/components/ui/link-button';
 
 export default function Page(){
@@ -468,7 +468,7 @@ function WorkExperienceSection({ resumeId }: { resumeId: string }) {
                     </div>
                   ) : (
                     <div className="text-center py-4 text-gray-500 text-sm border-2 border-dashed border-gray-200 rounded-lg">
-                      No responsibilities added yet. Click "Add Responsibility" to get started.
+                      No responsibilities added yet. Click &quot;Add Responsibility&quot; to get started.
                     </div>
                   )}
                 </div>

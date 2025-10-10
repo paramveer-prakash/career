@@ -36,7 +36,7 @@ export default function PreviewPage(){
           workExperiences: work.status==='fulfilled' ? map(work.value) : [],
           educations: edu.status==='fulfilled' ? map(edu.value) : [],
         })
-      } catch (error) {
+      } catch {
         // Fallback to test data if Spring Boot API is not available
         console.log('Spring Boot API not available, using test data');
         const testResponse = await fetch('/api/test-resume');
@@ -293,7 +293,7 @@ export default function PreviewPage(){
                         newWindow.document.write('<h1>Error loading resume</h1>');
                         newWindow.document.close();
                       }
-                    } catch (error) {
+                    } catch {
                       newWindow.document.write('<h1>Error loading resume</h1>');
                       newWindow.document.close();
                     }

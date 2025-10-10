@@ -2,7 +2,7 @@
 
 import { useAuth } from 'react-oidc-context'
 import { Button } from '@/components/ui/button'
-import { ArrowLeft, User, Shield, Zap, Info, LogOut } from 'lucide-react'
+import { ArrowLeft, User, Shield, LogOut } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
 export default function SettingsPage() {
