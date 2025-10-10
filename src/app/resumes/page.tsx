@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from 'react';
 import { api } from '@/lib/api';
+import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
 
 export default function Page(){
   const [items, setItems] = useState<any[]>([]);
@@ -15,6 +16,11 @@ export default function Page(){
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [conflictFile, setConflictFile] = useState<File | null>(null);
+  const [deleteDialog, setDeleteDialog] = useState<{ isOpen: boolean; resumeId: string | null; resumeTitle: string }>({
+    isOpen: false,
+    resumeId: null,
+    resumeTitle: ''
+  });
 
 
   const getTimeAgo = (value: any) => {
@@ -182,6 +188,35 @@ export default function Page(){
       setConflictFile(null);
       handleFileUpload(renamedFile);
     }
+  };
+
+  const handleDeleteResume = async (resumeId: string) => {
+    setDeleting(resumeId);
+    try {
+      await api.delete(`/api/v1/resumes/${resumeId}`);
+      const r = await api.get('/api/v1/resumes');
+      const data = r.data;
+      const list = Array.isArray(data) ? data : (Array.isArray(data?.content) ? data.content : []);
+      setItems(list);
+    } finally {
+      setDeleting(null);
+    }
+  };
+
+  const openDeleteDialog = (resumeId: string, resumeTitle: string) => {
+    setDeleteDialog({
+      isOpen: true,
+      resumeId,
+      resumeTitle
+    });
+  };
+
+  const closeDeleteDialog = () => {
+    setDeleteDialog({
+      isOpen: false,
+      resumeId: null,
+      resumeTitle: ''
+    });
   };
 
   if (loading) {
@@ -429,23 +464,11 @@ export default function Page(){
 
                       {/* Delete Button */}
                       <button
-                        onClick={async () => {
-                          if (!confirm('Are you sure you want to delete this resume? This action cannot be undone.')) return;
-                          setDeleting(resume.id);
-                          try {
-                            await api.delete(`/api/v1/resumes/${resume.id}`);
-                            const r = await api.get('/api/v1/resumes');
-                            const data = r.data;
-                            const list = Array.isArray(data) ? data : (Array.isArray(data?.content) ? data.content : []);
-                            setItems(list);
-                          } finally {
-                            setDeleting(null);
-                          }
-                        }}
+                        onClick={() => openDeleteDialog(resume.id, resume.title || 'Untitled Resume')}
                         disabled={deleting === resume.id}
                         className="w-full px-4 py-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-xl transition-all duration-200 text-sm font-medium disabled:opacity-50"
                       >
-                        {deleting === resume.id ? '🗑️ Deleting...' : '🗑️ Delete'}
+                        {deleting === resume.id ? '⏳ Deleting...' : '🗑️ Delete'}
                       </button>
                     </div>
                   </div>
@@ -513,6 +536,23 @@ export default function Page(){
           </div>
         )}
       </div>
+
+      {/* Delete Confirmation Dialog */}
+      <ConfirmationDialog
+        isOpen={deleteDialog.isOpen}
+        onClose={closeDeleteDialog}
+        onConfirm={() => {
+          if (deleteDialog.resumeId) {
+            handleDeleteResume(deleteDialog.resumeId);
+            closeDeleteDialog();
+          }
+        }}
+        title="Delete Resume"
+        message={`Are you sure you want to delete "${deleteDialog.resumeTitle}"? This action cannot be undone and will permanently remove the resume and all its data.`}
+        confirmText="Delete Resume"
+        cancelText="Cancel"
+        variant="destructive"
+      />
     </div>
   );
 }
