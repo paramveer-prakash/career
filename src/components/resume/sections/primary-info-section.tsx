@@ -1,6 +1,10 @@
 'use client';
 
+import { useState } from 'react';
 import { Resume } from '@/services/resume-service';
+import { useAI } from '@/hooks/use-ai';
+import { AIButton } from '@/components/ui/ai-button';
+import { AISuggestionsPanel } from '@/components/ui/ai-suggestions-panel';
 
 interface PrimaryInfoSectionProps {
   resume: Resume;
@@ -8,8 +12,73 @@ interface PrimaryInfoSectionProps {
 }
 
 export function PrimaryInfoSection({ resume, onUpdate }: PrimaryInfoSectionProps) {
+  const { loading, error, generateSummary, resetAIState } = useAI();
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [suggestions, setSuggestions] = useState<Array<{
+    id: string;
+    content: string;
+    type: 'enhancement' | 'alternative' | 'recommendation';
+    confidence: number;
+  }>>([]);
+
   const handleFieldChange = (field: keyof Resume, value: string) => {
     onUpdate({ [field]: value });
+  };
+
+  const handleGenerateSummary = async () => {
+    try {
+      const response = await generateSummary({
+        resumeId: resume.id,
+        workExperiences: resume.workExperiences || [],
+        skills: resume.skills || [],
+        education: resume.educations || []
+      });
+
+      if (response.success) {
+        const aiSuggestions: Array<{
+          id: string;
+          content: string;
+          type: 'enhancement' | 'alternative' | 'recommendation';
+          confidence: number;
+        }> = [
+          {
+            id: '1',
+            content: response.summary,
+            type: 'enhancement',
+            confidence: 0.9
+          }
+        ];
+
+        if (response.alternativeSummaries) {
+          response.alternativeSummaries.forEach((alt, index) => {
+            aiSuggestions.push({
+              id: `alt-${index + 1}`,
+              content: alt,
+              type: 'alternative',
+              confidence: 0.8
+            });
+          });
+        }
+
+        setSuggestions(aiSuggestions);
+        setShowSuggestions(true);
+      }
+    } catch (error) {
+      console.error('Failed to generate summary:', error);
+    }
+  };
+
+  const handleApplySuggestion = (suggestion: { id: string; content: string; type: 'enhancement' | 'alternative' | 'recommendation'; confidence: number }) => {
+    onUpdate({ summary: suggestion.content });
+    setShowSuggestions(false);
+    resetAIState();
+  };
+
+  const handleDismissSuggestion = (suggestionId: string) => {
+    setSuggestions(prev => prev.filter(s => s.id !== suggestionId));
+    if (suggestions.length === 1) {
+      setShowSuggestions(false);
+    }
   };
 
   return (
@@ -78,9 +147,19 @@ export function PrimaryInfoSection({ resume, onUpdate }: PrimaryInfoSectionProps
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Professional Summary
-          </label>
+          <div className="flex items-center justify-between mb-2">
+            <label className="block text-sm font-medium text-gray-700">
+              Professional Summary
+            </label>
+            <AIButton
+              onClick={handleGenerateSummary}
+              loading={loading}
+              variant="outline"
+              size="sm"
+            >
+              Generate with AI
+            </AIButton>
+          </div>
           <textarea
             value={resume.summary || ''}
             onChange={(e) => handleFieldChange('summary', e.target.value)}
@@ -88,8 +167,21 @@ export function PrimaryInfoSection({ resume, onUpdate }: PrimaryInfoSectionProps
             className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none"
             placeholder="Write a brief summary of your professional background and key achievements..."
           />
+          {error && (
+            <p className="mt-2 text-sm text-red-600">{error}</p>
+          )}
         </div>
       </div>
+
+      {/* AI Suggestions Panel */}
+      <AISuggestionsPanel
+        suggestions={suggestions}
+        onApply={handleApplySuggestion}
+        onDismiss={handleDismissSuggestion}
+        title="AI-Generated Summary Options"
+        isOpen={showSuggestions}
+        onClose={() => setShowSuggestions(false)}
+      />
     </div>
   );
 }

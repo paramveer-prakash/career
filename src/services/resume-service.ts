@@ -8,6 +8,10 @@ export interface Resume {
   primaryLocation?: string;
   summary?: string;
   title?: string;
+  skills?: Skill[];
+  workExperiences?: WorkExperience[];
+  educations?: Education[];
+  certifications?: Certification[];
   createdAt?: string;
   updatedAt?: string;
 }

@@ -3,16 +3,17 @@
 import { useState } from 'react';
 import { PrimaryButton } from '@/components/ui/button';
 import { useWorkExperience } from '@/hooks/use-work-experience';
-import { WorkExperience, WorkResponsibility } from '@/services/resume-service';
+import { WorkExperience, WorkResponsibility, Resume } from '@/services/resume-service';
 
 interface WorkExperienceSectionProps {
   resumeId: string;
+  resume: Resume;
 }
 
-export function WorkExperienceSection({ resumeId }: WorkExperienceSectionProps) {
+export function WorkExperienceSection({ resumeId, resume }: WorkExperienceSectionProps) {
+  // Use work experiences from resume data instead of separate API call
+  const workExperiences = resume.workExperiences || [];
   const { 
-    workExperiences, 
-    loading, 
     addWorkExperience, 
     updateWorkExperience, 
     deleteWorkExperience,
@@ -77,19 +78,6 @@ export function WorkExperienceSection({ resumeId }: WorkExperienceSectionProps) 
     }
   };
 
-  if (loading) {
-    return (
-      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
-        <div className="animate-pulse">
-          <div className="h-6 bg-gray-200 rounded w-1/3 mb-4"></div>
-          <div className="space-y-4">
-            <div className="h-20 bg-gray-200 rounded"></div>
-            <div className="h-20 bg-gray-200 rounded"></div>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
@@ -184,8 +172,8 @@ export function WorkExperienceSection({ resumeId }: WorkExperienceSectionProps) 
       {/* Work Experiences List */}
       <div className="space-y-4">
         {workExperiences.length > 0 ? (
-          workExperiences.map((workExp) => (
-            <div key={workExp.id} className="border border-gray-200 rounded-lg p-4">
+          workExperiences.map((workExp, index) => (
+            <div key={workExp.id || `workexp-${index}`} className="border border-gray-200 rounded-lg p-4">
               <div className="flex items-start justify-between mb-3">
                 <div className="flex-1">
                   <input

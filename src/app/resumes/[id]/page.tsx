@@ -138,10 +138,10 @@ export default function ResumeEditorPage() {
 
           {/* Right Column - Sections */}
           <div className="lg:col-span-2 space-y-6">
-            <SkillsSection resumeId={id} />
-            <WorkExperienceSection resumeId={id} />
-            <EducationSection resumeId={id} />
-            <CertificationsSection resumeId={id} />
+            <SkillsSection resumeId={id} resume={resume} />
+            <WorkExperienceSection resumeId={id} resume={resume} />
+            <EducationSection resumeId={id} resume={resume} />
+            <CertificationsSection resumeId={id} resume={resume} />
           </div>
         </div>
       </div>

@@ -3,16 +3,17 @@
 import { useState } from 'react';
 import { PrimaryButton } from '@/components/ui/button';
 import { useEducation } from '@/hooks/use-education';
-import { Education } from '@/services/resume-service';
+import { Education, Resume } from '@/services/resume-service';
 
 interface EducationSectionProps {
   resumeId: string;
+  resume: Resume;
 }
 
-export function EducationSection({ resumeId }: EducationSectionProps) {
+export function EducationSection({ resumeId, resume }: EducationSectionProps) {
+  // Use educations from resume data instead of separate API call
+  const educations = resume.educations || [];
   const { 
-    educations, 
-    loading, 
     addEducation, 
     updateEducation, 
     deleteEducation 
@@ -53,19 +54,6 @@ export function EducationSection({ resumeId }: EducationSectionProps) {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
-        <div className="animate-pulse">
-          <div className="h-6 bg-gray-200 rounded w-1/3 mb-4"></div>
-          <div className="space-y-4">
-            <div className="h-16 bg-gray-200 rounded"></div>
-            <div className="h-16 bg-gray-200 rounded"></div>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
@@ -178,8 +166,8 @@ export function EducationSection({ resumeId }: EducationSectionProps) {
       {/* Education List */}
       <div className="space-y-4">
         {educations.length > 0 ? (
-          educations.map((education) => (
-            <div key={education.id} className="border border-gray-200 rounded-lg p-4">
+          educations.map((education, index) => (
+            <div key={education.id || `education-${index}`} className="border border-gray-200 rounded-lg p-4">
               <div className="flex items-start justify-between mb-3">
                 <div className="flex-1">
                   <input
