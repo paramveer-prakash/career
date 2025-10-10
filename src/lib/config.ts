@@ -1,14 +1,29 @@
 import { WebStorageStateStore } from 'oidc-client-ts';
 
+// Validate required environment variables
+const requiredEnvVars = {
+  NEXT_PUBLIC_COGNITO_AUTHORITY: process.env.NEXT_PUBLIC_COGNITO_AUTHORITY,
+  NEXT_PUBLIC_COGNITO_CLIENT_ID: process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID,
+  NEXT_PUBLIC_COGNITO_DOMAIN: process.env.NEXT_PUBLIC_COGNITO_DOMAIN,
+};
+
+const missingVars = Object.entries(requiredEnvVars)
+  .filter(([, value]) => !value)
+  .map(([key]) => key);
+
+if (missingVars.length > 0) {
+  throw new Error(`Missing required environment variables: ${missingVars.join(', ')}. Please check your .env.local file.`);
+}
+
 export const cognitoAuthConfig = {
-  authority: process.env.NEXT_PUBLIC_COGNITO_AUTHORITY || "https://cognito-idp.ap-south-1.amazonaws.com/ap-south-1_KAyuLakQ6",
-  client_id: process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID || "79go35q1c7n3cgcpjimu7koet6",
+  authority: process.env.NEXT_PUBLIC_COGNITO_AUTHORITY,
+  client_id: process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID,
   redirect_uri: process.env.NEXT_PUBLIC_REDIRECT_URI || "http://localhost:3000/auth/callback",
   post_logout_redirect_uri: process.env.NEXT_PUBLIC_POST_LOGOUT_REDIRECT_URI || "http://localhost:3000",
   response_type: "code",
   scope: "email openid profile",
   loadUserInfo: true,
-  cognitoDomain: process.env.NEXT_PUBLIC_COGNITO_DOMAIN || "https://ap-south-1kayulakq6.auth.ap-south-1.amazoncognito.com",
+  cognitoDomain: process.env.NEXT_PUBLIC_COGNITO_DOMAIN,
   
   // Session management settings for cross-tab authentication
   automaticSilentRenew: true,

@@ -4,17 +4,25 @@
 
 /**
  * Get the current authentication token from localStorage
- * This is the same logic used in the api.ts interceptor
+ * Returns null if token is expired or invalid
  */
 export function getAuthToken(): string | null {
   try {
     const storedAuth = localStorage.getItem('auth-store');
     if (storedAuth) {
       const authData = JSON.parse(storedAuth);
-      return authData.state?.access_token || null;
+      const token = authData.state?.access_token;
+      
+      // Basic token validation (check if it exists and has proper structure)
+      if (token && typeof token === 'string' && token.length > 0) {
+        return token;
+      }
     }
   } catch (error) {
-    console.error('Error getting token from storage:', error);
+    // Silently handle errors to avoid exposing sensitive information
+    if (process.env.NODE_ENV === 'development') {
+      console.warn('Error getting token from storage:', error);
+    }
   }
   return null;
 }

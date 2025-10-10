@@ -18,7 +18,8 @@ async function checkRateLimits() {
     console.log('1. Open browser dev tools (F12)');
     console.log('2. Go to Application > Local Storage > http://localhost:3000');
     console.log('3. Find "auth-store" and copy the access_token value');
-    console.log('4. Run: TOKEN="your_token_here" node check-rate-limits.js\n');
+    console.log('4. Run: TOKEN="your_token_here" node check-rate-limits.js');
+    console.log('⚠️  WARNING: Never share your token or commit it to version control!\n');
     
     const token = process.env.TOKEN;
     if (!token) {

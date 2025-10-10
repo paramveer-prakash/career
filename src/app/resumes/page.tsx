@@ -94,9 +94,12 @@ export default function Page(){
       }, 3000);
       
     } catch (error: any) {
-      console.error('Upload failed:', error);
-      console.error('Error response:', error?.response?.data);
-      console.error('Error status:', error?.response?.status);
+      // Log error details only in development
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Upload failed:', error);
+        console.error('Error response:', error?.response?.data);
+        console.error('Error status:', error?.response?.status);
+      }
       clearInterval(progressInterval);
       setUploadProgress(0);
       setSelectedFile(null);

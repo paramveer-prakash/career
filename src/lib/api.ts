@@ -22,7 +22,10 @@ api.interceptors.request.use(
         token = authData.state?.access_token;
       }
     } catch (error) {
-      console.error('Error getting token from storage:', error);
+      // Silently handle errors to avoid exposing sensitive information
+      if (process.env.NODE_ENV === 'development') {
+        console.warn('Error getting token from storage:', error);
+      }
     }
     
     if (token) {
@@ -46,7 +49,10 @@ api.interceptors.response.use(
       try {
         localStorage.removeItem('auth-store');
       } catch (error) {
-        console.error('Error clearing auth storage:', error);
+        // Silently handle errors to avoid exposing sensitive information
+        if (process.env.NODE_ENV === 'development') {
+          console.warn('Error clearing auth storage:', error);
+        }
       }
       window.location.href = '/auth/login';
     } else if (error.response?.status === 429) {

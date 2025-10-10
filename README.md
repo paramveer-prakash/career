@@ -21,13 +21,16 @@ npm install
 ```bash
 cp env.example .env.local
 ```
-Then edit `.env.local`:
+Then edit `.env.local` with your actual AWS Cognito credentials:
 ```env
-NEXT_PUBLIC_COGNITO_AUTHORITY=your-cognito-authority-url
+NEXT_PUBLIC_COGNITO_AUTHORITY=https://cognito-idp.REGION.amazonaws.com/USER_POOL_ID
 NEXT_PUBLIC_COGNITO_CLIENT_ID=your-cognito-client-id
+NEXT_PUBLIC_COGNITO_DOMAIN=https://your-domain.auth.REGION.amazoncognito.com
 NEXT_PUBLIC_API_URL=http://localhost:8080
 NEXT_PUBLIC_REDIRECT_URI=http://localhost:3000/auth/callback
 ```
+
+**⚠️ Security Note**: Never commit your `.env.local` file to version control. The `env.example` file contains placeholder values only.
 
 3. Dev server:
 ```bash
@@ -64,6 +67,23 @@ Endpoints used (prefix: `/api/v1`):
 ## Notes
 - This app mirrors the `ai-chat` auth/provider setup to keep auth consistent across apps.
 - Add more sections (contacts, certifications, languages, links, hobbies, extracurriculars) following the same pattern in `/resumes/[id]/page.tsx`.
+
+## Security
+
+### Environment Variables
+- **Required**: `NEXT_PUBLIC_COGNITO_AUTHORITY`, `NEXT_PUBLIC_COGNITO_CLIENT_ID`, `NEXT_PUBLIC_COGNITO_DOMAIN`
+- **Never commit** your `.env.local` file to version control
+- Use different credentials for different environments (dev/staging/prod)
+
+### Token Security
+- JWT tokens are stored in browser localStorage
+- Tokens are automatically included in API requests
+- Unauthorized access (401) automatically clears tokens and redirects to login
+
+### Development vs Production
+- Debug logs are only shown in development mode
+- Error details are hidden in production to prevent information leakage
+- Console warnings are suppressed in production builds
 
 ## Scripts
 - `npm run dev` – start dev server
