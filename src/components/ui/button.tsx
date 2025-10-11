@@ -56,9 +56,34 @@ export function Button({
     });
   }
   
+  // Get inline styles for better color control
+  const getInlineStyles = () => {
+    const baseStyles: React.CSSProperties = {};
+    
+    switch (variant) {
+      case 'primary':
+        return { ...baseStyles, backgroundColor: '#2563eb', color: '#ffffff' };
+      case 'secondary':
+        return { ...baseStyles, backgroundColor: '#f1f5f9', color: '#0f172a' };
+      case 'destructive':
+        return { ...baseStyles, backgroundColor: '#ef4444', color: '#ffffff' };
+      case 'outline':
+        return { ...baseStyles, backgroundColor: '#ffffff', color: '#374151', border: '1px solid #d1d5db' };
+      case 'ghost':
+        return { ...baseStyles, backgroundColor: 'transparent', color: '#374151' };
+      case 'success':
+        return { ...baseStyles, backgroundColor: '#059669', color: '#ffffff' };
+      case 'accent':
+        return { ...baseStyles, backgroundColor: '#7c3aed', color: '#ffffff' };
+      default:
+        return baseStyles;
+    }
+  };
+
   return (
     <button
       className={buttonClasses}
+      style={getInlineStyles()}
       disabled={isDisabled}
       {...props}
     >
