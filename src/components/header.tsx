@@ -81,7 +81,10 @@ export function Header(){
 
               {/* User Dropdown Menu */}
               {showUserMenu && (
-                <div className="absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-lg border border-slate-200/60 py-2 z-50">
+                <div 
+                  className="absolute right-0 mt-2 w-64 rounded-xl shadow-xl border border-slate-200 py-2 z-50"
+                  style={{ backgroundColor: 'white' }}
+                >
                   <div className="px-4 py-3 border-b border-slate-100">
                     <div className="text-sm font-medium text-slate-900">{user.name}</div>
                     <div className="text-xs text-slate-500">{user.email}</div>
