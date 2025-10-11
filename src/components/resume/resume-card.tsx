@@ -21,8 +21,9 @@ export function ResumeCard({ resume, onDelete, deleting = false }: ResumeCardPro
 
   return (
     <>
-      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-        <div className="flex items-start justify-between mb-4">
+      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col h-full">
+        {/* Header section with fixed height */}
+        <div className="flex items-start justify-between mb-4 min-h-[80px]">
           <div className="flex-1 min-w-0">
             <h3 className="text-lg font-semibold text-gray-900 mb-1 break-words line-clamp-2">
               {resume.title || resume.primaryName || 'Untitled Resume'}
@@ -42,29 +43,34 @@ export function ResumeCard({ resume, onDelete, deleting = false }: ResumeCardPro
           </div>
         </div>
 
-        <div className="flex gap-2">
-          <a
-            href={`/resumes/${resume.id}`}
-            className="flex-1 px-4 py-2 text-center bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl hover:from-blue-600 hover:to-indigo-700 transition-all duration-200 text-sm font-medium"
-          >
-            ✏️ Edit
-          </a>
-          <a
-            href={`/resumes/${resume.id}/preview`}
-            className="flex-1 px-4 py-2 text-center bg-gradient-to-r from-gray-500 to-gray-600 text-white rounded-xl hover:from-gray-600 hover:to-gray-700 transition-all duration-200 text-sm font-medium"
-          >
-            👁️ Preview
-          </a>
-        </div>
-
-        <div className="mt-4 pt-4 border-t border-gray-100">
-          <button
-            onClick={() => setDeleteDialog(true)}
-            disabled={deleting}
-            className="w-full px-4 py-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-xl transition-all duration-200 text-sm font-medium disabled:opacity-50"
-          >
-            {deleting ? '⏳ Deleting...' : '🗑️ Delete'}
-          </button>
+        {/* Button section - always at bottom */}
+        <div className="mt-auto space-y-3">
+          {/* Top row: Edit and Preview buttons */}
+          <div className="grid grid-cols-2 gap-2">
+            <a
+              href={`/resumes/${resume.id}`}
+              className="px-4 py-2 text-center bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl hover:from-blue-600 hover:to-indigo-700 transition-all duration-200 text-sm font-medium"
+            >
+              ✏️ Edit
+            </a>
+            <a
+              href={`/resumes/${resume.id}/preview`}
+              className="px-4 py-2 text-center bg-gradient-to-r from-gray-500 to-gray-600 text-white rounded-xl hover:from-gray-600 hover:to-gray-700 transition-all duration-200 text-sm font-medium"
+            >
+              👁️ Preview
+            </a>
+          </div>
+          
+          {/* Bottom row: Delete button */}
+          <div className="pt-2 border-t border-gray-100">
+            <button
+              onClick={() => setDeleteDialog(true)}
+              disabled={deleting}
+              className="w-full px-4 py-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-xl transition-all duration-200 text-sm font-medium disabled:opacity-50"
+            >
+              {deleting ? '⏳ Deleting...' : '🗑️ Delete'}
+            </button>
+          </div>
         </div>
       </div>
 

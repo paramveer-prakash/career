@@ -101,6 +101,11 @@ export class ResumeService {
     return response.data;
   }
 
+  static async createEmptyResume(): Promise<Resume> {
+    const response = await api.post('/api/v1/resumes/empty');
+    return response.data;
+  }
+
   static async uploadResumeFile(file: File, overwrite: boolean = false, newName?: string): Promise<Resume[]> {
     const formData = new FormData();
     formData.append('file', file, newName || file.name);

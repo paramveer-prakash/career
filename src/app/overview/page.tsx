@@ -33,14 +33,7 @@ export default function OverviewPage() {
   const handleCreateEmptyResume = async () => {
     setCreatingEmpty(true);
     try {
-      const newResume = await ResumeService.createResume({
-        title: 'New Resume',
-        primaryName: '',
-        primaryEmail: '',
-        primaryPhone: '',
-        primaryLocation: '',
-        summary: ''
-      });
+      const newResume = await ResumeService.createEmptyResume();
       
       router.push(`/resumes/${newResume.id}`);
     } catch (error) {
