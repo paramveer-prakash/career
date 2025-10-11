@@ -1,14 +1,21 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useResumes } from '@/hooks/use-resumes';
 import { FullPageLoader } from '@/components/ui/loader';
 import { ResumeCard } from '@/components/resume/resume-card';
 import { FileUploadSection } from '@/components/resume/file-upload-section';
+import { AIResumeGenerator } from '@/components/resume/ai-resume-generator';
+import { ResumeService } from '@/services/resume-service';
+import { PrimaryButton, SecondaryButton } from '@/components/ui/button';
 
 export default function ResumesPage() {
+  const router = useRouter();
   const { resumes, loading, error, refreshResumes, deleteResume } = useResumes();
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [showAIGenerator, setShowAIGenerator] = useState(false);
+  const [creatingEmpty, setCreatingEmpty] = useState(false);
 
   const handleDelete = async (id: string) => {
     setDeletingId(id);
@@ -20,6 +27,27 @@ export default function ResumesPage() {
       console.error('Failed to delete resume:', error);
     } finally {
       setDeletingId(null);
+    }
+  };
+
+  const handleCreateEmptyResume = async () => {
+    setCreatingEmpty(true);
+    try {
+      const newResume = await ResumeService.createResume({
+        title: 'New Resume',
+        primaryName: '',
+        primaryEmail: '',
+        primaryPhone: '',
+        primaryLocation: '',
+        summary: ''
+      });
+      
+      // Navigate to the new resume editor
+      router.push(`/resumes/${newResume.id}`);
+    } catch (error) {
+      console.error('Failed to create empty resume:', error);
+    } finally {
+      setCreatingEmpty(false);
     }
   };
 
@@ -62,21 +90,80 @@ export default function ResumesPage() {
           </div>
         </div>
 
-        {/* Upload Section */}
+        {/* Create Resume Section */}
         <div className="mb-12">
           <div className="bg-white/90 backdrop-blur-sm border border-slate-200/60 rounded-3xl shadow-xl p-8">
             <div className="flex items-center gap-4 mb-8">
               <div className="w-16 h-16 bg-gradient-to-br from-sky-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg">
                 <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                 </svg>
               </div>
               <div>
-                <h2 className="text-2xl font-bold text-slate-900">Upload New Resume</h2>
-                <p className="text-lg text-slate-600 font-medium">Add a new resume to your collection</p>
+                <h2 className="text-2xl font-bold text-slate-900">Create New Resume</h2>
+                <p className="text-lg text-slate-600 font-medium">Create from scratch, use AI, or upload an existing file</p>
               </div>
             </div>
-            <FileUploadSection onUploadSuccess={refreshResumes} />
+            
+            {/* Creation Options */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              {/* AI Generation */}
+              <div className="bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-200/60 rounded-2xl p-6 hover:shadow-lg transition-all duration-300">
+                <div className="text-center">
+                  <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-semibold text-slate-900 mb-2">AI-Powered</h3>
+                  <p className="text-sm text-slate-600 mb-4">Let AI create your resume from your information</p>
+                  <PrimaryButton
+                    onClick={() => setShowAIGenerator(true)}
+                    className="w-full"
+                    size="sm"
+                  >
+                    Generate with AI
+                  </PrimaryButton>
+                </div>
+              </div>
+
+              {/* Empty Resume */}
+              <div className="bg-gradient-to-br from-sky-50 to-blue-50 border border-sky-200/60 rounded-2xl p-6 hover:shadow-lg transition-all duration-300">
+                <div className="text-center">
+                  <div className="w-12 h-12 bg-gradient-to-br from-sky-500 to-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-semibold text-slate-900 mb-2">Start from Scratch</h3>
+                  <p className="text-sm text-slate-600 mb-4">Create a blank resume and build it step by step</p>
+                  <SecondaryButton
+                    onClick={handleCreateEmptyResume}
+                    disabled={creatingEmpty}
+                    className="w-full"
+                    size="sm"
+                  >
+                    {creatingEmpty ? 'Creating...' : 'Create Empty'}
+                  </SecondaryButton>
+                </div>
+              </div>
+            </div>
+
+            {/* File Upload Section */}
+            <div className="border-t border-slate-200/60 pt-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-green-600 rounded-lg flex items-center justify-center">
+                  <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-slate-900">Upload Existing Resume</h3>
+                  <p className="text-sm text-slate-600">Upload PDF, DOC, DOCX, or TXT files</p>
+                </div>
+              </div>
+              <FileUploadSection onUploadSuccess={refreshResumes} />
+            </div>
           </div>
         </div>
 
@@ -139,12 +226,47 @@ export default function ResumesPage() {
             </div>
             <h2 className="text-2xl font-bold text-slate-900 mb-4">No Resumes Yet</h2>
             <p className="text-slate-600 mb-8 max-w-md mx-auto">
-              Get started by uploading your first resume. You can upload PDF, DOC, DOCX, or TXT files.
+              Get started by creating your first resume. Choose from AI generation, starting from scratch, or uploading a file.
             </p>
+            
+            {/* Quick Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto mb-8">
+              <PrimaryButton
+                onClick={() => setShowAIGenerator(true)}
+                className="flex-1"
+              >
+                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+                Generate with AI
+              </PrimaryButton>
+              <SecondaryButton
+                onClick={handleCreateEmptyResume}
+                disabled={creatingEmpty}
+                className="flex-1"
+              >
+                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+                {creatingEmpty ? 'Creating...' : 'Start from Scratch'}
+              </SecondaryButton>
+            </div>
+            
             <div className="max-w-md mx-auto">
               <FileUploadSection onUploadSuccess={refreshResumes} />
             </div>
           </div>
+        )}
+
+        {/* AI Resume Generator Modal */}
+        {showAIGenerator && (
+          <AIResumeGenerator
+            onClose={() => setShowAIGenerator(false)}
+            onSuccess={() => {
+              setShowAIGenerator(false);
+              refreshResumes();
+            }}
+          />
         )}
       </div>
     </div>

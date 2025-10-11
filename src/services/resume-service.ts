@@ -96,6 +96,11 @@ export class ResumeService {
     await api.delete(`/api/v1/resumes/${id}`);
   }
 
+  static async createResume(resume: Omit<Resume, 'id'>): Promise<Resume> {
+    const response = await api.post('/api/v1/resumes', resume);
+    return response.data;
+  }
+
   static async uploadResumeFile(file: File, overwrite: boolean = false, newName?: string): Promise<Resume[]> {
     const formData = new FormData();
     formData.append('file', file, newName || file.name);
