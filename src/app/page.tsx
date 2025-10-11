@@ -15,7 +15,7 @@ export default function HomePage() {
     // Check for existing authentication immediately
     if (!isLoading) {
       if (isAuthenticated) {
-        router.push('/resumes')
+        router.push('/overview')
       } else {
         // Try to get user if there might be a valid session
         const storedAuth = localStorage.getItem('auth-store');

@@ -59,5 +59,6 @@ export const routes = {
   home: "/",
   login: "/auth/login",
   callback: "/auth/callback",
+  overview: "/overview",
   resumes: "/resumes",
 } as const;
