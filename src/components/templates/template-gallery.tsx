@@ -95,68 +95,91 @@ export function TemplateGallery({
   if (compact) {
     return (
       <div className={`space-y-4 ${className}`}>
-        {/* Category Filter - Compact */}
-        <div className="flex flex-wrap gap-1">
-          {categories.map((category) => (
-            <button
-              key={category.key}
-              onClick={() => setSelectedCategory(category.key)}
-              className={`px-2 py-1 rounded text-xs font-medium transition-colors ${
-                selectedCategory === category.key
-                  ? 'bg-blue-600 text-gray-1100'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-              }`}
-            >
-              {category.label}
-            </button>
-          ))}
+        {/* Enhanced Category Filter */}
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-semibold text-gray-900">Filter Templates</h3>
+            <span className="text-xs text-gray-500">{filteredTemplates.length} templates</span>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {categories.map((category) => (
+              <button
+                key={category.key}
+                onClick={() => setSelectedCategory(category.key)}
+                className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 ${
+                  selectedCategory === category.key
+                    ? 'bg-blue-600 text-white shadow-sm'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200 hover:shadow-sm'
+                }`}
+              >
+                {category.label}
+                <span className="ml-1 text-xs opacity-75">({category.count})</span>
+              </button>
+            ))}
+          </div>
         </div>
 
-        {/* Template Grid - Two Column with Wider Thumbnails */}
+        {/* Enhanced Template Grid - Two Column */}
         <div className="grid grid-cols-2 gap-3">
           {filteredTemplates.map((template) => (
             <div
               key={template.key}
               onClick={() => onTemplateSelect(template.key)}
-              className={`group cursor-pointer rounded-lg border transition-all duration-200 hover:shadow-lg relative overflow-hidden ${
+              className={`group cursor-pointer rounded-xl border-2 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 relative overflow-hidden ${
                 selectedTemplate === template.key
-                  ? 'border-blue-500 bg-blue-50 shadow-md'
-                  : 'border-gray-200 bg-white hover:border-gray-300'
+                  ? 'border-blue-500 bg-blue-50 shadow-lg ring-2 ring-blue-200'
+                  : 'border-gray-200 bg-white hover:border-blue-300 hover:shadow-lg'
               }`}
             >
-              {/* Template Preview - Wider for Better Visibility */}
-              <div className="w-full h-[240px] relative overflow-hidden bg-gray-50 border border-gray-200">
+              {/* Template Preview */}
+              <div className="w-full h-[240px] relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
                 <img
                   src={template.preview}
                   alt={`${template.name} template preview`}
-                  className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-200"
+                  className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
                 />
                 
                 {/* Selection Indicator */}
-                {selectedTemplate === template.key && (
-                  <div className="absolute top-2 right-2 w-5 h-5 bg-blue-600 rounded-full flex items-center justify-center">
-                    <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                {/* {selectedTemplate === template.key && (
+                  <div className="absolute top-2 right-2 w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center shadow-lg">
+                    <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
                   </div>
-                )}
+                )}*/}
 
-                {/* Hover Overlay with Name and Description */}
-                <div className="absolute inset-0 bg-opacity-0 group-hover:bg-opacity-60 transition-all duration-200 flex items-end">
-                  <div className="w-full p-3 transform translate-y-full group-hover:translate-y-0 transition-transform duration-200">
+                {/* Category Badge */}
+                {/* <div className="absolute top-2 left-2">
+                  <span className={`px-2 py-1 rounded-full text-xs font-medium shadow-sm ${
+                    template.category === 'professional' ? 'bg-blue-500 text-white' :
+                    template.category === 'modern' ? 'bg-green-500 text-white' :
+                    template.category === 'creative' ? 'bg-purple-500 text-white' :
+                    'bg-gray-500 text-white'
+                  }`}>
+                    {template.category}
+                  </span>
+                </div>*/}
+
+                {/* Hover Overlay */}
+                {/*<div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                  <div className="w-full p-3">
                     <h3 className="font-semibold text-white text-sm mb-1">{template.name}</h3>
                     <p className="text-xs text-gray-200 line-clamp-2">{template.description}</p>
-                    <span className={`inline-block mt-2 px-2 py-0.5 rounded-full text-xs font-medium ${
-                      template.category === 'professional' ? 'bg-blue-500 text-white' :
-                      template.category === 'modern' ? 'bg-green-500 text-white' :
-                      template.category === 'creative' ? 'bg-purple-500 text-white' :
-                      'bg-gray-500 text-white'
-                    }`}>
-                      {template.category}
-                    </span>
                   </div>
-                </div>
+                </div>*/}
               </div>
+
+              {/* Template Info */}
+              {/*<div className="p-3">
+                <div className="flex items-center justify-between">
+                  <h3 className="font-semibold text-gray-900 text-sm truncate">{template.name}</h3>
+                  <span className={`text-xs font-medium ${
+                    selectedTemplate === template.key ? 'text-blue-600' : 'text-gray-500'
+                  }`}>
+                    {selectedTemplate === template.key ? 'Selected' : 'Click to select'}
+                  </span>
+                </div>
+              </div>*/}
             </div>
           ))}
         </div>
