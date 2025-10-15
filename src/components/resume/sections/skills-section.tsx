@@ -235,7 +235,7 @@ export function SkillsSection({ resumeId, resume }: SkillsSectionProps) {
 
       {/* AI Skill Recommendations Panel */}
       {showSkillRecommendations && (
-        <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
           <div 
             className="rounded-2xl shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-hidden border-2 border-gray-200"
             style={{ backgroundColor: 'white' }}

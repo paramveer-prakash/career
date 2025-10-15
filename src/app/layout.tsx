@@ -49,7 +49,6 @@ export default function RootLayout({
           __html: `
             html { background-color: white !important; }
             body { background-color: white !important; }
-            * { background-color: transparent; }
           `
         }} />
       </head>

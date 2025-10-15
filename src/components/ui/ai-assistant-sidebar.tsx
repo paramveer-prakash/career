@@ -81,7 +81,7 @@ export function AIAssistantSidebar({ resumeId, resume, isOpen, onToggle }: AIAss
 
       {/* Sidebar Panel */}
       <div
-        className={`fixed top-0 right-0 h-full w-96 bg-white/95 backdrop-blur-xl shadow-2xl border-l border-slate-200/60 z-30 transform transition-transform duration-300 ${
+        className={`fixed top-0 right-0 h-full w-96 bg-white shadow-2xl border-l border-slate-200 z-30 transform transition-transform duration-300 ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
@@ -91,7 +91,7 @@ export function AIAssistantSidebar({ resumeId, resume, isOpen, onToggle }: AIAss
             <h2 className="text-xl font-bold">AI Assistant</h2>
             <button
               onClick={onToggle}
-              className="text-white hover:text-slate-200 transition-colors p-1 rounded-lg hover:bg-white/10"
+              className="text-white hover:text-slate-200 transition-colors p-1 rounded-lg hover:bg-white/20"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />

@@ -23,7 +23,7 @@ export function Header(){
   };
 
   return (
-    <header className="sticky top-0 z-30 border-b border-slate-200/60 bg-white/80 backdrop-blur-xl supports-[backdrop-filter]:bg-white/80 shadow-sm">
+    <header className="sticky top-0 z-30 border-b border-slate-200 bg-white shadow-sm">
       <div className="container mx-auto px-6 py-4 flex items-center justify-between max-w-7xl">
         <Link href={routes.overview} className="flex items-center gap-4 group">
           <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-sky-600 via-blue-600 to-indigo-600 flex items-center justify-center shadow-lg group-hover:shadow-xl group-hover:scale-105 transition-all duration-300">
@@ -48,7 +48,14 @@ export function Header(){
               href={routes.resumes} 
               className="text-slate-700 hover:text-sky-600 font-semibold transition-all duration-200 relative group px-3 py-2 rounded-lg hover:bg-slate-50"
             >
-              <span className="relative z-10">All Resumes</span>
+              <span className="relative z-10">My Resumes</span>
+              <span className="absolute inset-0 bg-slate-50 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"></span>
+            </Link>
+            <Link 
+              href={routes.templates} 
+              className="text-slate-700 hover:text-sky-600 font-semibold transition-all duration-200 relative group px-3 py-2 rounded-lg hover:bg-slate-50"
+            >
+              <span className="relative z-10">Templates</span>
               <span className="absolute inset-0 bg-slate-50 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"></span>
             </Link>
           </nav>

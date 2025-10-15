@@ -61,4 +61,5 @@ export const routes = {
   callback: "/auth/callback",
   overview: "/overview",
   resumes: "/resumes",
+  templates: "/templates/browse",
 } as const;

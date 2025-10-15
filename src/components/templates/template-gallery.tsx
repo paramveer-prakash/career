@@ -215,7 +215,7 @@ export function TemplateGallery({
                 )}
 
                 {/* Hover Overlay with Name and Description */}
-                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-60 transition-all duration-200 flex items-end">
+                <div className="absolute inset-0 bg-opacity-0 group-hover:bg-opacity-60 transition-all duration-200 flex items-end">
                   <div className="w-full p-3 transform translate-y-full group-hover:translate-y-0 transition-transform duration-200">
                     <h3 className="font-semibold text-white text-sm mb-1">{template.name}</h3>
                     <p className="text-xs text-gray-200 line-clamp-2">{template.description}</p>

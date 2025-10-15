@@ -77,7 +77,7 @@ export default function ResumeEditorPage() {
 
   if (error || !resume) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex items-center justify-center">
+      <div className="min-h-screen from-slate-50 via-blue-50 to-indigo-50 flex items-center justify-center">
         <div className="text-center">
           <div className="text-6xl mb-4">❌</div>
           <h1 className="text-2xl font-bold text-gray-900 mb-2">Error Loading Resume</h1>
@@ -91,7 +91,7 @@ export default function ResumeEditorPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-sky-50 to-blue-50">
+    <div className="min-h-screen from-slate-50 via-sky-50 to-blue-50">
       <div className="container mx-auto px-6 py-12 max-w-7xl">
         {/* Header */}
         <div className="mb-12">

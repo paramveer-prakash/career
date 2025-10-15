@@ -58,7 +58,7 @@ export default function ResumesPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex items-center justify-center">
+      <div className="min-h-screen from-slate-50 via-blue-50 to-indigo-50 flex items-center justify-center">
         <div className="text-center">
           <div className="text-6xl mb-4">❌</div>
           <h1 className="text-2xl font-bold text-gray-900 mb-2">Error Loading Resumes</h1>
@@ -75,7 +75,7 @@ export default function ResumesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-sky-50 to-blue-50">
+    <div className="min-h-screen from-slate-50 via-sky-50 to-blue-50">
       <div className="container mx-auto px-6 py-12 max-w-7xl">
         {/* Header */}
         <div className="mb-8">
@@ -100,7 +100,7 @@ export default function ResumesPage() {
         </div>
 
         {/* Search and Filter Bar */}
-        <div className="bg-white/90 backdrop-blur-sm border border-slate-200/60 rounded-2xl shadow-lg p-6 mb-8">
+        <div className="bg-white border border-slate-200 rounded-2xl shadow-lg p-6 mb-8">
           <div className="flex flex-col md:flex-row gap-4">
             {/* Search Input */}
             <div className="flex-1">
