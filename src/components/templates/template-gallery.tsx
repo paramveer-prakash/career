@@ -14,7 +14,7 @@ interface TemplateInfo {
 const getTemplatesFromRegistry = (): TemplateInfo[] => {
   try {
     const registryTemplates = getAllTemplates();
-    
+    return getFallbackTemplates();
     if (registryTemplates.length === 0) {
       return getFallbackTemplates();
     }

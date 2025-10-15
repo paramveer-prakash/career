@@ -1,10 +1,11 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useParams } from 'next/navigation'
 import { api } from '@/lib/api'
 import { ResumePreview, ResumeTemplateKey } from '@/components/templates/preview'
 import { FullPageLoader } from '@/components/ui/loader'
 import { TemplateGallery } from '@/components/templates/template-gallery'
+import { getTemplate } from '@/lib/templates/template-registry'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export default function PreviewPage(){
@@ -15,6 +16,14 @@ export default function PreviewPage(){
   const [template,setTemplate]=useState<ResumeTemplateKey>('modern')
   const [downloadingPDF, setDownloadingPDF] = useState(false)
   const [previewingHTML, setPreviewingHTML] = useState(false)
+
+  const templateName = useMemo(() => {
+    try {
+      return getTemplate(template)?.name ?? template
+    } catch {
+      return template
+    }
+  }, [template])
 
   useEffect(()=>{(async()=>{
     if(!id) return
@@ -184,7 +193,7 @@ export default function PreviewPage(){
           <div className="p-4 border-b border-gray-200 bg-white/80 backdrop-blur-sm">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600">{resume?.title} : Preview</p>
+                <p className="text-sm text-gray-600">{resume?.title} : Preview {templateName}</p>
               </div>
               
             </div>
