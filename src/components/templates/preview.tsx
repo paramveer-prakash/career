@@ -9,8 +9,8 @@ import { MinimalDarkTemplate } from "./minimal-dark";
 import { ExecutiveTemplate } from "./executive";
 import { ColorfulTemplate } from "./colorful";
 import { TechModernTemplate } from "./tech-modern";
+import { ResumeTemplateKey } from '@/lib/templates/template-registry';
 
-export type ResumeTemplateKey = 'classic' | 'minimal' | 'modern' | 'professional' | 'creative' | 'minimal-dark' | 'executive' | 'colorful' | 'tech-modern';
 
 const templateMap: Record<ResumeTemplateKey, (p:{data:any})=>React.JSX.Element> = {
   classic: ({data}) => <ClassicTemplate data={data} />,

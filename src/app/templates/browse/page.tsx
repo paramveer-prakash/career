@@ -1,7 +1,7 @@
 'use client'
 import { useState, useMemo } from 'react'
-import { getAllTemplates } from '@/lib/templates/template-registry'
-import { ResumePreview, ResumeTemplateKey } from '@/components/templates/preview'
+import { getAllTemplates, getFallbackTemplates, ResumeTemplateKey } from '@/lib/templates/template-registry'
+import { ResumePreview } from '@/components/templates/preview'
 import { getSeedForProfession } from '@/lib/templates/seed-resume'
 
 interface TemplateInfo {
@@ -26,7 +26,7 @@ export default function TemplateBrowserPage() {
   
   const templates = useMemo(() => {
     try {
-      return getAllTemplates() as TemplateInfo[]
+      return getFallbackTemplates() as TemplateInfo[]
     } catch {
       return []
     }
@@ -114,8 +114,19 @@ export default function TemplateBrowserPage() {
               className="group cursor-pointer bg-white rounded-xl border-2 border-gray-200 transition-all duration-200 hover:shadow-xl hover:border-blue-300 hover:-translate-y-1"
             >
               {/* Preview Thumbnail */}
-              <div className="aspect-[3/4] rounded-t-xl overflow-hidden bg-gray-50 relative">
-                <div className="absolute inset-0 from-gray-100 to-gray-200 flex items-center justify-center">
+              <div className="aspect-[1/1.414] rounded-t-xl overflow-hidden bg-gray-50 relative p-1">
+                <img
+                  src={`/templates/${template.key}.png`}
+                  alt={`${template.name} template preview`}
+                  className="w-full h-full object-contain"
+                  onError={(e) => {
+                    // Fallback to placeholder if image doesn't exist
+                    e.currentTarget.style.display = 'none';
+                    const fallback = e.currentTarget.nextElementSibling as HTMLElement;
+                    if (fallback) fallback.style.display = 'flex';
+                  }}
+                />
+                <div className="absolute inset-0 from-gray-100 to-gray-200 hidden items-center justify-center">
                   <div className="text-center">
                     <div className="text-4xl mb-2">📄</div>
                     <div className="text-sm font-medium text-gray-600">{template.name}</div>
@@ -208,10 +219,10 @@ export default function TemplateBrowserPage() {
                   Close
                 </button>
                 <a
-                  href="/overview"
+                  href={`/templates/snap/${previewingTemplate}`}
                   className="px-4 py-2 text-sm rounded-lg bg-blue-600 text-white hover:bg-blue-700 font-medium transition-colors"
                 >
-                  Use This Template
+                  View Full Preview
                 </a>
               </div>
             </div>

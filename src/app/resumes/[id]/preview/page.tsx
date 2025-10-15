@@ -172,7 +172,7 @@ export default function PreviewPage(){
       {/* Main Content - Three Column Layout */}
       <div className="flex-1 flex overflow-hidden">
         {/* Left Column - Template Selection */}
-        <div className="w-80 bg-white border-r border-gray-200 flex flex-col">
+        <div className="w-112 bg-white border-r border-gray-200 flex flex-col">
           <div className="p-4 border-b border-gray-200">
             <h2 className="text-lg font-semibold text-gray-900">Templates</h2>
             <p className="text-sm text-gray-600 mt-1">Select a template to preview</p>
