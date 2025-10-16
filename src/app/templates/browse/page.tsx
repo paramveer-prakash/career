@@ -12,10 +12,10 @@ interface TemplateInfo {
 }
 
 const professionFilters = [
-  { key: 'all', label: 'All Professions', icon: '📋' },
-  { key: 'technology', label: 'Technology', icon: '💻' },
+  { key: 'all', label: 'All', icon: '📋' },
+  { key: 'technology', label: 'Tech', icon: '💻' },
   { key: 'finance', label: 'Finance', icon: '💰' },
-  { key: 'healthcare', label: 'Healthcare', icon: '⚕️' },
+  { key: 'healthcare', label: 'Health', icon: '⚕️' },
   { key: 'marketing', label: 'Marketing', icon: '📊' },
 ];
 
@@ -33,11 +33,11 @@ export default function TemplateBrowserPage() {
   }, [])
 
   const categories = [
-    { key: 'all', label: 'All Styles' },
-    { key: 'professional', label: 'Professional' },
-    { key: 'modern', label: 'Modern' },
-    { key: 'creative', label: 'Creative' },
-    { key: 'minimal', label: 'Minimal' },
+    { key: 'all', label: 'All', icon: '🎨' },
+    { key: 'professional', label: 'Professional', icon: '👔' },
+    { key: 'modern', label: 'Modern', icon: '✨' },
+    { key: 'creative', label: 'Creative', icon: '🎭' },
+    { key: 'minimal', label: 'Minimal', icon: '⚪' },
   ]
 
   const filteredTemplates = useMemo(() => {
@@ -54,58 +54,73 @@ export default function TemplateBrowserPage() {
     <div className="min-h-screen from-slate-50 via-blue-50 to-indigo-50">
       {/* Header */}
       <div className="bg-white border-b border-gray-200 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 py-6">
-          <h1 className="text-3xl font-bold text-gray-900">Resume Template Gallery</h1>
-          <p className="text-gray-600 mt-2">Browse professional templates tailored for your industry</p>
+        <div className="max-w-7xl mx-auto px-4 py-8">
+          <h1 className="text-4xl font-bold text-gray-900">Resume Templates</h1>
+          <p className="text-gray-600 mt-2">Choose the perfect template for your profession</p>
         </div>
       </div>
 
-      {/* Filters */}
-      <div className="max-w-7xl mx-auto px-4 py-6 space-y-4">
-        {/* Profession Filter */}
-        <div>
-          <h2 className="text-sm font-semibold text-gray-700 mb-3">Filter by Profession</h2>
-          <div className="flex flex-wrap gap-2">
-            {professionFilters.map((prof) => (
-              <button
-                key={prof.key}
-                onClick={() => setSelectedProfession(prof.key)}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                  selectedProfession === prof.key
-                    ? 'bg-blue-600 text-white shadow-md'
-                    : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
-                }`}
-              >
-                <span className="mr-2">{prof.icon}</span>
-                {prof.label}
-              </button>
-            ))}
-          </div>
-        </div>
+      {/* Compact Filters */}
+      <div className="bg-white border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 py-4">
+          <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+            {/* Profession Filter */}
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-medium text-gray-500">Industry:</span>
+              <div className="flex gap-1">
+                {professionFilters.map((prof) => (
+                  <button
+                    key={prof.key}
+                    onClick={() => setSelectedProfession(prof.key)}
+                    className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${
+                      selectedProfession === prof.key
+                        ? 'bg-blue-600 text-white shadow-sm'
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+                  >
+                    <span className="mr-1.5">{prof.icon}</span>
+                    {prof.label}
+                  </button>
+                ))}
+              </div>
+            </div>
 
-        {/* Category Filter */}
-        <div>
-          <h2 className="text-sm font-semibold text-gray-700 mb-3">Filter by Style</h2>
-          <div className="flex flex-wrap gap-2">
-            {categories.map((cat) => (
-              <button
-                key={cat.key}
-                onClick={() => setSelectedCategory(cat.key)}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                  selectedCategory === cat.key
-                    ? 'bg-indigo-600 text-white shadow-md'
-                    : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
-                }`}
-              >
-                {cat.label}
-              </button>
-            ))}
+            {/* Category Filter */}
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-medium text-gray-500">Style:</span>
+              <div className="flex gap-1">
+                {categories.map((cat) => (
+                  <button
+                    key={cat.key}
+                    onClick={() => setSelectedCategory(cat.key)}
+                    className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${
+                      selectedCategory === cat.key
+                        ? 'bg-indigo-600 text-white shadow-sm'
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+                  >
+                    <span className="mr-1.5">{cat.icon}</span>
+                    {cat.label}
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Template Grid */}
-      <div className="max-w-7xl mx-auto px-4 pb-12">
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        {/* Results Counter */}
+        <div className="mb-6">
+          <p className="text-sm text-gray-600">
+            Showing <span className="font-medium text-gray-900">{filteredTemplates.length}</span> template{filteredTemplates.length !== 1 ? 's' : ''}
+            {selectedCategory !== 'all' && (
+              <span> in <span className="font-medium text-gray-900">{categories.find(c => c.key === selectedCategory)?.label}</span> style</span>
+            )}
+          </p>
+        </div>
+        
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredTemplates.map((template) => (
             <div
@@ -118,7 +133,7 @@ export default function TemplateBrowserPage() {
                 <img
                   src={`/templates/${template.key}.png`}
                   alt={`${template.name} template preview`}
-                  className="w-full h-full object-contain border-1 border-gray-400"
+                  className="w-full h-full object-cover"
                   onError={(e) => {
                     // Fallback to placeholder if image doesn't exist
                     e.currentTarget.style.display = 'none';
@@ -133,10 +148,10 @@ export default function TemplateBrowserPage() {
                   </div>
                 </div>
                 {/* Hover Overlay */}
-                <div className="absolute inset-0 bg-blue-600/0 group-hover:bg-blue-600/10 transition-colors duration-200 flex items-center justify-center">
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-200 flex items-center justify-center">
                   <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                    <div className="bg-white rounded-full px-4 py-2 text-sm font-medium text-blue-600 shadow-lg">
-                      Click to Preview
+                    <div className="bg-white/90 backdrop-blur-sm rounded-full px-4 py-2 text-sm font-medium text-gray-900 shadow-lg">
+                      Preview Template
                     </div>
                   </div>
                 </div>

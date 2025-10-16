@@ -13,7 +13,7 @@ export default function PreviewPage(){
   const id = params?.id as string
   const [resume,setResume]=useState<any>(null)
   const [loading,setLoading]=useState(true)
-  const [template,setTemplate]=useState<ResumeTemplateKey>('modern')
+  const [template,setTemplate]=useState<ResumeTemplateKey>('executive')
   const [downloadingPDF, setDownloadingPDF] = useState(false)
   const [previewingHTML, setPreviewingHTML] = useState(false)
 
