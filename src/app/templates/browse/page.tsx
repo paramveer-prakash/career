@@ -114,7 +114,7 @@ export default function TemplateBrowserPage() {
               className="group cursor-pointer bg-white rounded-xl border-gray-200 transition-all duration-200 hover:shadow-xl hover:border-blue-300 hover:-translate-y-1"
             >
               {/* Preview Thumbnail */}
-              <div className="aspect-[1/1.414] overflow-hidden  relative p-1">
+              <div className="aspect-[3/4] overflow-hidden relative bg-gray-50">
                 <img
                   src={`/templates/${template.key}.png`}
                   alt={`${template.name} template preview`}

@@ -129,6 +129,9 @@ async function generateScreenshots(templatesToProcess) {
           timeout: 30000 
         });
 
+        // Set viewport to 3:4 ratio for consistent thumbnails
+        await page.setViewport({ width: 600, height: 800 });
+        
         // Wait for the template content to load
         await page.waitForSelector('body', { timeout: 10000 });
         
@@ -136,18 +139,12 @@ async function generateScreenshots(templatesToProcess) {
         await page.evaluateHandle('document.fonts.ready');
         await new Promise(resolve => setTimeout(resolve, 2000));
 
-        // Get the template container element
-        const element = await page.$(SELECTOR);
-        if (!element) {
-          console.log(`   ❌ Template container not found for ${templateKey}`);
-          continue;
-        }
-
-        // Take screenshot of the template container
+        // Take screenshot of the viewport (3:4 ratio)
         const outputPath = path.join(OUTPUT_DIR, `${templateKey}.png`);
-        await element.screenshot({
+        await page.screenshot({
           path: outputPath,
           type: 'png',
+          fullPage: false, // Only capture the viewport
           omitBackground: false // Keep white background
         });
 

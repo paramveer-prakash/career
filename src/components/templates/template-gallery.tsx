@@ -125,18 +125,18 @@ export function TemplateGallery({
             <div
               key={template.key}
               onClick={() => onTemplateSelect(template.key)}
-              className={`group cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-1 relative overflow-hidden ${
+              className={`group cursor-pointer bg-white border-2 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 relative overflow-hidden ${
                 selectedTemplate === template.key
                   ? 'border-blue-500 bg-blue-50 shadow-lg ring-2 ring-blue-200'
-                  : 'border-gray-200 bg-white hover:border-blue-300 hover:shadow-lg'
+                  : 'border-gray-200 hover:border-blue-300 hover:shadow-lg'
               }`}
             >
               {/* Template Preview */}
-              <div className="w-full h-[240px] relative overflow-hidden from-gray-50 to-gray-100">
+              <div className="w-full aspect-[3/4] relative overflow-hidden bg-gray-50">
                 <img
                   src={template.preview}
                   alt={`${template.name} template preview`}
-                  className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300 border-1 border-gray-400"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
                 
                 {/* Selection Indicator */}
@@ -169,17 +169,7 @@ export function TemplateGallery({
                 </div>*/}
               </div>
 
-              {/* Template Info */}
-              {/*<div className="p-3">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-semibold text-gray-900 text-sm truncate">{template.name}</h3>
-                  <span className={`text-xs font-medium ${
-                    selectedTemplate === template.key ? 'text-blue-600' : 'text-gray-500'
-                  }`}>
-                    {selectedTemplate === template.key ? 'Selected' : 'Click to select'}
-                  </span>
-                </div>
-              </div>*/}
+              
             </div>
           ))}
         </div>
