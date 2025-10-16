@@ -5,26 +5,10 @@ import { getTemplateCSS as getRegistryCSS } from './template-registry';
 const cssCache: Record<string, string> = {};
 
 export function loadTemplateCSS(templateKey: string): string {
-  // Return cached CSS if available
-  if (cssCache[templateKey]) {
-    return cssCache[templateKey];
-  }
-
-  // Try to get CSS from the new template registry first
-  try {
-    const registryCSS = getRegistryCSS(templateKey);
-    if (registryCSS) {
-      cssCache[templateKey] = registryCSS;
-      return registryCSS;
-    }
-  } catch (_error) {
-    // Fall back to legacy CSS if template not found in registry
-    console.log(`Template ${templateKey} not found in registry, using legacy CSS`);
-  }
-
-  // Load CSS from embedded content (legacy fallback)
+  // For now, always use the legacy CSS with our updates
+  // This ensures we get the updated modern template CSS
   const cssContent = getTemplateCSS(templateKey);
-
+  
   // Cache the CSS content
   cssCache[templateKey] = cssContent;
 
@@ -88,27 +72,58 @@ function getTemplateCSS(templateKey: string): string {
 
   const templateSpecificCSS = {
     modern: `
-      .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
-      .name-section h1 { font-size: 24px; font-weight: 600; margin: 0 0 4px 0; color: #1a1a1a; letter-spacing: -0.025em; }
-      .contact { color: #6b7280; font-size: 14px; }
-      .avatar { width: 40px; height: 40px; background: linear-gradient(135deg, #3b82f6, #06b6d4); border-radius: 6px; }
-      .summary { margin: 16px 0; color: #374151; white-space: pre-wrap; }
-      .content-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 16px; margin-top: 24px; }
-      .skills-section, .experience-section { display: flex; flex-direction: column; gap: 8px; }
-      .skills-section { grid-column: 1; }
-      .experience-section { grid-column: 2; }
-      .skills-section h3, .experience-section h3, .education-section h3 { font-weight: 600; margin: 0; color: #1a1a1a; font-size: 14px; }
-      .skills-list { display: flex; flex-wrap: wrap; gap: 8px; }
-      .skill-chip { border: 1px solid #dbeafe; background: #eff6ff; color: #1e40af; padding: 4px 12px; border-radius: 9999px; font-size: 12px; font-weight: 500; }
-      .experience-list { display: flex; flex-direction: column; gap: 12px; }
-      .experience-item { border: 1px solid #e5e7eb; background: #f9fafb; border-radius: 6px; padding: 12px; }
-      .job-title { font-weight: 500; color: #1a1a1a; margin-bottom: 8px; }
-      .responsibilities { margin: 0; padding-left: 20px; color: #374151; }
-      .responsibilities li { margin: 2px 0; }
-      .education-section { margin-top: 24px; }
-      .education-section h3 { font-weight: 600; margin: 0 0 8px 0; color: #1a1a1a; font-size: 14px; }
-      .education-list { margin: 0; padding-left: 20px; color: #374151; }
-      .education-list li { margin: 4px 0; }
+      .modern-resume { max-width: 210mm; margin: 0 auto; background: white; color: #1a1a1a; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; }
+      
+      /* Header Section */
+      .header-section { border-bottom: 4px solid #2563eb; padding-bottom: 24px; margin-bottom: 32px; }
+      .header-content { display: flex; justify-content: space-between; align-items: flex-start; }
+      .name-section { flex: 1; }
+      .name { font-size: 36px; font-weight: 700; margin: 0 0 12px 0; color: #1a1a1a; letter-spacing: -0.025em; }
+      .contact-info { display: flex; flex-wrap: wrap; gap: 16px; font-size: 14px; color: #6b7280; }
+      .contact-item { display: flex; align-items: center; gap: 6px; }
+      .avatar { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, #2563eb, #06b6d4); box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); flex-shrink: 0; }
+      
+      /* Summary Section */
+      .summary-section { margin-bottom: 32px; }
+      .section-title { font-size: 20px; font-weight: 700; color: #1a1a1a; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.05em; border-left: 4px solid #2563eb; padding-left: 12px; }
+      .summary-text { color: #374151; line-height: 1.6; text-align: justify; }
+      
+      /* Content Grid */
+      .content-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 32px; }
+      .left-column { display: flex; flex-direction: column; gap: 32px; }
+      .right-column { display: flex; flex-direction: column; }
+      
+      /* Skills Section */
+      .skills-section { }
+      .skills-list { display: flex; flex-direction: column; gap: 8px; }
+      .skill-item { }
+      .skill-name { font-size: 14px; font-weight: 500; color: #1a1a1a; margin-bottom: 4px; }
+      .skill-bar { height: 8px; background: #e5e7eb; border-radius: 4px; overflow: hidden; }
+      .skill-fill { height: 100%; background: linear-gradient(90deg, #2563eb, #06b6d4); border-radius: 4px; width: 80%; }
+      
+      /* Education Section */
+      .education-section { }
+      .education-list { display: flex; flex-direction: column; gap: 16px; }
+      .education-item { border-left: 2px solid #d1d5db; padding-left: 16px; }
+      .education-item:hover { border-left-color: #2563eb; }
+      .degree { font-weight: 600; color: #1a1a1a; font-size: 14px; }
+      .institution { font-size: 14px; color: #374151; font-weight: 500; margin-top: 4px; }
+      .year { font-size: 12px; color: #6b7280; margin-top: 4px; }
+      
+      /* Experience Section */
+      .experience-section { }
+      .experience-list { display: flex; flex-direction: column; gap: 24px; }
+      .experience-item { position: relative; padding-left: 24px; border-left: 2px solid #d1d5db; }
+      .experience-item:hover { border-left-color: #2563eb; }
+      .timeline-dot { position: absolute; left: -9px; top: 4px; width: 16px; height: 16px; border-radius: 50%; background: #2563eb; box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3); }
+      .experience-content { }
+      .job-title { font-size: 18px; font-weight: 700; color: #1a1a1a; margin-bottom: 4px; }
+      .job-meta { display: flex; align-items: center; gap: 12px; font-size: 14px; color: #6b7280; margin-bottom: 8px; }
+      .company { font-weight: 500; color: #2563eb; }
+      .duration { }
+      .responsibilities { margin: 0; padding: 0; }
+      .responsibility-item { display: flex; gap: 8px; font-size: 14px; color: #374151; margin-bottom: 6px; }
+      .bullet { color: #2563eb; font-weight: 700; margin-top: 2px; }
     `,
     classic: `
       .header { margin-bottom: 8px; }

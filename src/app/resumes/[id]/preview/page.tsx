@@ -175,7 +175,7 @@ export default function PreviewPage(){
         <div className="w-112 bg-white border-r border-gray-200 flex flex-col">
           <div className="p-4 border-b border-gray-200">
             <h2 className="text-lg font-semibold text-gray-900">Templates</h2>
-            <p className="text-sm text-gray-600 mt-1">Select a template to preview</p>
+            {/* <p className="text-sm text-gray-600 mt-1">Select a template to preview</p> */}
           </div>
           
           <div className="flex-1 overflow-y-auto">

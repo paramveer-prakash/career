@@ -130,40 +130,49 @@ async function generatePDF(html: string): Promise<Buffer> {
             color-adjust: exact !important;
           }
           body {
-            font-size: 12px !important;
-            line-height: 1.4 !important;
+            font-size: 14px !important;
+            line-height: 1.5 !important;
             margin: 0 !important;
-            padding: 10px !important;
+            padding: 15px !important;
           }
           .resume-container {
             max-width: 100% !important;
             margin: 0 !important;
             padding: 0 !important;
           }
-          /* Scale down large elements for PDF */
-          h1 { font-size: 24px !important; }
-          h2 { font-size: 18px !important; }
-          h3 { font-size: 16px !important; }
-          .name { font-size: 28px !important; }
-          .section-title { font-size: 16px !important; }
-          .profile-picture { 
-            width: 80px !important; 
-            height: 80px !important; 
+          /* Modern template specific adjustments */
+          .modern-resume {
+            max-width: 100% !important;
+            margin: 0 !important;
+          }
+          .name { font-size: 32px !important; }
+          .section-title { font-size: 18px !important; }
+          .avatar { 
+            width: 70px !important; 
+            height: 70px !important; 
           }
           .header-section { 
-            padding: 20px 0 !important; 
-            margin-bottom: 20px !important; 
+            padding-bottom: 20px !important; 
+            margin-bottom: 25px !important; 
           }
           .content-grid { 
-            gap: 20px !important; 
+            gap: 25px !important; 
           }
-          .experience-item, .education-item { 
-            margin-bottom: 15px !important; 
-            padding: 15px !important; 
+          .experience-item { 
+            margin-bottom: 20px !important; 
+            padding-left: 20px !important;
           }
-          .skill-item { 
-            padding: 8px 12px !important; 
-            font-size: 12px !important; 
+          .timeline-dot {
+            width: 14px !important;
+            height: 14px !important;
+            left: -7px !important;
+          }
+          .skill-bar {
+            height: 6px !important;
+          }
+          .education-item { 
+            margin-bottom: 12px !important; 
+            padding-left: 12px !important;
           }
           /* Ensure gradients and colors print correctly */
           .bg-gradient-to-r, .bg-gradient-to-br, .bg-gradient-to-l {

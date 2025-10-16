@@ -58,58 +58,99 @@ export function generateHtml(templateKey: string, data: any): string {
 
 function generateModernTemplate(data: any): string {
   const skills = (data.skills || []).map((skill: any) => 
-    `<span class="skill-chip">${skill.name || skill.skill}</span>`
+    `<div class="skill-item">
+      <div class="skill-name">${skill.name || skill.skill}</div>
+      <div class="skill-bar">
+        <div class="skill-fill"></div>
+      </div>
+    </div>`
   ).join('');
 
   const workExperiences = (data.workExperiences || []).map((work: any) => {
     const responsibilities = (work.responsibilities || []).map((resp: any) => 
-      `<li>${typeof resp === 'string' ? resp : resp.description}</li>`
+      `<li class="responsibility-item">
+        <span class="bullet">•</span>
+        <span>${typeof resp === 'string' ? resp : resp.description}</span>
+      </li>`
     ).join('');
     
     return `
       <div class="experience-item">
-        <div class="job-title">${work.jobTitle}</div>
-        ${responsibilities ? `<ul class="responsibilities">${responsibilities}</ul>` : ''}
+        <div class="timeline-dot"></div>
+        <div class="experience-content">
+          <h3 class="job-title">${work.jobTitle}</h3>
+          <div class="job-meta">
+            <span class="company">${work.companyName || work.company || 'Company'}</span>
+            ${(work.startDate || work.endDate) ? `<span class="duration">${work.startDate} - ${work.isCurrent ? 'Present' : (work.endDate || 'Present')}</span>` : ''}
+          </div>
+          ${responsibilities ? `<ul class="responsibilities">${responsibilities}</ul>` : ''}
+        </div>
       </div>
     `;
   }).join('');
 
   const educations = (data.educations || []).map((edu: any) => 
-    `<li>${edu.institution}</li>`
+    `<div class="education-item">
+      <div class="degree">${edu.degree || 'Degree'}</div>
+      <div class="institution">${edu.institution}</div>
+      ${edu.graduationYear ? `<div class="year">${edu.graduationYear}</div>` : ''}
+    </div>`
   ).join('');
 
   return `
-    <div class="header">
-      <div class="name-section">
-        <h1>${data.primaryName || 'Your Name'}</h1>
-        <div class="contact">${[data.primaryEmail, data.primaryPhone, data.primaryLocation].filter(Boolean).join(' · ')}</div>
-      </div>
-      <div class="avatar"></div>
-    </div>
-    
-    ${data.summary ? `<div class="summary"><p>${data.summary}</p></div>` : ''}
-    
-    <div class="content-grid">
-      <div class="skills-section">
-        <h3>Skills</h3>
-        <div class="skills-list">
-          ${skills}
+    <div class="modern-resume">
+      <!-- Header Section -->
+      <div class="header-section">
+        <div class="header-content">
+          <div class="name-section">
+            <h1 class="name">${data.primaryName || 'Your Name'}</h1>
+            <div class="contact-info">
+              ${data.primaryEmail ? `<span class="contact-item">✉ ${data.primaryEmail}</span>` : ''}
+              ${data.primaryPhone ? `<span class="contact-item">✆ ${data.primaryPhone}</span>` : ''}
+              ${data.primaryLocation ? `<span class="contact-item">⌘ ${data.primaryLocation}</span>` : ''}
+            </div>
+          </div>
+          <div class="avatar"></div>
         </div>
       </div>
-      
-      <div class="experience-section">
-        <h3>Experience</h3>
-        <div class="experience-list">
-          ${workExperiences}
+
+      <!-- Professional Summary -->
+      ${data.summary ? `
+        <div class="summary-section">
+          <h2 class="section-title">Professional Summary</h2>
+          <p class="summary-text">${data.summary}</p>
+        </div>
+      ` : ''}
+
+      <!-- Two Column Layout -->
+      <div class="content-grid">
+        <!-- Left Column - Skills & Education -->
+        <div class="left-column">
+          ${skills ? `
+            <div class="skills-section">
+              <h2 class="section-title">Skills</h2>
+              <div class="skills-list">${skills}</div>
+            </div>
+          ` : ''}
+
+          ${educations ? `
+            <div class="education-section">
+              <h2 class="section-title">Education</h2>
+              <div class="education-list">${educations}</div>
+            </div>
+          ` : ''}
+        </div>
+
+        <!-- Right Column - Experience -->
+        <div class="right-column">
+          ${workExperiences ? `
+            <div class="experience-section">
+              <h2 class="section-title">Professional Experience</h2>
+              <div class="experience-list">${workExperiences}</div>
+            </div>
+          ` : ''}
         </div>
       </div>
-    </div>
-    
-    <div class="education-section">
-      <h3>Education</h3>
-      <ul class="education-list">
-        ${educations}
-      </ul>
     </div>
   `;
 }

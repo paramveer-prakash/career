@@ -97,11 +97,11 @@ export function TemplateGallery({
       <div className={`space-y-4 ${className}`}>
         {/* Enhanced Category Filter */}
         <div className="space-y-3">
-          <div className="flex items-center justify-between">
+          {/*<div className="flex items-center justify-between">
             <h3 className="text-sm font-semibold text-gray-900">Filter Templates</h3>
             <span className="text-xs text-gray-500">{filteredTemplates.length} templates</span>
-          </div>
-          <div className="flex flex-wrap gap-2">
+          </div> */}
+          {/*<div className="flex flex-wrap gap-2">
             {categories.map((category) => (
               <button
                 key={category.key}
@@ -116,7 +116,7 @@ export function TemplateGallery({
                 <span className="ml-1 text-xs opacity-75">({category.count})</span>
               </button>
             ))}
-          </div>
+          </div>*/}
         </div>
 
         {/* Enhanced Template Grid - Two Column */}
