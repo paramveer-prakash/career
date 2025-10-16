@@ -1,6 +1,6 @@
 'use client'
 import { useState, useMemo } from 'react'
-import { getAllTemplates, getFallbackTemplates, ResumeTemplateKey } from '@/lib/templates/template-registry'
+import { getFallbackTemplates, ResumeTemplateKey } from '@/lib/templates/template-registry'
 import { ResumePreview } from '@/components/templates/preview'
 import { getSeedForProfession } from '@/lib/templates/seed-resume'
 

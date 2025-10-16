@@ -80,7 +80,7 @@ export function AIResumeGenerator({ onClose, onSuccess }: AIResumeGeneratorProps
               </div>
               <div>
                 <h2 className="text-2xl font-bold text-slate-900">AI Resume Generator</h2>
-                <p className="text-slate-600">Tell us about yourself and we'll create your resume</p>
+                <p className="text-slate-600">Tell us about yourself and we&apos;ll create your resume</p>
               </div>
             </div>
             <button

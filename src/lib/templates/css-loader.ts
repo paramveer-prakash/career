@@ -17,7 +17,7 @@ export function loadTemplateCSS(templateKey: string): string {
       cssCache[templateKey] = registryCSS;
       return registryCSS;
     }
-  } catch (error) {
+  } catch (_error) {
     // Fall back to legacy CSS if template not found in registry
     console.log(`Template ${templateKey} not found in registry, using legacy CSS`);
   }

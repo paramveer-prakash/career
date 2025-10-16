@@ -274,7 +274,7 @@ export class AIService {
     return foundSkills;
   }
 
-  private static generateSkillReason(skill: string, jobDescription: string): string {
+  private static generateSkillReason(skill: string, _jobDescription: string): string {
     const reasons = {
       'JavaScript': 'Essential for modern web development and mentioned in job requirements',
       'React': 'Core framework for frontend development, highly sought after',
@@ -292,7 +292,7 @@ export class AIService {
            `This skill is mentioned in the job description and would strengthen your application`;
   }
 
-  private static determineSkillPriority(skill: string, jobDescription: string): string {
+  private static determineSkillPriority(skill: string, _jobDescription: string): string {
     const highPrioritySkills = ['JavaScript', 'React', 'Python', 'AWS', 'Leadership', 'SQL'];
     const mediumPrioritySkills = ['Node.js', 'Docker', 'Agile', 'Git', 'Communication'];
     
@@ -304,7 +304,7 @@ export class AIService {
     return 'low';
   }
 
-  private static transformAchievement(content: string, context?: string): string {
+  private static transformAchievement(content: string, _context?: string): string {
     const lowerContent = content.toLowerCase();
     
     // Achievement enhancement patterns
@@ -386,7 +386,7 @@ export class AIService {
     return `${content}, ${randomEnhancement}`;
   }
 
-  private static generateAchievementSuggestions(content: string): string[] {
+  private static generateAchievementSuggestions(_content: string): string[] {
     return [
       'Consider adding specific metrics or numbers to quantify your impact',
       'Include the business outcome or benefit achieved',
@@ -403,7 +403,7 @@ export class AIService {
     console.log('AI Service: Chat with resume for:', request);
     await this.simulateDelay(1500);
 
-    const { message, resumeContext } = request;
+    const { message, resumeContext: _resumeContext } = request;
     const messageLower = message.toLowerCase();
 
     // Analyze the user's question and provide contextual advice
@@ -498,7 +498,7 @@ export class AIService {
     console.log('AI Service: Generating interview questions for:', request);
     await this.simulateDelay(2000);
 
-    const { jobTitle, company, jobDescription } = request;
+    const { jobTitle, company: _company, jobDescription: _jobDescription } = request;
 
     const questions: InterviewQuestion[] = [
       {
@@ -588,7 +588,7 @@ export class AIService {
     console.log('AI Service: Getting career guidance for:', request);
     await this.simulateDelay(1800);
 
-    const { targetRole, timeHorizon, currentGoals } = request;
+    const { targetRole: _targetRole, timeHorizon: _timeHorizon, currentGoals: _currentGoals } = request;
 
     const recommendations = [
       {

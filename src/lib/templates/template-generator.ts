@@ -280,7 +280,7 @@ export class TemplateGenerator {
     return html;
   }
 
-  private generateExperienceSection(data: any, experienceLayout: any): string {
+  private generateExperienceSection(data: any, _experienceLayout: any): string {
     if (!data.experience || data.experience.length === 0) return '';
     
     let html = '<div class="experience-section">';
@@ -306,7 +306,7 @@ export class TemplateGenerator {
     return html;
   }
 
-  private generateEducationSection(data: any, educationLayout: any): string {
+  private generateEducationSection(data: any, _educationLayout: any): string {
     if (!data.education || data.education.length === 0) return '';
     
     let html = '<div class="education-section">';
@@ -326,7 +326,7 @@ export class TemplateGenerator {
   }
 
   // Helper methods for CSS generation
-  private generateHeaderCSS(headerLayout: any, colors: any): string {
+  private generateHeaderCSS(headerLayout: any, _colors: any): string {
     switch (headerLayout.style) {
       case 'split':
         return `
@@ -375,13 +375,13 @@ export class TemplateGenerator {
     }
   }
 
-  private generateSectionCSS(colors: any, typography: any): string {
+  private generateSectionCSS(_colors: any, _typography: any): string {
     return `
       margin-bottom: 16px;
     `;
   }
 
-  private generateSkillsCSS(skillsLayout: any, colors: any): string {
+  private generateSkillsCSS(skillsLayout: any, _colors: any): string {
     switch (skillsLayout.style) {
       case 'chips':
         return `
@@ -404,7 +404,7 @@ export class TemplateGenerator {
     }
   }
 
-  private generateExperienceCSS(experienceLayout: any, colors: any): string {
+  private generateExperienceCSS(experienceLayout: any, _colors: any): string {
     switch (experienceLayout.style) {
       case 'cards':
         return `
@@ -426,7 +426,7 @@ export class TemplateGenerator {
     }
   }
 
-  private generateEducationCSS(educationLayout: any, colors: any): string {
+  private generateEducationCSS(educationLayout: any, _colors: any): string {
     switch (educationLayout.style) {
       case 'cards':
         return `

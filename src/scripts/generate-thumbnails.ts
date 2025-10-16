@@ -108,7 +108,7 @@ async function generateThumbnails() {
       await page.setContent(htmlContent, { waitUntil: 'networkidle0' });
       
       // Wait a bit for rendering
-      await page.waitForTimeout(500);
+      await new Promise(resolve => setTimeout(resolve, 500));
 
       // Take screenshot
       const screenshot = await page.screenshot({

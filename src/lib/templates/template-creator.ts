@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { TemplateConfig, createTemplate, addTemplate } from './template-generator';
+import { TemplateConfig, addTemplate } from './template-generator';
 
 // Simple template creator with presets
 export class TemplateCreator {

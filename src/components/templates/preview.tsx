@@ -11,6 +11,8 @@ import { ColorfulTemplate } from "./colorful";
 import { TechModernTemplate } from "./tech-modern";
 import { ResumeTemplateKey } from '@/lib/templates/template-registry';
 
+export type { ResumeTemplateKey };
+
 
 const templateMap: Record<ResumeTemplateKey, (p:{data:any})=>React.JSX.Element> = {
   classic: ({data}) => <ClassicTemplate data={data} />,

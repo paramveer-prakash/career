@@ -169,7 +169,7 @@ export default function ResumesPage() {
               <>
                 <h2 className="text-2xl font-bold text-slate-900 mb-4">No Resumes Found</h2>
                 <p className="text-slate-600 mb-8 max-w-md mx-auto">
-                  No resumes match your search for "{searchQuery}". Try adjusting your search terms.
+                  No resumes match your search for &quot;{searchQuery}&quot;. Try adjusting your search terms.
                 </p>
                 <button
                   onClick={() => setSearchQuery('')}

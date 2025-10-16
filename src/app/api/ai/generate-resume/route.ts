@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
       skills,
       education,
       careerGoals,
-      additionalInfo
+      additionalInfo: _additionalInfo
     } = body;
 
     // Generate a unique ID (in real implementation, this would come from the database)
@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
       endDate: null,
       isCurrent: true,
       jobDescription: experience,
-      technologies: skillsList.map(s => s.name),
+      technologies: skillsList.map((s: { name: string }) => s.name),
       industry: 'Technology',
       sortOrder: 1,
       isVisible: true,
@@ -67,7 +67,7 @@ export async function POST(request: NextRequest) {
     }] : [];
 
     // Create certifications if mentioned
-    const certifications = [];
+    const certifications: { name: string; authority: string | null; date: string | null }[] = [];
 
     // Generate a professional summary
     const summary = careerGoals 
