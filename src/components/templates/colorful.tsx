@@ -1,172 +1,102 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 
 interface ColorfulTemplateProps {
-  data: {
-    id: number;
-    primaryName: string;
-    primaryEmail: string;
-    primaryPhone: string;
-    summary: string;
-    skills: Array<{ name: string }>;
-    workExperiences: Array<{
-      jobTitle: string;
-      company: string;
-      startDate: string;
-      endDate: string;
-      responsibilities: Array<{id: number; description: string}>;
-    }>;
-    educations: Array<{
-      degree: string;
-      institution: string;
-      graduationYear: string;
-    }>;
-    profilePicture?: string;
-  };
+  data: any;
 }
 
 export function ColorfulTemplate({ data }: ColorfulTemplateProps) {
   return (
-    <div className="colorful-resume bg-gradient-to-br from-pink-400 via-purple-500 to-indigo-500 text-white min-h-screen font-sans">
-      {/* Header with Colorful Design */}
-      <div className="header-section relative py-20">
-        <div className="header-background absolute inset-0">
-          <div className="color-stripes flex h-full">
-            <div className="stripe stripe-1 flex-1 bg-gradient-to-br from-red-400 to-pink-500"></div>
-            <div className="stripe stripe-2 flex-1 bg-gradient-to-br from-teal-400 to-cyan-500"></div>
-            <div className="stripe stripe-3 flex-1 bg-gradient-to-br from-blue-400 to-indigo-500"></div>
-          </div>
-        </div>
-        <div className="header-content relative z-10 max-w-5xl mx-auto px-5">
-          <div className="profile-section flex items-center gap-12">
-            {data.profilePicture && (
-              <div className="profile-picture w-48 h-48 rounded-full overflow-hidden border-6 border-white/80 shadow-2xl">
-                <img src={data.profilePicture} alt="Profile" className="w-full h-full object-cover" />
-              </div>
-            )}
-            <div className="name-section">
-              <h1 className="name text-6xl font-black mb-5 text-white text-shadow-lg">{data.primaryName}</h1>
-              <div className="contact-info flex flex-col gap-4">
-                <div className="contact-item flex items-center gap-4 text-lg">
-                  <span className="icon text-2xl">📧</span>
-                  <span>{data.primaryEmail}</span>
-                </div>
-                <div className="contact-item flex items-center gap-4 text-lg">
-                  <span className="icon text-2xl">📱</span>
-                  <span>{data.primaryPhone}</span>
-                </div>
-              </div>
-            </div>
+    <div className="max-w-[210mm] mx-auto bg-white text-gray-900 font-sans leading-relaxed">
+      {/* Vibrant Header */}
+      <div className="relative mb-10">
+        <div className="absolute inset-0 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 h-48 rounded-2xl"></div>
+        <div className="relative pt-10 px-10 pb-6">
+          <h1 className="text-5xl font-bold text-white mb-3 drop-shadow-lg">{data.primaryName || 'Your Name'}</h1>
+          <div className="flex flex-wrap gap-4 text-white text-sm drop-shadow">
+            {data.primaryEmail && <span>✉ {data.primaryEmail}</span>}
+            {data.primaryPhone && <span>✆ {data.primaryPhone}</span>}
           </div>
         </div>
       </div>
 
       {/* Summary */}
       {data.summary && (
-        <div className="summary-section bg-white text-gray-900 mx-5 my-10 p-12 rounded-3xl shadow-2xl">
-          <h2 className="section-title text-4xl font-black text-red-500 mb-6 flex items-center gap-4">
-            <span className="title-decoration text-2xl">✨</span>
-            About Me
-            <span className="title-decoration text-2xl">✨</span>
-          </h2>
-          <p className="summary-text text-xl leading-relaxed text-gray-700">{data.summary}</p>
+        <div className="mb-8 px-10">
+          <h2 className="text-2xl font-bold bg-gradient-to-r from-pink-500 to-indigo-500 bg-clip-text text-transparent mb-3">About Me</h2>
+          <p className="text-gray-700 leading-relaxed">{data.summary}</p>
         </div>
       )}
 
-      {/* Main Content */}
-      <div className="content-sections bg-white text-gray-900 mx-5 my-10 p-12 rounded-3xl shadow-2xl">
-        {/* Skills */}
-        {data.skills && data.skills.length > 0 && (
-          <div className="skills-section mb-12">
-            <h3 className="section-title text-4xl font-black text-red-500 mb-8 flex items-center gap-4">
-              <span className="title-icon text-3xl">🎨</span>
-              Skills & Talents
-            </h3>
-            <div className="skills-container flex flex-wrap gap-5">
-              {data.skills.map((skill, index) => {
-                const colorClass = (index % 4) + 1;
-                const gradientClasses = {
-                  1: 'bg-gradient-to-r from-red-400 to-pink-500',
-                  2: 'bg-gradient-to-r from-teal-400 to-cyan-500',
-                  3: 'bg-gradient-to-r from-blue-400 to-indigo-500',
-                  4: 'bg-gradient-to-r from-purple-400 to-pink-500'
-                };
-                return (
-                  <div key={index} className={`skill-badge ${gradientClasses[colorClass as keyof typeof gradientClasses]} text-white px-6 py-4 rounded-full font-bold text-lg shadow-lg hover:transform hover:-translate-y-2 hover:shadow-xl transition-all duration-300`}>
-                    {skill.name}
+      {/* Two Column Layout */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 px-10">
+        {/* Left Column */}
+        <div className="md:col-span-1 space-y-8">
+          {/* Skills */}
+          {(data.skills||[]).length > 0 && (
+            <div>
+              <h2 className="text-xl font-bold bg-gradient-to-r from-pink-500 to-indigo-500 bg-clip-text text-transparent mb-4">Skills</h2>
+              <div className="space-y-2">
+                {(data.skills||[]).map((s:any)=> (
+                  <div key={s.id} className="bg-gradient-to-r from-pink-50 to-indigo-50 p-3 rounded-lg border-l-4 border-pink-500">
+                    <span className="text-sm font-medium text-gray-900">{s.name||s.skill}</span>
                   </div>
-                );
-              })}
+                ))}
+              </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {/* Work Experience */}
-        {data.workExperiences && data.workExperiences.length > 0 && (
-          <div className="experience-section mb-12">
-            <h3 className="section-title text-4xl font-black text-red-500 mb-8 flex items-center gap-4">
-              <span className="title-icon text-3xl">🚀</span>
-              Work Journey
-            </h3>
-            <div className="experience-timeline">
-              {data.workExperiences.map((work, index) => {
-                const markerClass = (index % 3) + 1;
-                const markerGradients = {
-                  1: 'bg-gradient-to-r from-red-400 to-pink-500',
-                  2: 'bg-gradient-to-r from-teal-400 to-cyan-500',
-                  3: 'bg-gradient-to-r from-blue-400 to-indigo-500'
-                };
-                return (
-                  <div key={index} className="timeline-item flex gap-6 mb-10">
-                    <div className={`timeline-marker w-6 h-6 ${markerGradients[markerClass as keyof typeof markerGradients]} rounded-full flex-shrink-0 mt-2 shadow-lg`}></div>
-                    <div className="timeline-content flex-1 bg-gradient-to-br from-gray-50 to-white p-6 rounded-2xl shadow-lg">
-                      <div className="job-header mb-4">
-                        <div className="job-title text-2xl font-bold text-red-500 mb-2">{work.jobTitle}</div>
-                        <div className="company text-lg text-gray-600 mb-2 font-semibold">{work.company}</div>
-                        <div className="duration text-gray-500 font-medium">
-                          {work.startDate} - {work.endDate}
-                        </div>
-                      </div>
-                      {work.responsibilities && work.responsibilities.length > 0 && (
-                        <ul className="responsibilities ml-6">
-                          {work.responsibilities.map((resp, respIndex) => (
-                            <li key={respIndex} className="text-gray-700 leading-relaxed mb-2" style={{listStyleType: 'disc', color: '#ef4444'}}>{resp.description}</li>
-                          ))}
-                        </ul>
+          {/* Education */}
+          {(data.educations||[]).length > 0 && (
+            <div>
+              <h2 className="text-xl font-bold bg-gradient-to-r from-pink-500 to-indigo-500 bg-clip-text text-transparent mb-4">Education</h2>
+              <div className="space-y-3">
+                {(data.educations||[]).map((e:any)=> (
+                  <div key={e.id} className="bg-gradient-to-r from-pink-50 to-indigo-50 p-4 rounded-lg">
+                    <div className="font-bold text-gray-900 text-sm">{e.degree || 'Degree'}</div>
+                    <div className="text-sm text-gray-700 mt-1">{e.institution}</div>
+                    {e.graduationYear && <div className="text-xs text-gray-500 mt-1">{e.graduationYear}</div>}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Right Column - Experience */}
+        <div className="md:col-span-2">
+          {(data.workExperiences||[]).length > 0 && (
+            <div>
+              <h2 className="text-2xl font-bold bg-gradient-to-r from-pink-500 to-indigo-500 bg-clip-text text-transparent mb-6">Experience</h2>
+              <div className="space-y-6">
+                {(data.workExperiences||[]).map((w:any)=> (
+                  <div key={w.id} className="border-l-4 border-pink-500 pl-6">
+                    <h3 className="text-lg font-bold text-gray-900 mb-1">{w.jobTitle}</h3>
+                    <div className="flex items-center gap-3 text-sm text-gray-600 mb-3">
+                      <span className="font-semibold bg-gradient-to-r from-pink-500 to-indigo-500 bg-clip-text text-transparent">{w.companyName || w.company}</span>
+                      {(w.startDate || w.endDate) && (
+                        <>
+                          <span className="text-gray-400">•</span>
+                          <span>{w.startDate} - {w.isCurrent ? 'Present' : (w.endDate || 'Present')}</span>
+                        </>
                       )}
                     </div>
+                    {Array.isArray(w.responsibilities) && w.responsibilities.length > 0 && (
+                      <ul className="space-y-1.5 text-sm text-gray-700">
+                        {w.responsibilities.map((r:any, idx:number)=> (
+                          <li key={r.id||idx} className="flex gap-2">
+                            <span className="text-pink-500 font-bold mt-1">•</span>
+                            <span className="flex-1">{r.description}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
-                );
-              })}
+                ))}
+              </div>
             </div>
-          </div>
-        )}
-
-        {/* Education */}
-        {data.educations && data.educations.length > 0 && (
-          <div className="education-section">
-            <h3 className="section-title text-4xl font-black text-red-500 mb-8 flex items-center gap-4">
-              <span className="title-icon text-3xl">🎓</span>
-              Education
-            </h3>
-            <div className="education-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {data.educations.map((edu, index) => {
-                const cardClass = (index % 3) + 1;
-                const cardGradients = {
-                  1: 'bg-gradient-to-br from-red-400 to-pink-500',
-                  2: 'bg-gradient-to-br from-teal-400 to-cyan-500',
-                  3: 'bg-gradient-to-br from-blue-400 to-indigo-500'
-                };
-                return (
-                  <div key={index} className={`education-card ${cardGradients[cardClass as keyof typeof cardGradients]} text-white p-6 rounded-2xl text-center shadow-lg hover:transform hover:-translate-y-2 hover:shadow-xl transition-all duration-300`}>
-                    <div className="degree font-bold mb-3 text-xl">{edu.degree}</div>
-                    <div className="institution opacity-95 mb-2 text-lg">{edu.institution}</div>
-                    <div className="year opacity-90 font-semibold">{edu.graduationYear}</div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

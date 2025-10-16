@@ -26,51 +26,37 @@ interface ProfessionalTemplateProps {
 
 export function ProfessionalTemplate({ data }: ProfessionalTemplateProps) {
   return (
-    <div className="professional-resume bg-white text-gray-900 font-sans">
-      {/* Header with Profile Picture */}
-      <div className="header-section bg-gradient-to-br from-blue-900 to-blue-600 text-white py-12 mb-10 relative">
-        <div className="header-content max-w-4xl mx-auto px-5 relative z-10">
-          <div className="profile-info flex items-center gap-10">
-            {data.profilePicture && (
-              <div className="profile-picture w-36 h-36 rounded-full overflow-hidden border-4 border-white/30 shadow-2xl">
-                <img src={data.profilePicture} alt="Profile" className="w-full h-full object-cover" />
-              </div>
-            )}
-            <div className="name-section">
-              <h1 className="name text-4xl font-black mb-4 text-shadow-lg">{data.primaryName}</h1>
-              <div className="contact-info flex flex-col gap-3">
-                <span className="email text-lg opacity-95 flex items-center gap-2">
-                  📧 {data.primaryEmail}
-                </span>
-                <span className="phone text-lg opacity-95 flex items-center gap-2">
-                  📱 {data.primaryPhone}
-                </span>
-              </div>
-            </div>
-          </div>
+    <div className="max-w-[210mm] mx-auto bg-white text-gray-900 font-sans leading-relaxed">
+      {/* Header Section */}
+      <div className="bg-gradient-to-r from-slate-800 to-slate-600 text-white py-10 px-8 mb-8 rounded-lg">
+        <h1 className="text-4xl font-bold mb-4 tracking-tight">{data.primaryName}</h1>
+        <div className="flex flex-wrap gap-6 text-sm">
+          {data.primaryEmail && <span className="flex items-center gap-2">✉ {data.primaryEmail}</span>}
+          {data.primaryPhone && <span className="flex items-center gap-2">✆ {data.primaryPhone}</span>}
         </div>
       </div>
 
-      {/* Summary */}
+      {/* Professional Summary */}
       {data.summary && (
-        <div className="summary-section mb-10 bg-gray-50 p-8 rounded-xl border-l-4 border-blue-600">
-          <h2 className="section-title text-3xl font-bold text-blue-900 mb-5 border-b-2 border-blue-600 pb-2">Professional Summary</h2>
-          <p className="summary-text text-lg leading-relaxed text-gray-700">{data.summary}</p>
+        <div className="mb-8 px-8">
+          <h2 className="text-xl font-bold text-slate-800 mb-3 uppercase tracking-wide pb-2 border-b-2 border-slate-300">Professional Summary</h2>
+          <p className="text-gray-700 leading-relaxed mt-4">{data.summary}</p>
         </div>
       )}
 
-      {/* Main Content Grid */}
-      <div className="content-grid grid grid-cols-1 lg:grid-cols-3 gap-12">
-        {/* Left Column */}
-        <div className="left-column lg:col-span-1">
+      {/* Two Column Layout */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 px-8">
+        {/* Left Column - Skills & Education */}
+        <div className="md:col-span-1 space-y-8">
           {/* Skills */}
           {data.skills && data.skills.length > 0 && (
-            <div className="skills-section mb-8">
-              <h3 className="section-title text-2xl font-bold text-blue-900 mb-4">Skills</h3>
-              <div className="skills-grid grid grid-cols-1 gap-3">
+            <div>
+              <h2 className="text-xl font-bold text-slate-800 mb-4 uppercase tracking-wide pb-2 border-b-2 border-slate-300">Core Skills</h2>
+              <div className="space-y-2 mt-4">
                 {data.skills.map((skill, index) => (
-                  <div key={index} className="skill-item bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-gray-200 p-4 rounded-xl text-center font-semibold text-blue-900 hover:transform hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
-                    {skill.name}
+                  <div key={index} className="flex items-center gap-3 text-sm">
+                    <div className="w-1.5 h-1.5 bg-slate-600 rounded-full"></div>
+                    <span className="text-gray-700 font-medium">{skill.name}</span>
                   </div>
                 ))}
               </div>
@@ -79,14 +65,14 @@ export function ProfessionalTemplate({ data }: ProfessionalTemplateProps) {
 
           {/* Education */}
           {data.educations && data.educations.length > 0 && (
-            <div className="education-section">
-              <h3 className="section-title text-2xl font-bold text-blue-900 mb-4">Education</h3>
-              <div className="education-list">
+            <div>
+              <h2 className="text-xl font-bold text-slate-800 mb-4 uppercase tracking-wide pb-2 border-b-2 border-slate-300">Education</h2>
+              <div className="space-y-4 mt-4">
                 {data.educations.map((edu, index) => (
-                  <div key={index} className="education-item mb-4 p-5 bg-gradient-to-br from-gray-50 to-white rounded-xl shadow-md">
-                    <div className="degree font-bold text-blue-900 mb-2 text-lg">{edu.degree}</div>
-                    <div className="institution text-gray-700 mb-2">{edu.institution}</div>
-                    <div className="year text-gray-600 font-medium">{edu.graduationYear}</div>
+                  <div key={index} className="bg-slate-50 p-4 rounded-lg">
+                    <div className="font-bold text-slate-900 text-sm mb-1">{edu.degree}</div>
+                    <div className="text-sm text-gray-700 mb-1">{edu.institution}</div>
+                    <div className="text-xs text-gray-500">{edu.graduationYear}</div>
                   </div>
                 ))}
               </div>
@@ -94,26 +80,29 @@ export function ProfessionalTemplate({ data }: ProfessionalTemplateProps) {
           )}
         </div>
 
-        {/* Right Column */}
-        <div className="right-column lg:col-span-2">
-          {/* Work Experience */}
+        {/* Right Column - Experience */}
+        <div className="md:col-span-2">
           {data.workExperiences && data.workExperiences.length > 0 && (
-            <div className="experience-section">
-              <h3 className="section-title text-2xl font-bold text-blue-900 mb-4">Professional Experience</h3>
-              <div className="experience-list">
+            <div>
+              <h2 className="text-xl font-bold text-slate-800 mb-4 uppercase tracking-wide pb-2 border-b-2 border-slate-300">Professional Experience</h2>
+              <div className="space-y-6 mt-4">
                 {data.workExperiences.map((work, index) => (
-                  <div key={index} className="experience-item mb-8 p-6 border-l-4 border-blue-600 bg-gradient-to-br from-gray-50 to-white rounded-r-xl shadow-lg">
-                    <div className="job-header mb-4">
-                      <div className="job-title text-xl font-bold text-blue-900 mb-2">{work.jobTitle}</div>
-                      <div className="company text-lg text-gray-600 mb-2 font-medium">{work.company}</div>
-                      <div className="duration text-gray-500 font-medium">
-                        {work.startDate} - {work.endDate}
+                  <div key={index}>
+                    <div className="mb-2">
+                      <h3 className="text-lg font-bold text-slate-900">{work.jobTitle}</h3>
+                      <div className="flex items-center gap-3 text-sm text-gray-600 mt-1">
+                        <span className="font-semibold text-slate-700">{work.company}</span>
+                        <span className="text-gray-400">|</span>
+                        <span>{work.startDate} - {work.endDate}</span>
                       </div>
                     </div>
                     {work.responsibilities && work.responsibilities.length > 0 && (
-                      <ul className="responsibilities ml-5">
+                      <ul className="space-y-1.5 text-sm text-gray-700 mt-3">
                         {work.responsibilities.map((resp, respIndex) => (
-                          <li key={respIndex} className="text-gray-700 leading-relaxed mb-2" style={{listStyleType: 'disc', color: '#3b82f6'}}>{resp.description}</li>
+                          <li key={respIndex} className="flex gap-2">
+                            <span className="text-slate-600 font-bold mt-1">•</span>
+                            <span className="flex-1">{resp.description}</span>
+                          </li>
                         ))}
                       </ul>
                     )}

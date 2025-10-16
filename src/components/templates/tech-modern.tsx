@@ -1,77 +1,54 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 
 interface TechModernTemplateProps {
-  data: {
-    id: number;
-    primaryName: string;
-    primaryEmail: string;
-    primaryPhone: string;
-    summary: string;
-    skills: Array<{ name: string }>;
-    workExperiences: Array<{
-      jobTitle: string;
-      company: string;
-      startDate: string;
-      endDate: string;
-      responsibilities: Array<{id: number; description: string}>;
-    }>;
-    educations: Array<{
-      degree: string;
-      institution: string;
-      graduationYear: string;
-    }>;
-    profilePicture?: string;
-  };
+  data: any;
 }
 
 export function TechModernTemplate({ data }: TechModernTemplateProps) {
   return (
-    <div className="tech-modern-resume bg-gray-900 text-white font-sans">
-      {/* Header with Tech Design */}
-      <div className="header-section bg-gradient-to-r from-green-400 to-blue-500 py-16 mb-12 relative">
-        <div className="header-content max-w-5xl mx-auto px-5 relative z-10">
-          <div className="profile-section flex items-center gap-12">
-            {data.profilePicture && (
-              <div className="profile-picture w-40 h-40 rounded-full overflow-hidden border-4 border-white/30 shadow-2xl">
-                <img src={data.profilePicture} alt="Profile" className="w-full h-full object-cover" />
-              </div>
-            )}
-            <div className="name-section">
-              <h1 className="name text-5xl font-black mb-3 text-white text-shadow-lg">{data.primaryName}</h1>
-              <div className="title text-xl text-white/90 mb-6 font-medium">Tech Professional</div>
-              <div className="contact-info flex flex-col gap-3">
-                <span className="email text-lg text-white/95 flex items-center gap-2">
-                  💻 {data.primaryEmail}
-                </span>
-                <span className="phone text-lg text-white/95 flex items-center gap-2">
-                  📱 {data.primaryPhone}
-                </span>
-              </div>
-            </div>
+    <div className="max-w-[210mm] mx-auto bg-gray-50 text-gray-900 font-mono leading-relaxed">
+      {/* Tech Header with Grid Pattern */}
+      <div className="bg-gradient-to-br from-emerald-600 to-teal-600 text-white p-10 mb-8 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="grid grid-cols-8 h-full">
+            {[...Array(64)].map((_, i) => <div key={i} className="border border-white/20"></div>)}
+          </div>
+        </div>
+        <div className="relative">
+          <div className="text-xs text-emerald-200 mb-2 font-bold tracking-widest">&lt;RESUME /&gt;</div>
+          <h1 className="text-4xl font-bold mb-4">{data.primaryName || 'Your Name'}</h1>
+          <div className="flex flex-wrap gap-4 text-sm font-sans">
+            {data.primaryEmail && <span className="bg-white/10 px-3 py-1 rounded">{data.primaryEmail}</span>}
+            {data.primaryPhone && <span className="bg-white/10 px-3 py-1 rounded">{data.primaryPhone}</span>}
+            {data.primaryLocation && <span className="bg-white/10 px-3 py-1 rounded">{data.primaryLocation}</span>}
           </div>
         </div>
       </div>
 
       {/* Summary */}
       {data.summary && (
-        <div className="summary-section mb-12 bg-gradient-to-br from-gray-800 to-gray-700 p-10 rounded-2xl border-l-6 border-green-400 shadow-xl">
-          <h2 className="section-title text-3xl font-black text-green-400 mb-6 border-b-2 border-green-400 pb-3">Tech Summary</h2>
-          <p className="summary-text text-lg leading-relaxed text-gray-300">{data.summary}</p>
+        <div className="mb-8 px-10">
+          <div className="bg-white p-6 rounded-lg shadow-sm border-l-4 border-emerald-600">
+            <div className="text-xs text-emerald-600 font-bold mb-2 tracking-widest">{'// ABOUT'}</div>
+            <p className="text-gray-700 leading-relaxed font-sans">{data.summary}</p>
+          </div>
         </div>
       )}
 
-      {/* Main Content Grid */}
-      <div className="content-grid grid grid-cols-1 lg:grid-cols-3 gap-12">
+      {/* Two Column Layout */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 px-10">
         {/* Left Column */}
-        <div className="left-column lg:col-span-1">
+        <div className="md:col-span-1 space-y-6">
           {/* Skills */}
-          {data.skills && data.skills.length > 0 && (
-            <div className="skills-section mb-8">
-              <h3 className="section-title text-2xl font-bold text-green-400 mb-4">Tech Stack</h3>
-              <div className="skills-grid grid grid-cols-1 gap-3">
-                {data.skills.map((skill, index) => (
-                  <div key={index} className="skill-item bg-gradient-to-br from-gray-800 to-gray-700 border-2 border-green-400/30 p-4 rounded-xl text-center font-semibold text-green-400 hover:transform hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
-                    {skill.name}
+          {(data.skills||[]).length > 0 && (
+            <div className="bg-white p-6 rounded-lg shadow-sm">
+              <div className="text-xs text-emerald-600 font-bold mb-4 tracking-widest">{'// TECH STACK'}</div>
+              <div className="space-y-2 font-sans">
+                {(data.skills||[]).map((s:any)=> (
+                  <div key={s.id} className="flex items-center gap-2 text-sm">
+                    <span className="text-emerald-600">▸</span>
+                    <span className="text-gray-700">{s.name||s.skill}</span>
                   </div>
                 ))}
               </div>
@@ -79,15 +56,15 @@ export function TechModernTemplate({ data }: TechModernTemplateProps) {
           )}
 
           {/* Education */}
-          {data.educations && data.educations.length > 0 && (
-            <div className="education-section">
-              <h3 className="section-title text-2xl font-bold text-green-400 mb-4">Education</h3>
-              <div className="education-list">
-                {data.educations.map((edu, index) => (
-                  <div key={index} className="education-item mb-4 p-5 bg-gradient-to-br from-gray-800 to-gray-700 rounded-xl shadow-lg">
-                    <div className="degree font-bold text-green-400 mb-2 text-lg">{edu.degree}</div>
-                    <div className="institution text-gray-300 mb-2">{edu.institution}</div>
-                    <div className="year text-gray-400 font-medium">{edu.graduationYear}</div>
+          {(data.educations||[]).length > 0 && (
+            <div className="bg-white p-6 rounded-lg shadow-sm">
+              <div className="text-xs text-emerald-600 font-bold mb-4 tracking-widest">{'// EDUCATION'}</div>
+              <div className="space-y-3 font-sans">
+                {(data.educations||[]).map((e:any)=> (
+                  <div key={e.id}>
+                    <div className="font-semibold text-gray-900 text-sm">{e.degree || 'Degree'}</div>
+                    <div className="text-sm text-gray-600 mt-1">{e.institution}</div>
+                    {e.graduationYear && <div className="text-xs text-gray-500 mt-1">{e.graduationYear}</div>}
                   </div>
                 ))}
               </div>
@@ -95,26 +72,32 @@ export function TechModernTemplate({ data }: TechModernTemplateProps) {
           )}
         </div>
 
-        {/* Right Column */}
-        <div className="right-column lg:col-span-2">
-          {/* Work Experience */}
-          {data.workExperiences && data.workExperiences.length > 0 && (
-            <div className="experience-section">
-              <h3 className="section-title text-2xl font-bold text-green-400 mb-4">Tech Experience</h3>
-              <div className="experience-list">
-                {data.workExperiences.map((work, index) => (
-                  <div key={index} className="experience-item mb-8 p-6 border-l-4 border-green-400 bg-gradient-to-br from-gray-800 to-gray-700 rounded-r-xl shadow-lg">
-                    <div className="job-header mb-4">
-                      <div className="job-title text-xl font-bold text-green-400 mb-2">{work.jobTitle}</div>
-                      <div className="company text-lg text-gray-300 mb-2 font-medium">{work.company}</div>
-                      <div className="duration text-gray-400 font-medium">
-                        {work.startDate} - {work.endDate}
+        {/* Right Column - Experience */}
+        <div className="md:col-span-2">
+          {(data.workExperiences||[]).length > 0 && (
+            <div className="bg-white p-6 rounded-lg shadow-sm">
+              <div className="text-xs text-emerald-600 font-bold mb-6 tracking-widest">{'// WORK EXPERIENCE'}</div>
+              <div className="space-y-6 font-sans">
+                {(data.workExperiences||[]).map((w:any)=> (
+                  <div key={w.id}>
+                    <div className="flex items-start justify-between mb-2">
+                      <div>
+                        <h3 className="text-lg font-bold text-gray-900">{w.jobTitle}</h3>
+                        <div className="text-sm text-emerald-700 font-semibold">{w.companyName || w.company}</div>
                       </div>
+                      {(w.startDate || w.endDate) && (
+                        <span className="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded">
+                          {w.startDate} - {w.isCurrent ? 'Present' : (w.endDate || 'Present')}
+                        </span>
+                      )}
                     </div>
-                    {work.responsibilities && work.responsibilities.length > 0 && (
-                      <ul className="responsibilities ml-6">
-                        {work.responsibilities.map((resp, respIndex) => (
-                          <li key={respIndex} className="text-gray-300 leading-relaxed mb-2" style={{listStyleType: 'disc', color: '#4ade80'}}>{resp.description}</li>
+                    {Array.isArray(w.responsibilities) && w.responsibilities.length > 0 && (
+                      <ul className="space-y-1.5 text-sm text-gray-700 mt-3">
+                        {w.responsibilities.map((r:any, idx:number)=> (
+                          <li key={r.id||idx} className="flex gap-2">
+                            <span className="text-emerald-600 font-bold">&gt;</span>
+                            <span className="flex-1">{r.description}</span>
+                          </li>
                         ))}
                       </ul>
                     )}
