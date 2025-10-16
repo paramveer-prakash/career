@@ -111,14 +111,14 @@ export default function TemplateBrowserPage() {
             <div
               key={template.key}
               onClick={() => setPreviewingTemplate(template.key)}
-              className="group cursor-pointer bg-white rounded-xl border-2 border-gray-200 transition-all duration-200 hover:shadow-xl hover:border-blue-300 hover:-translate-y-1"
+              className="group cursor-pointer bg-white rounded-xl border-gray-200 transition-all duration-200 hover:shadow-xl hover:border-blue-300 hover:-translate-y-1"
             >
               {/* Preview Thumbnail */}
-              <div className="aspect-[1/1.414] rounded-t-xl overflow-hidden bg-gray-50 relative p-1">
+              <div className="aspect-[1/1.414] overflow-hidden  relative p-1">
                 <img
                   src={`/templates/${template.key}.png`}
                   alt={`${template.name} template preview`}
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-contain border-1 border-gray-400"
                   onError={(e) => {
                     // Fallback to placeholder if image doesn't exist
                     e.currentTarget.style.display = 'none';

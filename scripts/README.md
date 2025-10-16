@@ -50,7 +50,7 @@ npm run screenshots -- --help
 ## What it does
 
 1. **Iterates through all templates**: modern, classic, minimal, professional, creative, minimal-dark, executive, colorful, tech-modern
-2. **Uses HTML API routes**: More reliable than client-side rendering
+2. **Uses dedicated thumbnail API**: Always uses consistent dummy data for reliable thumbnails
 3. **Captures high-quality screenshots**: 2x device scale factor for crisp images
 4. **Saves to public/templates/**: Ready to use as template thumbnails
 
@@ -60,6 +60,15 @@ npm run screenshots -- --help
 - **Format**: PNG with white background
 - **Quality**: High DPI (2x scale factor)
 - **Size**: Optimized for template gallery display
+
+## Thumbnail API
+
+The script uses a dedicated thumbnail API endpoint (`/api/templates/[templateKey]/thumbnail`) that:
+
+- **Always uses dummy data**: Consistent seed data for all thumbnails
+- **No authentication required**: Works without backend API
+- **Fast and reliable**: Direct HTML generation without database calls
+- **Consistent output**: Same data structure across all templates
 
 ## Requirements
 

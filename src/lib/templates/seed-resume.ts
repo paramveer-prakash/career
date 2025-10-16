@@ -63,34 +63,6 @@ export const seedResume: any = {
         { id: 'r5', description: 'Introduced blue/green deployments and feature flags, reducing deployment risk by 60%.' },
         { id: 'r6', description: 'Improved database performance through index tuning and schema refactoring.' }
       ]
-    },
-    {
-      id: 'w4',
-      jobTitle: 'Software Engineer',
-      companyName: 'Globex',
-      startDate: '2018-07',
-      endDate: '2021-02',
-      isCurrent: false,
-      location: 'Remote',
-      responsibilities: [
-        { id: 'r4', description: 'Built and maintained microservices architecture using Java and Node.js.' },
-        { id: 'r5', description: 'Introduced blue/green deployments and feature flags, reducing deployment risk by 60%.' },
-        { id: 'r6', description: 'Improved database performance through index tuning and schema refactoring.' }
-      ]
-    },
-    {
-      id: 'w5',
-      jobTitle: 'Software Engineer',
-      companyName: 'Globex',
-      startDate: '2018-07',
-      endDate: '2021-02',
-      isCurrent: false,
-      location: 'Remote',
-      responsibilities: [
-        { id: 'r4', description: 'Built and maintained microservices architecture using Java and Node.js.' },
-        { id: 'r5', description: 'Introduced blue/green deployments and feature flags, reducing deployment risk by 60%.' },
-        { id: 'r6', description: 'Improved database performance through index tuning and schema refactoring.' }
-      ]
     }
   ],
   educations: [

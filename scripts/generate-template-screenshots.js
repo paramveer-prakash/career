@@ -120,10 +120,10 @@ async function generateScreenshots(templatesToProcess) {
       try {
         console.log(`\n🎯 Processing template: ${templateKey}`);
         
-        const url = `${BASE_URL}/api/templates/${templateKey}/render/1/html`;
+        const url = `${BASE_URL}/api/templates/${templateKey}/thumbnail`;
         console.log(`   📍 URL: ${url}`);
         
-        // Navigate to the HTML API route (faster and more reliable)
+        // Navigate to the thumbnail API route (uses dummy data for consistency)
         await page.goto(url, { 
           waitUntil: 'networkidle0',
           timeout: 30000 
