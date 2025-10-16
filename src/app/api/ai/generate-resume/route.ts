@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
       skills,
       education,
       careerGoals,
-      additionalInfo: _additionalInfo
+      additionalInfo: _additionalInfo // eslint-disable-line @typescript-eslint/no-unused-vars
     } = body;
 
     // Generate a unique ID (in real implementation, this would come from the database)

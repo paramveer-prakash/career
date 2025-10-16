@@ -1,5 +1,5 @@
-// Import the new template registry
-import { getTemplateCSS as getRegistryCSS } from './template-registry';
+// Import the new template registry (currently unused but kept for future use)
+// import { getTemplateCSS as getRegistryCSS } from './template-registry';
 
 // CSS content cache
 const cssCache: Record<string, string> = {};

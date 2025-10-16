@@ -133,6 +133,7 @@ export function TemplateGallery({
             >
               {/* Template Preview */}
               <div className="w-full aspect-[3/4] relative overflow-hidden bg-gray-50">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={template.preview}
                   alt={`${template.name} template preview`}
@@ -210,6 +211,7 @@ export function TemplateGallery({
           >
             {/* Template Preview */}
             <div className="aspect-[3/4] rounded-t-xl overflow-hidden bg-gray-50">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={template.preview}
                 alt={`${template.name} template preview`}

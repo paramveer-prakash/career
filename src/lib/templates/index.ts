@@ -23,7 +23,7 @@ export function initializeTemplates() {
       primaryColor: '#1f2937'
     });
     
-    console.log('✅ Custom templates initialized successfully!');
+    // Custom templates initialized silently
   } catch (error) {
     console.error('❌ Error initializing templates:', error);
   }

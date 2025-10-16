@@ -546,19 +546,11 @@ function generateMinimalDarkTemplate(data: any): string {
     </div>`
   ).join('');
 
-  const profilePicture = data.profilePicture ?
-    `<div class="profile-picture-container">
-      <div class="profile-picture">
-        <img src="${data.profilePicture}" alt="${data.primaryName}" />
-      </div>
-      <div class="status-indicator">
-        <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-        </svg>
-      </div>
-    </div>` : '';
-
-  const currentJobTitle = data.workExperiences && data.workExperiences.length > 0 ? data.workExperiences[0].jobTitle : '';
+  // Note: profilePicture and currentJobTitle are intentionally unused in this template
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _profilePicture = data.profilePicture;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _currentJobTitle = data.workExperiences && data.workExperiences.length > 0 ? data.workExperiences[0].jobTitle : '';
 
   return `
     <div class="minimal-dark-resume">

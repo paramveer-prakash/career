@@ -130,6 +130,7 @@ export default function TemplateBrowserPage() {
             >
               {/* Preview Thumbnail */}
               <div className="aspect-[3/4] overflow-hidden relative bg-gray-50">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={`/templates/${template.key}.png`}
                   alt={`${template.name} template preview`}

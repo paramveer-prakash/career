@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { WorkExperience, Skill, Education } from './resume-service';
 
 // AI Service Types

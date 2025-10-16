@@ -310,7 +310,7 @@ export const quickTemplates = {
 // Function to add a template to the system
 export function addNewTemplate(config: TemplateConfig): void {
   addTemplate(config);
-  console.log(`✅ Template "${config.name}" added successfully!`);
+  // Template added silently
 }
 
 // Function to create and add a template in one step
